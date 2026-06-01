@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WEARWC | Niche Mechanical Timepieces</title>
+    <title>Premium Rolex | High Quality Timepieces</title>
     <!-- Tailwind CSS for modern premium styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -29,6 +29,12 @@
         .animate-fade-entry {
             animation: luxuryFadeIn 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
+
+        /* Custom styling for the currency dropdown to make it look premium */
+        select option {
+            background-color: #0a100c;
+            color: #cbd5e1;
+        }
     </style>
 </head>
 <body class="bg-[#050806] text-[#cbd5e1] font-sans antialiased selection:bg-emerald-800 selection:text-white">
@@ -39,16 +45,25 @@
         <!-- Header / Navigation -->
         <header class="border-b border-emerald-950/60 bg-[#050806]/90 backdrop-blur sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-                <a href="#" class="font-serif text-2xl tracking-[0.25em] text-white font-bold">
-                    WEAR<span class="text-emerald-500 font-light">WC</span>
+                <!-- Logo -->
+                <a href="#" class="font-serif text-2xl tracking-[0.2em] text-white font-bold">
+                    ROLEX<span class="text-emerald-500 font-light">VAULT</span>
                 </a>
+                
+                <!-- Nav (Streamlined) -->
                 <nav class="hidden md:flex space-x-8 text-xs uppercase tracking-[0.15em] font-medium text-gray-400">
                     <a href="#collection" class="text-white hover:text-emerald-400 transition">The Vault</a>
-                    <a href="#" class="hover:text-emerald-400 transition">Philosophy</a>
-                    <a href="#" class="hover:text-emerald-400 transition">Sourcing</a>
                 </nav>
+                
+                <!-- Actions & Currency -->
                 <div class="flex items-center space-x-4">
-                    <button onclick="openInquiry('General Collection Sourcing')" class="text-xs uppercase tracking-widest border border-emerald-500/30 text-emerald-400 px-5 py-2.5 hover:bg-emerald-500 hover:text-black transition duration-300">
+                    <!-- Currency Selector -->
+                    <select id="currencySelector" onchange="updateCurrency()" class="bg-transparent text-emerald-400 border border-emerald-950/60 text-xs uppercase tracking-widest px-3 py-2.5 focus:outline-none focus:border-emerald-500 cursor-pointer transition">
+                        <option value="USD">USD ($)</option>
+                        <option value="DZD">DZD (د.ج)</option>
+                    </select>
+
+                    <button onclick="openInquiry('General Vault Inquiry')" class="text-xs uppercase tracking-widest border border-emerald-500/30 text-emerald-400 px-5 py-2.5 hover:bg-emerald-500 hover:text-black transition duration-300">
                         Inquire
                     </button>
                 </div>
@@ -59,21 +74,21 @@
         <section class="relative py-28 bg-gradient-to-b from-[#050806] to-[#0a100c] overflow-hidden">
             <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
                 <div>
-                    <span class="text-xs font-semibold tracking-[0.2em] text-emerald-500 uppercase block mb-4">Mechanical & Rare Collectibles</span>
+                    <span class="text-xs font-semibold tracking-[0.2em] text-emerald-500 uppercase block mb-4">Accessible Luxury</span>
                     <h1 class="font-serif text-5xl md:text-6xl text-white font-medium leading-[1.15] mb-6">
-                        Curating the world’s finest <span class="italic text-emerald-200/90">niche horology</span>.
+                        High-quality <span class="italic text-emerald-200/90">Rolex</span> timepieces at unbeatable prices.
                     </h1>
                     <p class="text-gray-400 text-base mb-8 max-w-lg leading-relaxed font-light">
-                        No digital screens. No charging cables. We source high-complication mechanical engineering, independent micro-brands, and historic vintage assets for serious minds.
+                        Experience the prestige without the premium. We provide exceptionally crafted, high-quality Rolex models built to look and feel exactly like the originals, available at prices that make luxury accessible.
                     </p>
                     <a href="#collection" class="inline-block bg-emerald-600 text-white font-semibold text-xs uppercase tracking-widest px-8 py-4 hover:bg-emerald-500 transition duration-300 shadow-xl shadow-emerald-950/50">
-                        Explore Collection
+                        Enter The Vault
                     </a>
                 </div>
-                <div class="relative bg-[#0b100c] border border-emerald-950/60 p-8 rounded-sm aspect-square flex flex-col justify-center items-center text-center cursor-pointer group transition-all duration-500 hover:border-emerald-800/60" onclick="openInquiry('Rolex Submariner Ref. 5513')">
-                    <p class="text-emerald-500 font-serif text-lg italic mb-2">[ Vault Highlight ]</p>
-                    <p class="text-white text-2xl font-light tracking-wide uppercase group-hover:text-emerald-400 transition">Rolex Submariner Ref. 5513</p>
-                    <p class="text-gray-500 text-xs mt-2 uppercase tracking-widest">Circa 1970 • Patina Dial</p>
+                <div class="relative bg-[#0b100c] border border-emerald-950/60 p-8 rounded-sm aspect-square flex flex-col justify-center items-center text-center cursor-pointer group transition-all duration-500 hover:border-emerald-800/60" onclick="openInquiry('Rolex Submariner Date')">
+                    <p class="text-emerald-500 font-serif text-lg italic mb-2">[ Featured Model ]</p>
+                    <p class="text-white text-2xl font-light tracking-wide uppercase group-hover:text-emerald-400 transition">Rolex Submariner Date</p>
+                    <p class="text-gray-500 text-xs mt-2 uppercase tracking-widest">Black Dial • Ceramic Bezel</p>
                     <span class="text-xs text-emerald-400 mt-6 underline opacity-0 group-hover:opacity-100 transition duration-300">Initiate Inquiry</span>
                 </div>
             </div>
@@ -82,8 +97,8 @@
         <!-- Curated Vault / Products -->
         <section id="collection" class="py-24 max-w-7xl mx-auto px-6">
             <div class="mb-12">
-                <h2 class="font-serif text-3xl md:text-4xl text-white font-medium tracking-wide">Available References</h2>
-                <p class="text-gray-500 text-sm mt-2">Every timepiece undergoes precise mechanical calibration and provenance authentication.</p>
+                <h2 class="font-serif text-3xl md:text-4xl text-white font-medium tracking-wide">The Vault</h2>
+                <p class="text-gray-500 text-sm mt-2">Premium quality models ready for immediate acquisition.</p>
             </div>
 
             <!-- Product Grid -->
@@ -93,15 +108,16 @@
                 <div class="group border border-emerald-950/40 bg-[#0a100c] p-6 hover:border-emerald-800/40 transition duration-300 flex flex-col justify-between">
                     <div>
                         <div class="bg-[#040605] aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/60">
-                            <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Reference Image</span>
+                            <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Submariner Image</span>
                         </div>
                         <span class="text-xs text-emerald-500 uppercase tracking-widest font-medium">Rolex</span>
-                        <h3 class="text-white text-xl font-medium mt-1 group-hover:text-emerald-400 transition">Oyster Perpetual 36</h3>
-                        <p class="text-gray-400 font-light text-sm mt-2 leading-relaxed">Rare "Stella" lacquer variant dial. Automatic calibre 3230 movement featuring a 70-hour reserve.</p>
+                        <h3 class="text-white text-xl font-medium mt-1 group-hover:text-emerald-400 transition">Submariner "Hulk"</h3>
+                        <p class="text-gray-400 font-light text-sm mt-2 leading-relaxed">Stunning green sunburst dial with matching ceramic bezel. Heavyweight stainless steel construction.</p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-emerald-950/60 flex justify-between items-center">
-                        <span class="text-white font-medium tracking-wide">$9,400</span>
-                        <button onclick="openInquiry('Rolex Oyster Perpetual 36')" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition">Inquire</button>
+                        <!-- Note the data-usd attribute we use for the JS calculator -->
+                        <span class="price-display text-white font-medium tracking-wide" data-usd="299">$299</span>
+                        <button onclick="openInquiry('Rolex Submariner Hulk')" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition">Inquire</button>
                     </div>
                 </div>
 
@@ -109,15 +125,15 @@
                 <div class="group border border-emerald-950/40 bg-[#0a100c] p-6 hover:border-emerald-800/40 transition duration-300 flex flex-col justify-between">
                     <div>
                         <div class="bg-[#040605] aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/60">
-                            <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Reference Image</span>
+                            <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Datejust Image</span>
                         </div>
-                        <span class="text-xs text-emerald-500 uppercase tracking-widest font-medium">Anordain</span>
-                        <h3 class="text-white text-xl font-medium mt-1 group-hover:text-emerald-400 transition">Model 1 Vitreous Enamel</h3>
-                        <p class="text-gray-400 font-light text-sm mt-2 leading-relaxed">Niche Scottish independent house. Masterfully handmade translucent blue enamel dial over a manual-wind core.</p>
+                        <span class="text-xs text-emerald-500 uppercase tracking-widest font-medium">Rolex</span>
+                        <h3 class="text-white text-xl font-medium mt-1 group-hover:text-emerald-400 transition">Datejust 41mm</h3>
+                        <p class="text-gray-400 font-light text-sm mt-2 leading-relaxed">Classic fluted bezel with a jubilee bracelet and pristine blue dial. Perfect sweeping movement.</p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-emerald-950/60 flex justify-between items-center">
-                        <span class="text-white font-medium tracking-wide">$4,200</span>
-                        <button onclick="openInquiry('Anordain Model 1 Enamel')" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition">Inquire</button>
+                        <span class="price-display text-white font-medium tracking-wide" data-usd="249">$249</span>
+                        <button onclick="openInquiry('Rolex Datejust 41mm')" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition">Inquire</button>
                     </div>
                 </div>
 
@@ -125,15 +141,15 @@
                 <div class="group border border-emerald-950/40 bg-[#0a100c] p-6 hover:border-emerald-800/40 transition duration-300 flex flex-col justify-between">
                     <div>
                         <div class="bg-[#040605] aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/60">
-                            <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Reference Image</span>
+                            <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Daytona Image</span>
                         </div>
-                        <span class="text-xs text-emerald-500 uppercase tracking-widest font-medium">Tudor</span>
-                        <h3 class="text-white text-xl font-medium mt-1 group-hover:text-emerald-400 transition">Black Bay 58 'Navy Blue'</h3>
-                        <p class="text-gray-400 font-light text-sm mt-2 leading-relaxed">Classic heritage-inspired geometry. Powered by the manufacture automatic MT5402 chronometer calibre.</p>
+                        <span class="text-xs text-emerald-500 uppercase tracking-widest font-medium">Rolex</span>
+                        <h3 class="text-white text-xl font-medium mt-1 group-hover:text-emerald-400 transition">Cosmograph Daytona</h3>
+                        <p class="text-gray-400 font-light text-sm mt-2 leading-relaxed">The iconic "Panda" dial configuration. Fully functional chronograph dials and crisp pushers.</p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-emerald-950/60 flex justify-between items-center">
-                        <span class="text-white font-medium tracking-wide">$3,900</span>
-                        <button onclick="openInquiry('Tudor Black Bay 58')" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition">Inquire</button>
+                        <span class="price-display text-white font-medium tracking-wide" data-usd="349">$349</span>
+                        <button onclick="openInquiry('Rolex Daytona Panda')" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition">Inquire</button>
                     </div>
                 </div>
 
@@ -145,8 +161,8 @@
             <div class="bg-[#0a100c] border border-emerald-950 p-8 max-w-md w-full mx-4 relative">
                 <button onclick="closeInquiry()" class="absolute top-4 right-4 text-gray-500 hover:text-white text-xl">&times;</button>
                 
-                <h3 class="font-serif text-2xl text-white mb-2 tracking-wide">Acquisition Inquiry</h3>
-                <p class="text-sm text-gray-400 mb-6 font-light">Selected reference: <span id="modalWatchName" class="text-emerald-400 font-medium"></span></p>
+                <h3 class="font-serif text-2xl text-white mb-2 tracking-wide">Order Inquiry</h3>
+                <p class="text-sm text-gray-400 mb-6 font-light">Selected model: <span id="modalWatchName" class="text-emerald-400 font-medium"></span></p>
                 
                 <form id="inquiryForm" class="space-y-4" onsubmit="handleFormSubmit(event)">
                     <div>
@@ -154,15 +170,15 @@
                         <input type="text" required class="w-full bg-[#040605] border border-emerald-950/80 p-3 text-white focus:outline-none focus:border-emerald-500 text-sm font-light">
                     </div>
                     <div>
-                        <label class="block text-xs uppercase tracking-[0.15em] text-gray-400 mb-1 font-medium">Email Address</label>
-                        <input type="email" required class="w-full bg-[#040605] border border-emerald-950/80 p-3 text-white focus:outline-none focus:border-emerald-500 text-sm font-light">
+                        <label class="block text-xs uppercase tracking-[0.15em] text-gray-400 mb-1 font-medium">Email / WhatsApp Number</label>
+                        <input type="text" required class="w-full bg-[#040605] border border-emerald-950/80 p-3 text-white focus:outline-none focus:border-emerald-500 text-sm font-light">
                     </div>
                     <div>
-                        <label class="block text-xs uppercase tracking-[0.15em] text-gray-400 mb-1 font-medium">Message / Private Questions</label>
-                        <textarea rows="3" class="w-full bg-[#040605] border border-emerald-950/80 p-3 text-white focus:outline-none focus:border-emerald-500 text-sm font-light" placeholder="Inquire about serial validation, condition grade, timing sheets, or bank wire protocol..."></textarea>
+                        <label class="block text-xs uppercase tracking-[0.15em] text-gray-400 mb-1 font-medium">Shipping Details / Questions</label>
+                        <textarea rows="3" class="w-full bg-[#040605] border border-emerald-950/80 p-3 text-white focus:outline-none focus:border-emerald-500 text-sm font-light" placeholder="Let us know where to ship or ask us about the watch..."></textarea>
                     </div>
                     <button type="submit" class="w-full bg-emerald-600 text-white font-semibold text-xs uppercase tracking-widest py-3.5 hover:bg-emerald-500 transition duration-300 mt-2">
-                        Submit Secure Request
+                        Send Request
                     </button>
                 </form>
             </div>
@@ -170,13 +186,14 @@
 
         <!-- Footer -->
         <footer class="border-t border-emerald-950/60 py-12 text-center text-xs text-gray-600 tracking-[0.2em] uppercase">
-            <p>&copy; 2026 WEARWC. Fine mechanical objects for modern purists.</p>
+            <p>&copy; 2026 ROLEX VAULT. High Quality Timepieces.</p>
         </footer>
 
     </div>
 
     <!-- Interactive Logic Script -->
     <script>
+        // --- Modal Logic ---
         const modal = document.getElementById('inquiryModal');
         const modalWatchName = document.getElementById('modalWatchName');
 
@@ -197,7 +214,7 @@
 
         function handleFormSubmit(event) {
             event.preventDefault();
-            alert(`Inquiry request received for "${modalWatchName.textContent}". WEARWC concierge routing active.`);
+            alert(`Your request for the "${modalWatchName.textContent}" has been sent. We will contact you shortly!`);
             closeInquiry();
             document.getElementById('inquiryForm').reset();
         }
@@ -206,6 +223,28 @@
             if (event.target == modal) {
                 closeInquiry();
             }
+        }
+
+        // --- Currency Converter Logic ---
+        // Approximate exchange rate (You can update this number as the real market rate fluctuates)
+        const dzdExchangeRate = 134.50; 
+
+        function updateCurrency() {
+            const currency = document.getElementById('currencySelector').value;
+            const priceElements = document.querySelectorAll('.price-display');
+
+            priceElements.forEach(el => {
+                const baseUsdPrice = parseFloat(el.getAttribute('data-usd'));
+                
+                if (currency === 'DZD') {
+                    // Multiply USD by the exchange rate and format with commas
+                    const dzdPrice = Math.round(baseUsdPrice * dzdExchangeRate);
+                    el.textContent = dzdPrice.toLocaleString() + ' DZD';
+                } else {
+                    // Revert back to USD
+                    el.textContent = '$' + baseUsdPrice.toLocaleString();
+                }
+            });
         }
     </script>
 </body>
