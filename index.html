@@ -7,7 +7,7 @@
     <!-- Tailwind CSS for modern premium styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght=0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
         
         .font-serif { font-family: 'Cormorant Garamond', serif; }
         .font-sans { font-family: 'Inter', sans-serif; }
@@ -39,12 +39,11 @@
 </head>
 <body class="text-[#cbd5e1] font-sans antialiased selection:bg-emerald-800 selection:text-white relative min-h-screen">
 
-    <!-- FIXED BACKGROUND IMAGE -->
-    <!-- You can change the 'src' link below to your own background image URL -->
+    <!-- FIXED BACKGROUND IMAGE (PULLED LOCALLY FROM REPO) -->
     <div class="fixed inset-0 z-[-1]">
         <!-- Dark greenish overlay so text remains readable -->
         <div class="absolute inset-0 bg-[#050806]/85 z-10"></div> 
-        <img src="https://ibb.co/6JvpKBGB" alt="Luxury Background" class="w-full h-full object-cover">
+        <img src="background.png" alt="Luxury Background" class="w-full h-full object-cover">
     </div>
 
     <!-- Wrapper to handle the global fade entry animation -->
@@ -53,14 +52,14 @@
         <!-- Header / Navigation -->
         <header class="border-b border-emerald-950/40 bg-[#050806]/60 backdrop-blur-md sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-                <!-- Logo (Replaced text with a minimalist icon) -->
+                <!-- Logo -->
                 <a href="#" class="text-emerald-500 hover:text-emerald-400 transition">
                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                 </a>
                 
-                <!-- Nav (Streamlined) -->
+                <!-- Nav -->
                 <nav class="hidden md:flex space-x-8 text-xs uppercase tracking-[0.15em] font-medium text-gray-400">
                     <a href="#collection" class="text-white hover:text-emerald-400 transition">The Vault</a>
                 </nav>
