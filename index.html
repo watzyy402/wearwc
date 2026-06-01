@@ -37,16 +37,13 @@
         }
     </style>
 </head>
-<body class="text-[#cbd5e1] font-sans antialiased selection:bg-emerald-800 selection:text-white relative min-h-screen bg-[#050806]">
+<body class="text-[#cbd5e1] font-sans antialiased selection:bg-emerald-800 selection:text-white relative min-h-screen">
 
-    <!-- FIXED BACKGROUND IMAGE (OPTIMIZED FOR 9:16 RATIO) -->
-    <div class="fixed inset-0 z-[-1] overflow-hidden bg-[#050806]">
-        <!-- Ambient Blurred Layer (Fills the side gaps on PC) -->
-        <img src="background.png" alt="" class="absolute inset-0 w-full h-full object-cover blur-3xl opacity-40 scale-110">
-        <!-- Main Asset Layer (Covers on mobile, Contains on PC to prevent extreme zooming) -->
-        <img src="background.png" alt="Luxury Background" class="absolute inset-0 w-full h-full object-cover md:object-contain">
-        <!-- Dark tint overlay for absolute text readability -->
+    <!-- FIXED BACKGROUND IMAGE (PULLED LOCALLY FROM REPO) -->
+    <div class="fixed inset-0 z-[-1]">
+        <!-- Dark greenish overlay so text remains readable -->
         <div class="absolute inset-0 bg-[#050806]/85 z-10"></div> 
+        <img src="background.png" alt="Luxury Background" class="w-full h-full object-cover">
     </div>
 
     <!-- Wrapper to handle the global fade entry animation -->
