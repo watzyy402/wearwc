@@ -37,13 +37,16 @@
         }
     </style>
 </head>
-<body class="text-[#cbd5e1] font-sans antialiased selection:bg-emerald-800 selection:text-white relative min-h-screen">
+<body class="text-[#cbd5e1] font-sans antialiased selection:bg-emerald-800 selection:text-white relative min-h-screen bg-[#050806]">
 
-    <!-- FIXED BACKGROUND IMAGE (PULLED LOCALLY FROM REPO) -->
-    <div class="fixed inset-0 z-[-1]">
-        <!-- Dark greenish overlay so text remains readable -->
+    <!-- FIXED BACKGROUND IMAGE (OPTIMIZED FOR 9:16 RATIO) -->
+    <div class="fixed inset-0 z-[-1] overflow-hidden bg-[#050806]">
+        <!-- Ambient Blurred Layer (Fills the side gaps on PC) -->
+        <img src="background.png" alt="" class="absolute inset-0 w-full h-full object-cover blur-3xl opacity-40 scale-110">
+        <!-- Main Asset Layer (Covers on mobile, Contains on PC to prevent extreme zooming) -->
+        <img src="background.png" alt="Luxury Background" class="absolute inset-0 w-full h-full object-cover md:object-contain">
+        <!-- Dark tint overlay for absolute text readability -->
         <div class="absolute inset-0 bg-[#050806]/85 z-10"></div> 
-        <img src="background.png" alt="Luxury Background" class="w-full h-full object-cover">
     </div>
 
     <!-- Wrapper to handle the global fade entry animation -->
@@ -161,6 +164,32 @@
                     </div>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- SOCIALS SECTION -->
+        <section class="py-20 max-w-7xl mx-auto px-6 text-center border-t border-emerald-950/30">
+            <h2 class="font-serif text-2xl text-white font-medium tracking-wide mb-2">Connect With Us</h2>
+            <p class="text-gray-400 text-sm font-light mb-8 max-w-sm mx-auto">Follow our feeds for daily close-up showcases and stock updates.</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <!-- Instagram Link -->
+                <a href="#" target="_blank" class="group w-full sm:w-auto flex items-center justify-center space-x-3 bg-[#0a100c]/40 backdrop-blur-md border border-emerald-950/50 px-8 py-3.5 hover:border-emerald-500/40 transition duration-300">
+                    <svg class="w-4 h-4 text-emerald-500 group-hover:text-emerald-400 transition" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    <span class="text-xs uppercase tracking-[0.2em] text-gray-300 group-hover:text-white transition">Instagram</span>
+                </a>
+
+                <!-- TikTok Link -->
+                <a href="#" target="_blank" class="group w-full sm:w-auto flex items-center justify-center space-x-3 bg-[#0a100c]/40 backdrop-blur-md border border-emerald-950/50 px-8 py-3.5 hover:border-emerald-500/40 transition duration-300">
+                    <svg class="w-4 h-4 text-emerald-500 group-hover:text-emerald-400 transition" fill="currentColor" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31c8.08,0,15.93,.62,23.59,1.8V267c-7.46-1.21-15.14-1.89-23-1.89a85.66,85.66,0,1,0,85.45,85.67V0h78.36a113.62,113.62,0,0,0,10.74,45.31,111.66,111.66,0,0,0,51.86,51.58A114.77,114.77,0,0,0,448,107.61Z"/>
+                    </svg>
+                    <span class="text-xs uppercase tracking-[0.2em] text-gray-300 group-hover:text-white transition">TikTok</span>
+                </a>
             </div>
         </section>
 
