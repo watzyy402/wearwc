@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Rolex | High Quality Timepieces</title>
+    <title>Premium Timepieces | High Quality</title>
     <!-- Tailwind CSS for modern premium styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -30,24 +30,34 @@
             animation: luxuryFadeIn 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* Custom styling for the currency dropdown to make it look premium */
+        /* Custom styling for the currency dropdown */
         select option {
-            background-color: #0a100c;
+            background-color: #050806;
             color: #cbd5e1;
         }
     </style>
 </head>
-<body class="bg-[#050806] text-[#cbd5e1] font-sans antialiased selection:bg-emerald-800 selection:text-white">
+<body class="text-[#cbd5e1] font-sans antialiased selection:bg-emerald-800 selection:text-white relative min-h-screen">
+
+    <!-- FIXED BACKGROUND IMAGE -->
+    <!-- You can change the 'src' link below to your own background image URL -->
+    <div class="fixed inset-0 z-[-1]">
+        <!-- Dark greenish overlay so text remains readable -->
+        <div class="absolute inset-0 bg-[#050806]/85 z-10"></div> 
+        <img src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?q=80&w=2574&auto=format&fit=crop" alt="Luxury Background" class="w-full h-full object-cover">
+    </div>
 
     <!-- Wrapper to handle the global fade entry animation -->
     <div class="animate-fade-entry opacity-0">
 
         <!-- Header / Navigation -->
-        <header class="border-b border-emerald-950/60 bg-[#050806]/90 backdrop-blur sticky top-0 z-50">
+        <header class="border-b border-emerald-950/40 bg-[#050806]/60 backdrop-blur-md sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-                <!-- Logo -->
-                <a href="#" class="font-serif text-2xl tracking-[0.2em] text-white font-bold">
-                    ROLEX<span class="text-emerald-500 font-light">VAULT</span>
+                <!-- Logo (Replaced text with a minimalist icon) -->
+                <a href="#" class="text-emerald-500 hover:text-emerald-400 transition">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
                 </a>
                 
                 <!-- Nav (Streamlined) -->
@@ -58,12 +68,12 @@
                 <!-- Actions & Currency -->
                 <div class="flex items-center space-x-4">
                     <!-- Currency Selector -->
-                    <select id="currencySelector" onchange="updateCurrency()" class="bg-transparent text-emerald-400 border border-emerald-950/60 text-xs uppercase tracking-widest px-3 py-2.5 focus:outline-none focus:border-emerald-500 cursor-pointer transition">
+                    <select id="currencySelector" onchange="updateCurrency()" class="bg-transparent text-emerald-400 border border-emerald-950/60 text-xs uppercase tracking-widest px-3 py-2.5 focus:outline-none focus:border-emerald-500 cursor-pointer transition backdrop-blur-sm">
                         <option value="USD">USD ($)</option>
                         <option value="DZD">DZD (د.ج)</option>
                     </select>
 
-                    <button onclick="openInquiry('General Vault Inquiry')" class="text-xs uppercase tracking-widest border border-emerald-500/30 text-emerald-400 px-5 py-2.5 hover:bg-emerald-500 hover:text-black transition duration-300">
+                    <button onclick="openInquiry('General Vault Inquiry')" class="text-xs uppercase tracking-widest border border-emerald-500/30 text-emerald-400 px-5 py-2.5 hover:bg-emerald-500 hover:text-black transition duration-300 backdrop-blur-sm">
                         Inquire
                     </button>
                 </div>
@@ -71,7 +81,7 @@
         </header>
 
         <!-- Hero Section -->
-        <section class="relative py-28 bg-gradient-to-b from-[#050806] to-[#0a100c] overflow-hidden">
+        <section class="relative py-28 overflow-hidden">
             <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
                 <div>
                     <span class="text-xs font-semibold tracking-[0.2em] text-emerald-500 uppercase block mb-4">Accessible Luxury</span>
@@ -79,16 +89,16 @@
                         High-quality <span class="italic text-emerald-200/90">Rolex</span> timepieces at unbeatable prices.
                     </h1>
                     <p class="text-gray-400 text-base mb-8 max-w-lg leading-relaxed font-light">
-                        Experience the prestige without the premium. We provide exceptionally crafted, high-quality Rolex models built to look and feel exactly like the originals, available at prices that make luxury accessible.
+                        Experience the prestige without the premium. We provide exceptionally crafted, high-quality models built to look and feel exactly like the originals, available at prices that make luxury accessible.
                     </p>
-                    <a href="#collection" class="inline-block bg-emerald-600 text-white font-semibold text-xs uppercase tracking-widest px-8 py-4 hover:bg-emerald-500 transition duration-300 shadow-xl shadow-emerald-950/50">
+                    <a href="#collection" class="inline-block bg-emerald-600/90 backdrop-blur-sm text-white font-semibold text-xs uppercase tracking-widest px-8 py-4 hover:bg-emerald-500 transition duration-300 shadow-xl shadow-emerald-950/50">
                         Enter The Vault
                     </a>
                 </div>
-                <div class="relative bg-[#0b100c] border border-emerald-950/60 p-8 rounded-sm aspect-square flex flex-col justify-center items-center text-center cursor-pointer group transition-all duration-500 hover:border-emerald-800/60" onclick="openInquiry('Rolex Submariner Date')">
+                <div class="relative bg-[#0b100c]/60 backdrop-blur-md border border-emerald-950/60 p-8 rounded-sm aspect-square flex flex-col justify-center items-center text-center cursor-pointer group transition-all duration-500 hover:border-emerald-800/60" onclick="openInquiry('Rolex Submariner Date')">
                     <p class="text-emerald-500 font-serif text-lg italic mb-2">[ Featured Model ]</p>
                     <p class="text-white text-2xl font-light tracking-wide uppercase group-hover:text-emerald-400 transition">Rolex Submariner Date</p>
-                    <p class="text-gray-500 text-xs mt-2 uppercase tracking-widest">Black Dial • Ceramic Bezel</p>
+                    <p class="text-gray-400 text-xs mt-2 uppercase tracking-widest">Black Dial • Ceramic Bezel</p>
                     <span class="text-xs text-emerald-400 mt-6 underline opacity-0 group-hover:opacity-100 transition duration-300">Initiate Inquiry</span>
                 </div>
             </div>
@@ -98,56 +108,55 @@
         <section id="collection" class="py-24 max-w-7xl mx-auto px-6">
             <div class="mb-12">
                 <h2 class="font-serif text-3xl md:text-4xl text-white font-medium tracking-wide">The Vault</h2>
-                <p class="text-gray-500 text-sm mt-2">Premium quality models ready for immediate acquisition.</p>
+                <p class="text-gray-400 text-sm mt-2">Premium quality models ready for immediate acquisition.</p>
             </div>
 
             <!-- Product Grid -->
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 
                 <!-- Watch Item 1 -->
-                <div class="group border border-emerald-950/40 bg-[#0a100c] p-6 hover:border-emerald-800/40 transition duration-300 flex flex-col justify-between">
+                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 transition duration-300 flex flex-col justify-between">
                     <div>
-                        <div class="bg-[#040605] aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/60">
+                        <div class="bg-[#040605]/80 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/40">
                             <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Submariner Image</span>
                         </div>
                         <span class="text-xs text-emerald-500 uppercase tracking-widest font-medium">Rolex</span>
                         <h3 class="text-white text-xl font-medium mt-1 group-hover:text-emerald-400 transition">Submariner "Hulk"</h3>
                         <p class="text-gray-400 font-light text-sm mt-2 leading-relaxed">Stunning green sunburst dial with matching ceramic bezel. Heavyweight stainless steel construction.</p>
                     </div>
-                    <div class="mt-6 pt-4 border-t border-emerald-950/60 flex justify-between items-center">
-                        <!-- Note the data-usd attribute we use for the JS calculator -->
+                    <div class="mt-6 pt-4 border-t border-emerald-950/40 flex justify-between items-center">
                         <span class="price-display text-white font-medium tracking-wide" data-usd="299">$299</span>
                         <button onclick="openInquiry('Rolex Submariner Hulk')" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition">Inquire</button>
                     </div>
                 </div>
 
                 <!-- Watch Item 2 -->
-                <div class="group border border-emerald-950/40 bg-[#0a100c] p-6 hover:border-emerald-800/40 transition duration-300 flex flex-col justify-between">
+                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 transition duration-300 flex flex-col justify-between">
                     <div>
-                        <div class="bg-[#040605] aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/60">
+                        <div class="bg-[#040605]/80 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/40">
                             <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Datejust Image</span>
                         </div>
                         <span class="text-xs text-emerald-500 uppercase tracking-widest font-medium">Rolex</span>
                         <h3 class="text-white text-xl font-medium mt-1 group-hover:text-emerald-400 transition">Datejust 41mm</h3>
                         <p class="text-gray-400 font-light text-sm mt-2 leading-relaxed">Classic fluted bezel with a jubilee bracelet and pristine blue dial. Perfect sweeping movement.</p>
                     </div>
-                    <div class="mt-6 pt-4 border-t border-emerald-950/60 flex justify-between items-center">
+                    <div class="mt-6 pt-4 border-t border-emerald-950/40 flex justify-between items-center">
                         <span class="price-display text-white font-medium tracking-wide" data-usd="249">$249</span>
                         <button onclick="openInquiry('Rolex Datejust 41mm')" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition">Inquire</button>
                     </div>
                 </div>
 
                 <!-- Watch Item 3 -->
-                <div class="group border border-emerald-950/40 bg-[#0a100c] p-6 hover:border-emerald-800/40 transition duration-300 flex flex-col justify-between">
+                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 transition duration-300 flex flex-col justify-between">
                     <div>
-                        <div class="bg-[#040605] aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/60">
+                        <div class="bg-[#040605]/80 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/40">
                             <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Daytona Image</span>
                         </div>
                         <span class="text-xs text-emerald-500 uppercase tracking-widest font-medium">Rolex</span>
                         <h3 class="text-white text-xl font-medium mt-1 group-hover:text-emerald-400 transition">Cosmograph Daytona</h3>
                         <p class="text-gray-400 font-light text-sm mt-2 leading-relaxed">The iconic "Panda" dial configuration. Fully functional chronograph dials and crisp pushers.</p>
                     </div>
-                    <div class="mt-6 pt-4 border-t border-emerald-950/60 flex justify-between items-center">
+                    <div class="mt-6 pt-4 border-t border-emerald-950/40 flex justify-between items-center">
                         <span class="price-display text-white font-medium tracking-wide" data-usd="349">$349</span>
                         <button onclick="openInquiry('Rolex Daytona Panda')" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition">Inquire</button>
                     </div>
@@ -185,8 +194,8 @@
         </div>
 
         <!-- Footer -->
-        <footer class="border-t border-emerald-950/60 py-12 text-center text-xs text-gray-600 tracking-[0.2em] uppercase">
-            <p>&copy; 2026 ROLEX VAULT. High Quality Timepieces.</p>
+        <footer class="border-t border-emerald-950/40 bg-[#050806]/60 backdrop-blur-md py-12 text-center text-xs text-gray-500 tracking-[0.2em] uppercase">
+            <p>&copy; 2026 Premium Timepieces. High Quality Standard.</p>
         </footer>
 
     </div>
@@ -226,7 +235,6 @@
         }
 
         // --- Currency Converter Logic ---
-        // Approximate exchange rate (You can update this number as the real market rate fluctuates)
         const dzdExchangeRate = 134.50; 
 
         function updateCurrency() {
@@ -237,11 +245,9 @@
                 const baseUsdPrice = parseFloat(el.getAttribute('data-usd'));
                 
                 if (currency === 'DZD') {
-                    // Multiply USD by the exchange rate and format with commas
                     const dzdPrice = Math.round(baseUsdPrice * dzdExchangeRate);
                     el.textContent = dzdPrice.toLocaleString() + ' DZD';
                 } else {
-                    // Revert back to USD
                     el.textContent = '$' + baseUsdPrice.toLocaleString();
                 }
             });
