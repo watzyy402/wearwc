@@ -14,16 +14,8 @@
 
         /* Custom smooth cinematic fade-in entry */
         @keyframes luxuryFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-                filter: blur(4px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-                filter: blur(0);
-            }
+            from { opacity: 0; transform: translateY(8px); filter: blur(4px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
 
         .animate-fade-entry {
@@ -47,10 +39,60 @@
             animation: diamondShimmer 4s linear infinite;
         }
 
+        /* 
+         * ==========================================
+         * DYNAMIC THEME SHIFT LOGIC
+         * ==========================================
+         */
+        
+        /* Enable smooth fading on all color properties */
+        body, div, header, section, a, button, span, p, h1, h2, h3, input, textarea, select, svg, path {
+            transition: background-color 0.8s ease, border-color 0.8s ease, color 0.8s ease, fill 0.8s ease, box-shadow 0.8s ease;
+        }
+
+        /* Override Emerald colors with Icy Slate/Diamond when cartier-mode is active */
+        .cartier-mode .bg-\[\#050806\]\/85 { background-color: rgba(7, 12, 16, 0.9) !important; }
+        .cartier-mode .bg-\[\#050806\]\/60 { background-color: rgba(7, 12, 16, 0.7) !important; }
+        
+        .cartier-mode .text-emerald-500 { color: #94a3b8 !important; } /* Slate 400 */
+        .cartier-mode .text-emerald-400 { color: #e2e8f0 !important; } /* Slate 200 */
+        .cartier-mode .text-emerald-200\/90 { color: #f8fafc !important; } /* Slate 50 */
+        .cartier-mode .text-emerald-900 { color: #475569 !important; } /* Slate 600 */
+        
+        .cartier-mode .border-emerald-950\/40 { border-color: rgba(51, 65, 85, 0.4) !important; }
+        .cartier-mode .border-emerald-950\/60 { border-color: rgba(51, 65, 85, 0.6) !important; }
+        .cartier-mode .border-emerald-950\/80 { border-color: rgba(51, 65, 85, 0.8) !important; }
+        .cartier-mode .border-emerald-950\/30 { border-color: rgba(51, 65, 85, 0.3) !important; }
+        .cartier-mode .border-emerald-950\/50 { border-color: rgba(51, 65, 85, 0.5) !important; }
+        .cartier-mode .border-emerald-950 { border-color: rgba(51, 65, 85, 1) !important; }
+        .cartier-mode .border-emerald-500\/20 { border-color: rgba(148, 163, 184, 0.2) !important; }
+        .cartier-mode .border-emerald-500\/30 { border-color: rgba(148, 163, 184, 0.3) !important; }
+        
+        .cartier-mode .bg-emerald-600\/90 { background-color: rgba(71, 85, 105, 0.9) !important; color: #fff !important; }
+        .cartier-mode .bg-emerald-600 { background-color: #475569 !important; color: #fff !important; }
+        
+        .cartier-mode .hover\:bg-emerald-500:hover { background-color: #cbd5e1 !important; color: #000 !important; }
+        .cartier-mode .hover\:border-emerald-800\/60:hover { border-color: rgba(148, 163, 184, 0.6) !important; }
+        .cartier-mode .hover\:border-emerald-500\/40:hover { border-color: rgba(148, 163, 184, 0.4) !important; }
+        
+        /* Dark Panel Overrides */
+        .cartier-mode .bg-\[\#0b100c\]\/60 { background-color: rgba(15, 23, 30, 0.6) !important; }
+        .cartier-mode .bg-\[\#0a100c\]\/60 { background-color: rgba(15, 23, 30, 0.6) !important; }
+        .cartier-mode .bg-\[\#0a100c\]\/40 { background-color: rgba(15, 23, 30, 0.4) !important; }
+        .cartier-mode .bg-\[\#0a100c\] { background-color: #0f171e !important; }
+        .cartier-mode .bg-\[\#040605\]\/80 { background-color: rgba(5, 8, 12, 0.8) !important; }
+        .cartier-mode .bg-\[\#040605\] { background-color: #05080c !important; }
+        
+        /* Highlight Selection */
+        .cartier-mode *::selection { background-color: #475569 !important; color: #fff !important; }
+
         /* Custom styling for the currency dropdown */
         select option {
             background-color: #050806;
             color: #cbd5e1;
+        }
+        .cartier-mode select option {
+            background-color: #0f171e !important;
         }
     </style>
 </head>
@@ -78,7 +120,7 @@
                 <!-- Nav -->
                 <nav class="hidden md:flex space-x-8 text-xs uppercase tracking-[0.15em] font-medium text-gray-400">
                     <a href="#collection" class="text-white hover:text-emerald-400 transition">The Vault</a>
-                    <a href="#diamond-reserve" class="text-slate-300 hover:text-white transition">Diamond Reserve</a>
+                    <a href="#diamond-reserve" class="text-gray-400 hover:text-white transition">Diamond Reserve</a>
                 </nav>
                 
                 <!-- Actions & Currency -->
@@ -110,7 +152,7 @@
                         Enter The Vault
                     </a>
                 </div>
-                <div class="relative bg-[#0b100c]/60 backdrop-blur-md border border-emerald-950/60 p-8 rounded-sm aspect-square flex flex-col justify-center items-center text-center cursor-pointer group transition-all duration-500 hover:border-emerald-800/60" onclick="openInquiry('Rolex Submariner Date')">
+                <div class="relative bg-[#0b100c]/60 backdrop-blur-md border border-emerald-950/60 p-8 rounded-sm aspect-square flex flex-col justify-center items-center text-center cursor-pointer group transition hover:border-emerald-800/60" onclick="openInquiry('Rolex Submariner Date')">
                     <p class="text-emerald-500 font-serif text-lg italic mb-2">[ Featured Model ]</p>
                     <p class="text-white text-2xl font-light tracking-wide uppercase group-hover:text-emerald-400 transition">Rolex Submariner Date</p>
                     <p class="text-gray-400 text-xs mt-2 uppercase tracking-widest">Black Dial • Ceramic Bezel</p>
@@ -179,64 +221,64 @@
         </section>
 
         <!-- CARTIER DIAMOND SECTION -->
-        <section id="diamond-reserve" class="py-24 max-w-7xl mx-auto px-6 relative border-t border-slate-800/40 bg-gradient-to-b from-transparent to-[#0a1215]/40">
+        <section id="diamond-reserve" class="py-24 max-w-7xl mx-auto px-6 relative border-t border-emerald-950/40 bg-gradient-to-b from-transparent to-black/10">
             <div class="mb-12">
-                <span class="text-xs font-semibold tracking-[0.2em] text-slate-400 uppercase block mb-2">Exquisite Setting</span>
+                <span class="text-xs font-semibold tracking-[0.2em] text-emerald-500 uppercase block mb-2 transition-colors duration-700">Exquisite Setting</span>
                 <h2 class="font-serif text-3xl md:text-4xl font-medium tracking-wide text-diamond">The Diamond Reserve</h2>
-                <p class="text-slate-400 text-sm mt-2 font-light">Breathtaking Cartier models meticulously handset with brilliant simulated stones.</p>
+                <p class="text-gray-400 text-sm mt-2 font-light">Breathtaking Cartier models meticulously handset with brilliant simulated stones.</p>
             </div>
 
             <!-- Product Grid -->
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 
                 <!-- Diamond Item 1 -->
-                <div class="group border border-slate-700/40 bg-[#070a0e]/60 backdrop-blur-md p-6 hover:border-slate-400/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition duration-500 flex flex-col justify-between relative overflow-hidden">
+                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] transition duration-500 flex flex-col justify-between relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none"></div>
                     <div class="relative z-10">
-                        <div class="bg-slate-900/50 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-slate-700/30">
-                            <span class="text-slate-600 text-xs tracking-widest uppercase font-light">Santos Iced Image</span>
+                        <div class="bg-[#040605]/80 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/40">
+                            <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Santos Iced Image</span>
                         </div>
-                        <span class="text-xs text-slate-300 uppercase tracking-widest font-medium">Cartier</span>
+                        <span class="text-xs text-emerald-500 uppercase tracking-widest font-medium">Cartier</span>
                         <h3 class="text-white text-xl font-medium mt-1 group-hover:text-diamond transition">Santos de Cartier Iced</h3>
-                        <p class="text-slate-400 font-light text-sm mt-2 leading-relaxed">Fully handset case and bracelet. A bold statement piece that commands attention under any light.</p>
+                        <p class="text-gray-400 font-light text-sm mt-2 leading-relaxed">Fully handset case and bracelet. A bold statement piece that commands attention under any light.</p>
                     </div>
-                    <div class="mt-6 pt-4 border-t border-slate-800/60 flex justify-between items-center relative z-10">
+                    <div class="mt-6 pt-4 border-t border-emerald-950/40 flex justify-between items-center relative z-10">
                         <span class="price-display text-white font-medium tracking-wide" data-usd="450">$450</span>
-                        <button onclick="openInquiry('Cartier Santos Iced')" class="text-xs uppercase tracking-wider text-slate-200 border border-slate-400/30 px-4 py-2 hover:bg-slate-200 hover:text-black transition">Inquire</button>
+                        <button onclick="openInquiry('Cartier Santos Iced')" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition">Inquire</button>
                     </div>
                 </div>
 
                 <!-- Diamond Item 2 -->
-                <div class="group border border-slate-700/40 bg-[#070a0e]/60 backdrop-blur-md p-6 hover:border-slate-400/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition duration-500 flex flex-col justify-between relative overflow-hidden">
+                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] transition duration-500 flex flex-col justify-between relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none"></div>
                     <div class="relative z-10">
-                        <div class="bg-slate-900/50 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-slate-700/30">
-                            <span class="text-slate-600 text-xs tracking-widest uppercase font-light">Ballon Bleu Image</span>
+                        <div class="bg-[#040605]/80 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/40">
+                            <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Ballon Bleu Image</span>
                         </div>
-                        <span class="text-xs text-slate-300 uppercase tracking-widest font-medium">Cartier</span>
+                        <span class="text-xs text-emerald-500 uppercase tracking-widest font-medium">Cartier</span>
                         <h3 class="text-white text-xl font-medium mt-1 group-hover:text-diamond transition">Ballon Bleu VVS</h3>
-                        <p class="text-slate-400 font-light text-sm mt-2 leading-relaxed">Elegant curves encrusted with premium stones. Features the signature sapphire cabochon crown.</p>
+                        <p class="text-gray-400 font-light text-sm mt-2 leading-relaxed">Elegant curves encrusted with premium stones. Features the signature sapphire cabochon crown.</p>
                     </div>
-                    <div class="mt-6 pt-4 border-t border-slate-800/60 flex justify-between items-center relative z-10">
+                    <div class="mt-6 pt-4 border-t border-emerald-950/40 flex justify-between items-center relative z-10">
                         <span class="price-display text-white font-medium tracking-wide" data-usd="399">$399</span>
-                        <button onclick="openInquiry('Cartier Ballon Bleu VVS')" class="text-xs uppercase tracking-wider text-slate-200 border border-slate-400/30 px-4 py-2 hover:bg-slate-200 hover:text-black transition">Inquire</button>
+                        <button onclick="openInquiry('Cartier Ballon Bleu VVS')" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition">Inquire</button>
                     </div>
                 </div>
 
                 <!-- Diamond Item 3 -->
-                <div class="group border border-slate-700/40 bg-[#070a0e]/60 backdrop-blur-md p-6 hover:border-slate-400/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition duration-500 flex flex-col justify-between relative overflow-hidden">
+                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] transition duration-500 flex flex-col justify-between relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none"></div>
                     <div class="relative z-10">
-                        <div class="bg-slate-900/50 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-slate-700/30">
-                            <span class="text-slate-600 text-xs tracking-widest uppercase font-light">Panthère Image</span>
+                        <div class="bg-[#040605]/80 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/40">
+                            <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Panthère Image</span>
                         </div>
-                        <span class="text-xs text-slate-300 uppercase tracking-widest font-medium">Cartier</span>
+                        <span class="text-xs text-emerald-500 uppercase tracking-widest font-medium">Cartier</span>
                         <h3 class="text-white text-xl font-medium mt-1 group-hover:text-diamond transition">Panthère Diamond</h3>
-                        <p class="text-slate-400 font-light text-sm mt-2 leading-relaxed">A jewelry watch par excellence. Delicate link bracelet completely wrapped in a brilliant glow.</p>
+                        <p class="text-gray-400 font-light text-sm mt-2 leading-relaxed">A jewelry watch par excellence. Delicate link bracelet completely wrapped in a brilliant glow.</p>
                     </div>
-                    <div class="mt-6 pt-4 border-t border-slate-800/60 flex justify-between items-center relative z-10">
+                    <div class="mt-6 pt-4 border-t border-emerald-950/40 flex justify-between items-center relative z-10">
                         <span class="price-display text-white font-medium tracking-wide" data-usd="420">$420</span>
-                        <button onclick="openInquiry('Cartier Panthere Diamond')" class="text-xs uppercase tracking-wider text-slate-200 border border-slate-400/30 px-4 py-2 hover:bg-slate-200 hover:text-black transition">Inquire</button>
+                        <button onclick="openInquiry('Cartier Panthere Diamond')" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition">Inquire</button>
                     </div>
                 </div>
             </div>
@@ -277,15 +319,15 @@
                 <form id="inquiryForm" class="space-y-4" onsubmit="handleFormSubmit(event)">
                     <div>
                         <label class="block text-xs uppercase tracking-[0.15em] text-gray-400 mb-1 font-medium">Your Name</label>
-                        <input type="text" required class="w-full bg-[#040605] border border-emerald-950/80 p-3 text-white focus:outline-none focus:border-emerald-500 text-sm font-light">
+                        <input type="text" required class="w-full bg-[#040605] border border-emerald-950/80 p-3 text-white focus:outline-none focus:border-emerald-500 text-sm font-light transition-colors duration-700">
                     </div>
                     <div>
                         <label class="block text-xs uppercase tracking-[0.15em] text-gray-400 mb-1 font-medium">Email / WhatsApp Number</label>
-                        <input type="text" required class="w-full bg-[#040605] border border-emerald-950/80 p-3 text-white focus:outline-none focus:border-emerald-500 text-sm font-light">
+                        <input type="text" required class="w-full bg-[#040605] border border-emerald-950/80 p-3 text-white focus:outline-none focus:border-emerald-500 text-sm font-light transition-colors duration-700">
                     </div>
                     <div>
                         <label class="block text-xs uppercase tracking-[0.15em] text-gray-400 mb-1 font-medium">Shipping Details / Questions</label>
-                        <textarea rows="3" class="w-full bg-[#040605] border border-emerald-950/80 p-3 text-white focus:outline-none focus:border-emerald-500 text-sm font-light" placeholder="Let us know where to ship or ask us about the watch..."></textarea>
+                        <textarea rows="3" class="w-full bg-[#040605] border border-emerald-950/80 p-3 text-white focus:outline-none focus:border-emerald-500 text-sm font-light transition-colors duration-700" placeholder="Let us know where to ship or ask us about the watch..."></textarea>
                     </div>
                     <button type="submit" class="w-full bg-emerald-600 text-white font-semibold text-xs uppercase tracking-widest py-3.5 hover:bg-emerald-500 transition duration-300 mt-2">
                         Send Request
@@ -303,6 +345,21 @@
 
     <!-- Interactive Logic Script -->
     <script>
+        // --- Dynamic Theme Scroll Logic ---
+        window.addEventListener('scroll', () => {
+            const diamondSection = document.getElementById('diamond-reserve');
+            // Get the bounding rectangle of the Cartier section
+            const rect = diamondSection.getBoundingClientRect();
+            
+            // If the top of the Cartier section is within the top 65% of the viewport height,
+            // we assume the user has scrolled down far enough to trigger the Cartier theme.
+            if (rect.top <= window.innerHeight * 0.65) {
+                document.body.classList.add('cartier-mode');
+            } else {
+                document.body.classList.remove('cartier-mode');
+            }
+        });
+
         // --- Modal Logic ---
         const modal = document.getElementById('inquiryModal');
         const modalWatchName = document.getElementById('modalWatchName');
