@@ -12,6 +12,10 @@
         .font-serif { font-family: 'Cormorant Garamond', serif; }
         .font-sans { font-family: 'Inter', sans-serif; }
 
+        /* Hide scrollbar for premium sliders */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
         /* Custom smooth cinematic fade-in entry */
         @keyframes luxuryFadeIn {
             from { opacity: 0; transform: translateY(8px); filter: blur(4px); }
@@ -45,7 +49,6 @@
          * ==========================================
          */
         
-        /* Deep, slow easing for maximum luxury feel */
         body, div, header, section, a, button, span, p, h1, h2, h3, input, textarea, select, svg, path {
             transition: background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1), 
                         border-color 1.2s cubic-bezier(0.4, 0, 0.2, 1), 
@@ -67,10 +70,10 @@
         .cartier-mode .bg-\[\#050806\]\/85 { background-color: rgba(7, 12, 16, 0.9) !important; }
         .cartier-mode .bg-\[\#050806\]\/60 { background-color: rgba(7, 12, 16, 0.7) !important; }
         
-        .cartier-mode .text-emerald-500 { color: #94a3b8 !important; } /* Slate 400 */
-        .cartier-mode .text-emerald-400 { color: #e2e8f0 !important; } /* Slate 200 */
-        .cartier-mode .text-emerald-200\/90 { color: #f8fafc !important; } /* Slate 50 */
-        .cartier-mode .text-emerald-900 { color: #475569 !important; } /* Slate 600 */
+        .cartier-mode .text-emerald-500 { color: #94a3b8 !important; } 
+        .cartier-mode .text-emerald-400 { color: #e2e8f0 !important; } 
+        .cartier-mode .text-emerald-200\/90 { color: #f8fafc !important; } 
+        .cartier-mode .text-emerald-900 { color: #475569 !important; } 
         
         .cartier-mode .border-emerald-950\/40 { border-color: rgba(51, 65, 85, 0.4) !important; }
         .cartier-mode .border-emerald-950\/60 { border-color: rgba(51, 65, 85, 0.6) !important; }
@@ -96,10 +99,8 @@
         .cartier-mode .bg-\[\#040605\]\/80 { background-color: rgba(5, 8, 12, 0.8) !important; }
         .cartier-mode .bg-\[\#040605\] { background-color: #05080c !important; }
         
-        /* Highlight Selection */
         .cartier-mode *::selection { background-color: #475569 !important; color: #fff !important; }
 
-        /* Custom styling for the currency dropdown */
         select option { background-color: #050806; color: #cbd5e1; }
         .cartier-mode select option { background-color: #0f171e !important; }
     </style>
@@ -109,7 +110,6 @@
     <!-- FIXED BACKGROUND IMAGE -->
     <div class="fixed inset-0 z-[-1]">
         <div class="absolute inset-0 bg-[#050806]/85 z-10"></div> 
-        <!-- Ambient Diamond Glow -->
         <div id="cartier-glow" class="absolute inset-0 z-20"></div>
         <img src="background.png" alt="Luxury Background" class="w-full h-full object-cover">
     </div>
@@ -162,7 +162,7 @@
                         Enter The Vault
                     </a>
                 </div>
-                <div class="relative bg-[#0b100c]/60 backdrop-blur-md border border-emerald-950/60 p-8 rounded-sm aspect-square flex flex-col justify-center items-center text-center cursor-pointer group transition hover:border-emerald-800/60" onclick="openInquiry('Rolex Submariner Date')">
+                <div class="relative bg-[#0b100c]/60 backdrop-blur-md border border-emerald-950/60 p-8 rounded-sm aspect-square flex flex-col justify-center items-center text-center cursor-pointer group transition hover:border-emerald-800/60" onclick="window.open('https://your-payment-link.com/checkout', '_blank')">
                     <p class="text-emerald-500 font-serif text-lg italic mb-2">[ Featured Model ]</p>
                     <p class="text-white text-2xl font-light tracking-wide uppercase group-hover:text-emerald-400 transition">Rolex Submariner Date</p>
                     <p class="text-gray-400 text-xs mt-2 uppercase tracking-widest">Black Dial • Ceramic Bezel</p>
@@ -172,15 +172,20 @@
         </section>
 
         <!-- Curated Vault / Products (ROLEX) -->
-        <section id="collection" class="py-24 max-w-7xl mx-auto px-6">
-            <div class="mb-12">
-                <h2 class="font-serif text-3xl md:text-4xl text-white font-medium tracking-wide">The Vault</h2>
-                <p class="text-gray-400 text-sm mt-2">Premium quality models ready for immediate acquisition.</p>
+        <section id="collection" class="py-24 max-w-7xl mx-auto px-6 overflow-hidden">
+            <div class="mb-12 flex justify-between items-end">
+                <div>
+                    <h2 class="font-serif text-3xl md:text-4xl text-white font-medium tracking-wide">The Vault</h2>
+                    <p class="text-gray-400 text-sm mt-2">Premium quality models ready for immediate acquisition.</p>
+                </div>
+                <span class="hidden md:block text-xs uppercase tracking-[0.2em] text-emerald-500 font-medium">Swipe to explore &rarr;</span>
             </div>
 
-            <!-- Product Grid -->
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 transition flex flex-col justify-between">
+            <!-- Horizontal Slider Grid -->
+            <div class="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 hide-scrollbar pr-6">
+                
+                <!-- Model 1 -->
+                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 transition flex flex-col justify-between min-w-[85vw] sm:min-w-[340px] snap-start">
                     <div>
                         <div class="bg-[#040605]/80 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/40">
                             <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Submariner Image</span>
@@ -191,11 +196,12 @@
                     </div>
                     <div class="mt-6 pt-4 border-t border-emerald-950/40 flex justify-between items-center">
                         <span class="price-display text-white font-medium tracking-wide" data-usd="299">$299</span>
-                        <button onclick="openInquiry('Rolex Submariner Hulk')" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition">WEAR</button>
+                        <a href="https://your-payment-provider.com/checkout" target="_blank" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition inline-block">WEAR</a>
                     </div>
                 </div>
 
-                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 transition flex flex-col justify-between">
+                <!-- Model 2 -->
+                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 transition flex flex-col justify-between min-w-[85vw] sm:min-w-[340px] snap-start">
                     <div>
                         <div class="bg-[#040605]/80 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/40">
                             <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Datejust Image</span>
@@ -206,11 +212,12 @@
                     </div>
                     <div class="mt-6 pt-4 border-t border-emerald-950/40 flex justify-between items-center">
                         <span class="price-display text-white font-medium tracking-wide" data-usd="249">$249</span>
-                        <button onclick="openInquiry('Rolex Datejust 41mm')" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition">WEAR</button>
+                        <a href="https://your-payment-provider.com/checkout" target="_blank" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition inline-block">WEAR</a>
                     </div>
                 </div>
 
-                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 transition flex flex-col justify-between">
+                <!-- Model 3 -->
+                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 transition flex flex-col justify-between min-w-[85vw] sm:min-w-[340px] snap-start">
                     <div>
                         <div class="bg-[#040605]/80 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/40">
                             <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Daytona Image</span>
@@ -221,23 +228,77 @@
                     </div>
                     <div class="mt-6 pt-4 border-t border-emerald-950/40 flex justify-between items-center">
                         <span class="price-display text-white font-medium tracking-wide" data-usd="349">$349</span>
-                        <button onclick="openInquiry('Rolex Daytona Panda')" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition">WEAR</button>
+                        <a href="https://your-payment-provider.com/checkout" target="_blank" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition inline-block">WEAR</a>
                     </div>
                 </div>
+
+                <!-- Model 4 (NEW) -->
+                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 transition flex flex-col justify-between min-w-[85vw] sm:min-w-[340px] snap-start">
+                    <div>
+                        <div class="bg-[#040605]/80 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/40">
+                            <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">GMT Pepsi Image</span>
+                        </div>
+                        <span class="text-xs text-emerald-500 uppercase tracking-widest font-medium">Rolex</span>
+                        <h3 class="text-white text-xl font-medium mt-1 group-hover:text-emerald-400 transition">GMT-Master II "Pepsi"</h3>
+                        <p class="text-gray-400 font-light text-sm mt-2 leading-relaxed">Iconic red and blue ceramic bezel with a dedicated GMT hand. The ultimate traveler's companion.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-emerald-950/40 flex justify-between items-center">
+                        <span class="price-display text-white font-medium tracking-wide" data-usd="329">$329</span>
+                        <a href="https://your-payment-provider.com/checkout" target="_blank" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition inline-block">WEAR</a>
+                    </div>
+                </div>
+
+                <!-- Model 5 (NEW) -->
+                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 transition flex flex-col justify-between min-w-[85vw] sm:min-w-[340px] snap-start">
+                    <div>
+                        <div class="bg-[#040605]/80 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/40">
+                            <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Day-Date Image</span>
+                        </div>
+                        <span class="text-xs text-emerald-500 uppercase tracking-widest font-medium">Rolex</span>
+                        <h3 class="text-white text-xl font-medium mt-1 group-hover:text-emerald-400 transition">Day-Date 40</h3>
+                        <p class="text-gray-400 font-light text-sm mt-2 leading-relaxed">The "President". Fluted bezel with full day display at 12 o'clock, finished in a flawless gold tone.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-emerald-950/40 flex justify-between items-center">
+                        <span class="price-display text-white font-medium tracking-wide" data-usd="369">$369</span>
+                        <a href="https://your-payment-provider.com/checkout" target="_blank" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition inline-block">WEAR</a>
+                    </div>
+                </div>
+
+                <!-- Model 6 (NEW) -->
+                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 transition flex flex-col justify-between min-w-[85vw] sm:min-w-[340px] snap-start">
+                    <div>
+                        <div class="bg-[#040605]/80 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/40">
+                            <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Yacht-Master Image</span>
+                        </div>
+                        <span class="text-xs text-emerald-500 uppercase tracking-widest font-medium">Rolex</span>
+                        <h3 class="text-white text-xl font-medium mt-1 group-hover:text-emerald-400 transition">Yacht-Master 42</h3>
+                        <p class="text-gray-400 font-light text-sm mt-2 leading-relaxed">Matte black dial with a matching black ceramic bezel, secured on a premium oysterflex-style strap.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-emerald-950/40 flex justify-between items-center">
+                        <span class="price-display text-white font-medium tracking-wide" data-usd="319">$319</span>
+                        <a href="https://your-payment-provider.com/checkout" target="_blank" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition inline-block">WEAR</a>
+                    </div>
+                </div>
+
             </div>
         </section>
 
         <!-- CARTIER DIAMOND SECTION -->
-        <section id="diamond-reserve" class="py-24 max-w-7xl mx-auto px-6 relative border-t border-emerald-950/40 bg-gradient-to-b from-transparent to-black/10">
-            <div class="mb-12">
-                <span class="text-xs font-semibold tracking-[0.2em] text-emerald-500 uppercase block mb-2 transition-colors">Exquisite Setting</span>
-                <h2 class="font-serif text-3xl md:text-4xl font-medium tracking-wide text-diamond">The Diamond Reserve</h2>
-                <p class="text-gray-400 text-sm mt-2 font-light">Breathtaking Cartier models meticulously handset with brilliant simulated stones.</p>
+        <section id="diamond-reserve" class="py-24 max-w-7xl mx-auto px-6 relative border-t border-emerald-950/40 bg-gradient-to-b from-transparent to-black/10 overflow-hidden">
+            <div class="mb-12 flex justify-between items-end">
+                <div>
+                    <span class="text-xs font-semibold tracking-[0.2em] text-emerald-500 uppercase block mb-2 transition-colors">Exquisite Setting</span>
+                    <h2 class="font-serif text-3xl md:text-4xl font-medium tracking-wide text-diamond">The Diamond Reserve</h2>
+                    <p class="text-gray-400 text-sm mt-2 font-light">Breathtaking Cartier models meticulously handset with brilliant simulated stones.</p>
+                </div>
+                <span class="hidden md:block text-xs uppercase tracking-[0.2em] text-emerald-500 font-medium">Swipe to explore &rarr;</span>
             </div>
 
-            <!-- Product Grid -->
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] transition flex flex-col justify-between relative overflow-hidden">
+            <!-- Horizontal Slider Grid -->
+            <div class="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 hide-scrollbar pr-6">
+                
+                <!-- Model 1 -->
+                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] transition flex flex-col justify-between relative overflow-hidden min-w-[85vw] sm:min-w-[340px] snap-start">
                     <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition pointer-events-none"></div>
                     <div class="relative z-10">
                         <div class="bg-[#040605]/80 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/40">
@@ -249,11 +310,12 @@
                     </div>
                     <div class="mt-6 pt-4 border-t border-emerald-950/40 flex justify-between items-center relative z-10">
                         <span class="price-display text-white font-medium tracking-wide" data-usd="450">$450</span>
-                        <button onclick="openInquiry('Cartier Santos Iced')" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition">WEAR</button>
+                        <a href="https://your-payment-provider.com/checkout" target="_blank" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition inline-block">WEAR</a>
                     </div>
                 </div>
 
-                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] transition flex flex-col justify-between relative overflow-hidden">
+                <!-- Model 2 -->
+                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] transition flex flex-col justify-between relative overflow-hidden min-w-[85vw] sm:min-w-[340px] snap-start">
                     <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition pointer-events-none"></div>
                     <div class="relative z-10">
                         <div class="bg-[#040605]/80 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/40">
@@ -265,11 +327,12 @@
                     </div>
                     <div class="mt-6 pt-4 border-t border-emerald-950/40 flex justify-between items-center relative z-10">
                         <span class="price-display text-white font-medium tracking-wide" data-usd="399">$399</span>
-                        <button onclick="openInquiry('Cartier Ballon Bleu VVS')" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition">WEAR</button>
+                        <a href="https://your-payment-provider.com/checkout" target="_blank" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition inline-block">WEAR</a>
                     </div>
                 </div>
 
-                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] transition flex flex-col justify-between relative overflow-hidden">
+                <!-- Model 3 -->
+                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] transition flex flex-col justify-between relative overflow-hidden min-w-[85vw] sm:min-w-[340px] snap-start">
                     <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition pointer-events-none"></div>
                     <div class="relative z-10">
                         <div class="bg-[#040605]/80 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/40">
@@ -281,9 +344,61 @@
                     </div>
                     <div class="mt-6 pt-4 border-t border-emerald-950/40 flex justify-between items-center relative z-10">
                         <span class="price-display text-white font-medium tracking-wide" data-usd="420">$420</span>
-                        <button onclick="openInquiry('Cartier Panthere Diamond')" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition">WEAR</button>
+                        <a href="https://your-payment-provider.com/checkout" target="_blank" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition inline-block">WEAR</a>
                     </div>
                 </div>
+
+                <!-- Model 4 (NEW) -->
+                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] transition flex flex-col justify-between relative overflow-hidden min-w-[85vw] sm:min-w-[340px] snap-start">
+                    <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition pointer-events-none"></div>
+                    <div class="relative z-10">
+                        <div class="bg-[#040605]/80 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/40">
+                            <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Tank Must Image</span>
+                        </div>
+                        <span class="text-xs text-emerald-500 uppercase tracking-widest font-medium">Cartier</span>
+                        <h3 class="text-white text-xl font-medium mt-1 group-hover:text-diamond transition">Tank Must Iced</h3>
+                        <p class="text-gray-400 font-light text-sm mt-2 leading-relaxed">The classic rectangular profile, completely reimagined with flawless pavé setting.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-emerald-950/40 flex justify-between items-center relative z-10">
+                        <span class="price-display text-white font-medium tracking-wide" data-usd="380">$380</span>
+                        <a href="https://your-payment-provider.com/checkout" target="_blank" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition inline-block">WEAR</a>
+                    </div>
+                </div>
+
+                <!-- Model 5 (NEW) -->
+                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] transition flex flex-col justify-between relative overflow-hidden min-w-[85vw] sm:min-w-[340px] snap-start">
+                    <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition pointer-events-none"></div>
+                    <div class="relative z-10">
+                        <div class="bg-[#040605]/80 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/40">
+                            <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Crash Skeleton Image</span>
+                        </div>
+                        <span class="text-xs text-emerald-500 uppercase tracking-widest font-medium">Cartier</span>
+                        <h3 class="text-white text-xl font-medium mt-1 group-hover:text-diamond transition">Crash Skeleton Premium</h3>
+                        <p class="text-gray-400 font-light text-sm mt-2 leading-relaxed">The avant-garde asymmetrical masterpiece, fully iced out with exposed mechanical detailing.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-emerald-950/40 flex justify-between items-center relative z-10">
+                        <span class="price-display text-white font-medium tracking-wide" data-usd="490">$490</span>
+                        <a href="https://your-payment-provider.com/checkout" target="_blank" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition inline-block">WEAR</a>
+                    </div>
+                </div>
+
+                <!-- Model 6 (NEW) -->
+                <div class="group border border-emerald-950/40 bg-[#0a100c]/60 backdrop-blur-md p-6 hover:border-emerald-800/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] transition flex flex-col justify-between relative overflow-hidden min-w-[85vw] sm:min-w-[340px] snap-start">
+                    <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition pointer-events-none"></div>
+                    <div class="relative z-10">
+                        <div class="bg-[#040605]/80 aspect-[4/3] w-full mb-6 flex items-center justify-center border border-emerald-950/40">
+                            <span class="text-emerald-900 text-xs tracking-widest uppercase font-light">Pasha Iced Image</span>
+                        </div>
+                        <span class="text-xs text-emerald-500 uppercase tracking-widest font-medium">Cartier</span>
+                        <h3 class="text-white text-xl font-medium mt-1 group-hover:text-diamond transition">Pasha de Cartier Iced</h3>
+                        <p class="text-gray-400 font-light text-sm mt-2 leading-relaxed">Round case with the signature chained crown cap, brilliantly wrapped in premium simulated stones.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-emerald-950/40 flex justify-between items-center relative z-10">
+                        <span class="price-display text-white font-medium tracking-wide" data-usd="410">$410</span>
+                        <a href="https://your-payment-provider.com/checkout" target="_blank" class="text-xs uppercase tracking-wider text-emerald-400 border border-emerald-500/20 px-4 py-2 hover:bg-emerald-500 hover:text-black transition inline-block">WEAR</a>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -319,21 +434,18 @@
     </div>
 
     <!-- UI CHAT WIDGET -->
-    <!-- Floating Chat Button -->
     <button onclick="toggleChat()" class="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white p-4 rounded-sm shadow-lg shadow-emerald-900/50 hover:bg-emerald-500 transition border border-emerald-950/40">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
         </svg>
     </button>
 
-    <!-- Hidden Chat Panel -->
     <div id="chatPanel" class="fixed bottom-24 right-6 z-50 w-80 bg-[#0a100c]/95 backdrop-blur-md border border-emerald-950/80 shadow-2xl transition-all duration-300 transform translate-y-4 opacity-0 pointer-events-none flex flex-col hidden rounded-sm">
         <div class="bg-[#050806] border-b border-emerald-950/60 p-4 flex justify-between items-center rounded-t-sm">
             <h3 class="text-white font-serif text-lg tracking-wide">Client Concierge</h3>
             <button onclick="toggleChat()" class="text-gray-500 hover:text-white transition text-xl">&times;</button>
         </div>
         <div id="chatMessages" class="p-4 h-64 overflow-y-auto space-y-4">
-            <!-- Default Concierge Message -->
             <div class="bg-[#040605] border border-emerald-950/40 p-3 rounded-sm shadow-sm">
                 <p class="text-xs text-emerald-500 uppercase tracking-widest mb-1 font-medium">Concierge</p>
                 <p class="text-sm text-gray-300 font-light leading-relaxed">Welcome to the vault. How can we assist you with your timepiece selection today?</p>
@@ -347,7 +459,7 @@
         </div>
     </div>
 
-    <!-- INQUIRY MODAL -->
+    <!-- INQUIRY MODAL (Kept active just in case for Header button) -->
     <div id="inquiryModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
         <div class="bg-[#0a100c] border border-emerald-950 p-8 max-w-md w-full mx-4 relative">
             <button onclick="closeInquiry()" class="absolute top-4 right-4 text-gray-500 hover:text-white text-xl">&times;</button>
@@ -382,7 +494,6 @@
             const diamondSection = document.getElementById('diamond-reserve');
             const rect = diamondSection.getBoundingClientRect();
             
-            // Trigger exactly when the section enters the bottom of the viewport
             if (rect.top <= window.innerHeight) {
                 document.body.classList.add('cartier-mode');
             } else {
@@ -390,7 +501,7 @@
             }
         });
 
-        // --- Modal Logic ---
+        // --- Modal Logic (Kept for Header General Inquiry) ---
         const modal = document.getElementById('inquiryModal');
         const modalWatchName = document.getElementById('modalWatchName');
 
@@ -464,7 +575,6 @@
             if (message !== '') {
                 const chatMessages = document.getElementById('chatMessages');
                 
-                // Create user message element
                 const userMsgHTML = `
                     <div class="bg-emerald-900/30 border border-emerald-900/50 p-3 rounded-sm shadow-sm ml-6">
                         <p class="text-xs text-white uppercase tracking-widest mb-1 font-medium text-right">You</p>
@@ -472,7 +582,6 @@
                     </div>
                 `;
                 
-                // Append message and scroll to bottom
                 chatMessages.insertAdjacentHTML('beforeend', userMsgHTML);
                 input.value = '';
                 chatMessages.scrollTop = chatMessages.scrollHeight;
