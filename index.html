@@ -502,9 +502,193 @@
         ══════════════════════════════ */
         #main { opacity: 0; transition: opacity 0.8s ease; }
         #main.visible { opacity: 1; }
+
+        /* ══════════════════════════════
+           BLURRED BACKGROUND LAYER
+        ══════════════════════════════ */
+        #bg-blur {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            overflow: hidden;
+        }
+        /* Large ghost watch faces scattered as CSS shapes */
+        #bg-blur::before, #bg-blur::after {
+            content: '';
+            position: absolute; border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.04);
+            background: radial-gradient(circle at 40% 35%,
+                rgba(255,255,255,0.035) 0%,
+                rgba(255,255,255,0.01) 40%,
+                transparent 70%
+            );
+            filter: blur(2px);
+        }
+        #bg-blur::before {
+            width: 560px; height: 560px;
+            top: -120px; left: -160px;
+            box-shadow:
+                0 0 0 18px rgba(255,255,255,0.018),
+                0 0 0 36px rgba(255,255,255,0.008),
+                inset 0 0 80px rgba(255,255,255,0.02);
+        }
+        #bg-blur::after {
+            width: 420px; height: 420px;
+            bottom: 5%; right: -100px;
+            box-shadow:
+                0 0 0 14px rgba(255,255,255,0.016),
+                0 0 0 28px rgba(255,255,255,0.006),
+                inset 0 0 60px rgba(255,255,255,0.015);
+        }
+        .bg-watch-mid {
+            position: fixed; z-index: -1; pointer-events: none;
+            border-radius: 50%; border: 1px solid rgba(255,255,255,0.03);
+            background: radial-gradient(circle at 50% 40%,
+                rgba(255,255,255,0.025) 0%,
+                transparent 65%
+            );
+            filter: blur(1px);
+            width: 320px; height: 320px;
+            top: 42%; left: 55%;
+            box-shadow:
+                0 0 0 10px rgba(255,255,255,0.012),
+                0 0 0 22px rgba(255,255,255,0.005);
+        }
+        /* Crosshair lines inside ghost watches */
+        .bg-watch-line {
+            position: fixed; z-index: -1; pointer-events: none;
+            background: rgba(255,255,255,0.025);
+            filter: blur(0.5px);
+        }
+        .bg-watch-line.h1 { width: 420px; height: 1px; top: 12%; left: -80px; transform: rotate(-8deg); }
+        .bg-watch-line.v1 { width: 1px; height: 380px; top: -60px; left: 13%; }
+        .bg-watch-line.h2 { width: 300px; height: 1px; bottom: 14%; right: -40px; transform: rotate(6deg); }
+        .bg-watch-line.v2 { width: 1px; height: 280px; bottom: 3%; right: 18%; }
+
+        /* ══════════════════════════════
+           MUSIC TOGGLE BUTTON
+        ══════════════════════════════ */
+        #musicBtn {
+            position: fixed; bottom: 20px; left: 20px; z-index: 50;
+            width: 46px; height: 46px;
+            background: rgba(8,8,8,0.88); border: 1px solid var(--border2);
+            backdrop-filter: blur(16px);
+            display: flex; align-items: center; justify-content: center;
+            cursor: none; transition: border-color 0.2s, background 0.2s;
+        }
+        #musicBtn:hover { border-color: rgba(255,255,255,0.35); background: rgba(20,20,20,0.95); }
+        #musicBtn .bars {
+            display: flex; align-items: flex-end; gap: 2px; height: 18px;
+        }
+        #musicBtn .bar {
+            width: 3px; background: rgba(255,255,255,0.7); border-radius: 2px;
+            transform-origin: bottom;
+        }
+        #musicBtn .bar:nth-child(1) { height: 8px; }
+        #musicBtn .bar:nth-child(2) { height: 14px; }
+        #musicBtn .bar:nth-child(3) { height: 10px; }
+        #musicBtn .bar:nth-child(4) { height: 16px; }
+        #musicBtn .bar:nth-child(5) { height: 6px; }
+
+        @keyframes bar-dance-1 { 0%,100%{height:8px}  50%{height:14px} }
+        @keyframes bar-dance-2 { 0%,100%{height:14px} 50%{height:6px}  }
+        @keyframes bar-dance-3 { 0%,100%{height:10px} 50%{height:18px} }
+        @keyframes bar-dance-4 { 0%,100%{height:16px} 50%{height:8px}  }
+        @keyframes bar-dance-5 { 0%,100%{height:6px}  50%{height:12px} }
+
+        #musicBtn.playing .bar:nth-child(1) { animation: bar-dance-1 0.9s ease-in-out infinite; }
+        #musicBtn.playing .bar:nth-child(2) { animation: bar-dance-2 0.7s ease-in-out infinite 0.1s; }
+        #musicBtn.playing .bar:nth-child(3) { animation: bar-dance-3 1.1s ease-in-out infinite 0.2s; }
+        #musicBtn.playing .bar:nth-child(4) { animation: bar-dance-4 0.8s ease-in-out infinite 0.05s; }
+        #musicBtn.playing .bar:nth-child(5) { animation: bar-dance-5 1.0s ease-in-out infinite 0.15s; }
+
+        /* Music tooltip */
+        #musicBtn::after {
+            content: attr(data-tip);
+            position: absolute; bottom: 52px; left: 0;
+            background: rgba(8,8,8,0.95); border: 1px solid var(--border2);
+            color: rgba(255,255,255,0.7); font-size: 9px; font-weight: 600;
+            letter-spacing: 0.15em; text-transform: uppercase;
+            padding: 5px 10px; white-space: nowrap;
+            opacity: 0; pointer-events: none; transition: opacity 0.2s;
+        }
+        #musicBtn:hover::after { opacity: 1; }
+
+        /* ══════════════════════════════
+           CUSTOM ORDER SECTION
+        ══════════════════════════════ */
+        #custom-order { padding: 100px 0; border-top: 1px solid var(--border); }
+
+        .custom-order-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+            border: 1px solid var(--border);
+        }
+        @media (max-width: 768px) {
+            .custom-order-grid { grid-template-columns: 1fr; }
+        }
+
+        .custom-order-left {
+            padding: 56px 48px;
+            background: rgba(255,255,255,0.015);
+            border-right: 1px solid var(--border);
+        }
+        @media (max-width: 768px) {
+            .custom-order-left { border-right: none; border-bottom: 1px solid var(--border); padding: 40px 28px; }
+        }
+
+        .custom-order-right { padding: 56px 48px; }
+        @media (max-width: 768px) { .custom-order-right { padding: 40px 28px; } }
+
+        /* Form fields */
+        .field-group { margin-bottom: 20px; }
+        .field-label {
+            display: block; font-size: 9px; font-weight: 600;
+            letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim);
+            margin-bottom: 8px;
+        }
+        .field-input, .field-textarea, .field-select {
+            width: 100%; background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border); color: var(--white);
+            font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 300;
+            padding: 12px 14px; outline: none; cursor: none;
+            transition: border-color 0.2s, background 0.2s;
+            appearance: none; -webkit-appearance: none;
+        }
+        .field-input:focus, .field-textarea:focus, .field-select:focus {
+            border-color: rgba(255,255,255,0.35);
+            background: rgba(255,255,255,0.06);
+        }
+        .field-input::placeholder, .field-textarea::placeholder { color: #444; }
+        .field-textarea { resize: vertical; min-height: 90px; }
+        .field-select option { background: #111; color: var(--white); }
+
+        /* Success state */
+        #order-success {
+            display: none; text-align: center; padding: 32px 0;
+        }
+        #order-success .tick {
+            width: 48px; height: 48px; border: 1px solid var(--border2);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        /* Floating badge on section */
+        .section-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            border: 1px solid var(--border2); padding: 5px 14px;
+            font-size: 9px; font-weight: 600; letter-spacing: 0.2em;
+            text-transform: uppercase; color: var(--white); margin-bottom: 20px;
+        }
+        .badge-star { color: var(--gold); }
     </style>
 </head>
 <body>
+
+<!-- Blurred background watch shapes -->
+<div id="bg-blur"></div>
+<div class="bg-watch-mid"></div>
+<div class="bg-watch-line h1"></div>
+<div class="bg-watch-line v1"></div>
+<div class="bg-watch-line h2"></div>
+<div class="bg-watch-line v2"></div>
 
 <!-- Cursor -->
 <div class="c-dot" id="cDot"></div>
@@ -575,7 +759,7 @@
                 <!-- Nav -->
                 <nav class="hidden md:flex" style="gap:32px;">
                     <a href="#collection" class="active">Collection</a>
-                    <a href="#about">About</a>
+                    <a href="#custom-order">Custom Order</a>
                     <a href="#reviews">Reviews</a>
                     <a href="#payment">Payment</a>
                 </nav>
@@ -890,6 +1074,152 @@
         </div>
     </section>
 
+    <!-- ── LOOK FOR YOUR MODEL ── -->
+    <section id="custom-order">
+        <div class="container reveal">
+            <!-- Header -->
+            <div style="text-align:center; margin-bottom:56px;">
+                <div class="section-badge" style="margin:0 auto 20px; display:inline-flex;">
+                    <span class="badge-star">✦</span>
+                    Bespoke Service
+                    <span class="badge-star">✦</span>
+                </div>
+                <h2 class="serif" style="font-size:clamp(32px,5vw,56px); font-weight:700; color:var(--white); line-height:1.05; margin-bottom:16px;">
+                    Look for<br><em style="color:rgba(255,255,255,0.45);">Your Model.</em>
+                </h2>
+                <p style="font-size:14px; color:var(--dim); max-width:480px; margin:0 auto; line-height:1.8; font-weight:300;">
+                    Don't see the exact model you want? Tell us. We source to order — any Rolex reference, any dial, any bracelet. If it exists, we'll find it.
+                </p>
+            </div>
+
+            <!-- Main card -->
+            <div class="custom-order-grid">
+
+                <!-- Left: How it works -->
+                <div class="custom-order-left">
+                    <p class="label" style="margin-bottom:28px;">How It Works</p>
+
+                    <div style="display:flex; flex-direction:column; gap:0; border-top:1px solid var(--border);">
+                        <!-- Step 1 -->
+                        <div style="display:flex; gap:20px; padding:24px 0; border-bottom:1px solid var(--border);">
+                            <div style="width:28px; height:28px; border:1px solid var(--border2); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                <span style="font-size:11px; font-weight:700; color:var(--white);">01</span>
+                            </div>
+                            <div>
+                                <p style="font-size:13px; font-weight:600; color:var(--white); margin-bottom:5px;">Describe Your Watch</p>
+                                <p style="font-size:12px; color:var(--dim); line-height:1.7; font-weight:300;">Fill in the form with the model name, reference number if you have it, preferred dial colour, and bracelet type.</p>
+                            </div>
+                        </div>
+                        <!-- Step 2 -->
+                        <div style="display:flex; gap:20px; padding:24px 0; border-bottom:1px solid var(--border);">
+                            <div style="width:28px; height:28px; border:1px solid var(--border2); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                <span style="font-size:11px; font-weight:700; color:var(--white);">02</span>
+                            </div>
+                            <div>
+                                <p style="font-size:13px; font-weight:600; color:var(--white); margin-bottom:5px;">We Source It</p>
+                                <p style="font-size:12px; color:var(--dim); line-height:1.7; font-weight:300;">Within 24–48 hours our team responds via WhatsApp with pricing, photos, and availability confirmation.</p>
+                            </div>
+                        </div>
+                        <!-- Step 3 -->
+                        <div style="display:flex; gap:20px; padding:24px 0; border-bottom:1px solid var(--border);">
+                            <div style="width:28px; height:28px; border:1px solid var(--border2); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                <span style="font-size:11px; font-weight:700; color:var(--white);">03</span>
+                            </div>
+                            <div>
+                                <p style="font-size:13px; font-weight:600; color:var(--white); margin-bottom:5px;">Confirm & Ship</p>
+                                <p style="font-size:12px; color:var(--dim); line-height:1.7; font-weight:300;">Once you approve, we process payment and dispatch. Card worldwide — Cash on Delivery for Algeria.</p>
+                            </div>
+                        </div>
+                        <!-- Step 4 -->
+                        <div style="display:flex; gap:20px; padding:24px 0;">
+                            <div style="width:28px; height:28px; border:1px solid var(--border2); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                <span style="font-size:11px; font-weight:700; color:var(--white);">04</span>
+                            </div>
+                            <div>
+                                <p style="font-size:13px; font-weight:600; color:var(--white); margin-bottom:5px;">Delivered to You</p>
+                                <p style="font-size:12px; color:var(--dim); line-height:1.7; font-weight:300;">7–14 days to your door in discreet, plain packaging. Tracked and fully insured.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Popular requests chips -->
+                    <div style="margin-top:28px;">
+                        <p class="label" style="margin-bottom:12px; color:#555;">Popular Requests</p>
+                        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                            <span onclick="fillModel('Submariner Date')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Submariner Date</span>
+                            <span onclick="fillModel('Daytona Panda')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Daytona Panda</span>
+                            <span onclick="fillModel('Sky-Dweller Two-Tone')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Sky-Dweller Two-Tone</span>
+                            <span onclick="fillModel('Explorer II Black Dial')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Explorer II Black Dial</span>
+                            <span onclick="fillModel('Day-Date President')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Day-Date President</span>
+                            <span onclick="fillModel('Milgauss')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Milgauss</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Form -->
+                <div class="custom-order-right">
+                    <p class="label" style="margin-bottom:28px;">Your Request</p>
+
+                    <div id="order-form-wrap">
+                        <div class="field-group">
+                            <label class="field-label">Model Name *</label>
+                            <input type="text" id="orderModel" class="field-input" placeholder="e.g. Submariner No-Date, Daytona…"/>
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label">Dial Colour</label>
+                            <select id="orderDial" class="field-select">
+                                <option value="" disabled selected>Select dial colour</option>
+                                <option>Black</option>
+                                <option>White / Silver</option>
+                                <option>Blue</option>
+                                <option>Green</option>
+                                <option>Champagne / Gold</option>
+                                <option>Grey / Slate</option>
+                                <option>Brown / Chocolate</option>
+                                <option>Other — I'll describe below</option>
+                            </select>
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label">Bracelet / Strap</label>
+                            <select id="orderBracelet" class="field-select">
+                                <option value="" disabled selected>Select bracelet type</option>
+                                <option>Oyster (steel)</option>
+                                <option>Jubilee (steel)</option>
+                                <option>President (gold)</option>
+                                <option>Pearlmaster</option>
+                                <option>Leather strap</option>
+                                <option>Rubber / sport strap</option>
+                                <option>Not sure</option>
+                            </select>
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label">Your WhatsApp Number *</label>
+                            <input type="tel" id="orderPhone" class="field-input" placeholder="+213 or international format"/>
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label">Extra Details / Reference Number</label>
+                            <textarea id="orderNotes" class="field-textarea" placeholder="Any extra info — reference number, images you've seen, budget, country…"></textarea>
+                        </div>
+                        <button onclick="submitCustomOrder()" class="btn-primary" style="width:100%; font-size:10px; padding:16px; margin-top:4px;">
+                            Send My Request via WhatsApp →
+                        </button>
+                        <p style="font-size:10px; color:#444; margin-top:10px; text-align:center;">We respond within 24 hours. No spam, no obligation.</p>
+                    </div>
+
+                    <!-- Success message -->
+                    <div id="order-success">
+                        <div class="tick">
+                            <svg width="20" height="20" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        </div>
+                        <h3 class="serif" style="font-size:22px; color:var(--white); margin-bottom:10px;">Request Sent!</h3>
+                        <p style="font-size:13px; color:var(--dim); line-height:1.7; font-weight:300; max-width:280px; margin:0 auto;">Opening WhatsApp with your request pre-filled. We'll reply within 24 hours.</p>
+                        <button onclick="resetOrderForm()" class="btn-ghost" style="margin-top:24px; font-size:9px; padding:10px 24px;">Send Another Request</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ── DIAMOND RESERVE ── -->
     <section style="padding:100px 0; border-top:1px solid var(--border); text-align:center;">
         <div class="container reveal">
@@ -983,6 +1313,17 @@
 <!-- ═══════════════════════════════════════
      FAB BUTTONS
 ═══════════════════════════════════════ -->
+<!-- Music toggle -->
+<button id="musicBtn" onclick="toggleMusic()" data-tip="AMBIENT MUSIC" aria-label="Toggle ambient music">
+    <div class="bars">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+</button>
+
 <!-- WhatsApp -->
 <a href="https://wa.me/213XXXXXXXXX" target="_blank"
    style="position:fixed; bottom:20px; right:72px; z-index:50; background:#16a34a; color:#fff; padding:14px; border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; cursor:none;"
@@ -1204,7 +1545,208 @@ function playSwoosh() {
     } catch(e) {}
 }
 
-// ── AI Chat ───────────────────────────────────────────────────────────────────
+// ── Ambient Music Engine ──────────────────────────────────────────────────────
+// Generates a lush, slow ambient soundscape using Web Audio API — no external file needed.
+// Based on slow-moving pad chords (Cmaj7 → Am7 → Fmaj7 → G9) at ~60bpm
+let audioCtx = null;
+let musicPlaying = false;
+let masterGain = null;
+let musicNodes = [];
+
+function buildAmbient() {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    masterGain.gain.linearRampToValueAtTime(0.18, audioCtx.currentTime + 3);
+
+    // Reverb (convolver with synthetic impulse)
+    const reverb = audioCtx.createConvolver();
+    const revLen = audioCtx.sampleRate * 4;
+    const revBuf = audioCtx.createBuffer(2, revLen, audioCtx.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+        const d = revBuf.getChannelData(ch);
+        for (let i = 0; i < revLen; i++) {
+            d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / revLen, 2.5);
+        }
+    }
+    reverb.buffer = revBuf;
+
+    // Lo-pass filter for warmth
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 1200;
+    filter.Q.value = 0.8;
+
+    masterGain.connect(reverb);
+    reverb.connect(filter);
+    filter.connect(audioCtx.destination);
+
+    // Also connect dry signal quietly
+    const dryGain = audioCtx.createGain();
+    dryGain.gain.value = 0.04;
+    masterGain.connect(dryGain);
+    dryGain.connect(audioCtx.destination);
+
+    // Chord sequences: Cmaj7, Am7, Fmaj7, Gsus4 — frequencies in Hz
+    const chords = [
+        [130.81, 164.81, 196.00, 246.94, 329.63], // Cmaj7
+        [110.00, 130.81, 164.81, 196.00, 261.63], // Am7
+        [87.31,  130.81, 164.81, 174.61, 220.00],  // Fmaj7
+        [98.00,  130.81, 164.81, 185.00, 246.94],  // G9
+    ];
+
+    const beatLen = 8; // seconds per chord
+    const totalBeats = chords.length;
+
+    function scheduleChord(chord, startTime) {
+        chord.forEach((freq, i) => {
+            const osc = audioCtx.createOscillator();
+            const oscGain = audioCtx.createGain();
+            osc.type = 'sine';
+            // Slight detune for lushness
+            osc.frequency.value = freq * (1 + (i % 2 === 0 ? 0.001 : -0.0008));
+            osc.connect(oscGain);
+            oscGain.connect(masterGain);
+            oscGain.gain.setValueAtTime(0, startTime);
+            oscGain.gain.linearRampToValueAtTime(0.22 / chord.length, startTime + 1.2);
+            oscGain.gain.setValueAtTime(0.22 / chord.length, startTime + beatLen - 1.4);
+            oscGain.gain.linearRampToValueAtTime(0, startTime + beatLen);
+            osc.start(startTime);
+            osc.stop(startTime + beatLen + 0.1);
+            musicNodes.push(osc, oscGain);
+
+            // Subtle harmonic overtone (one octave up, very quiet)
+            const osc2 = audioCtx.createOscillator();
+            const osc2G = audioCtx.createGain();
+            osc2.type = 'triangle';
+            osc2.frequency.value = freq * 2.005;
+            osc2.connect(osc2G);
+            osc2G.connect(masterGain);
+            osc2G.gain.setValueAtTime(0, startTime);
+            osc2G.gain.linearRampToValueAtTime(0.04 / chord.length, startTime + 2);
+            osc2G.gain.linearRampToValueAtTime(0, startTime + beatLen);
+            osc2.start(startTime);
+            osc2.stop(startTime + beatLen + 0.1);
+            musicNodes.push(osc2, osc2G);
+        });
+    }
+
+    // Gentle sub-bass pad (root notes only)
+    function scheduleBass(rootFreq, startTime) {
+        const osc = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = rootFreq / 2;
+        osc.connect(g); g.connect(masterGain);
+        g.gain.setValueAtTime(0, startTime);
+        g.gain.linearRampToValueAtTime(0.12, startTime + 2);
+        g.gain.linearRampToValueAtTime(0, startTime + beatLen);
+        osc.start(startTime); osc.stop(startTime + beatLen + 0.1);
+        musicNodes.push(osc, g);
+    }
+
+    function loop(iteration) {
+        const now = audioCtx.currentTime;
+        chords.forEach((chord, i) => {
+            const t = now + i * beatLen;
+            scheduleChord(chord, t);
+            scheduleBass(chord[0], t);
+        });
+        // Schedule next loop
+        const loopDuration = beatLen * totalBeats;
+        const loopTimer = setTimeout(() => {
+            if (musicPlaying) loop(iteration + 1);
+        }, (loopDuration - 0.5) * 1000);
+        musicNodes.push({ stop: () => clearTimeout(loopTimer) });
+    }
+
+    loop(0);
+}
+
+function toggleMusic() {
+    const btn = document.getElementById('musicBtn');
+    if (!musicPlaying) {
+        musicPlaying = true;
+        buildAmbient();
+        btn.classList.add('playing');
+        btn.setAttribute('data-tip', 'PAUSE MUSIC');
+    } else {
+        musicPlaying = false;
+        if (masterGain) {
+            masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
+            setTimeout(() => {
+                musicNodes.forEach(n => { try { if (n.stop) n.stop(); } catch(e){} });
+                musicNodes = [];
+                if (audioCtx) { audioCtx.close(); audioCtx = null; }
+            }, 1800);
+        }
+        btn.classList.remove('playing');
+        btn.setAttribute('data-tip', 'AMBIENT MUSIC');
+    }
+}
+
+// ── Custom Order ──────────────────────────────────────────────────────────────
+function fillModel(name) {
+    const field = document.getElementById('orderModel');
+    if (field) {
+        field.value = name;
+        field.focus();
+        // Scroll to form
+        document.getElementById('custom-order').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+
+function submitCustomOrder() {
+    const model     = document.getElementById('orderModel').value.trim();
+    const phone     = document.getElementById('orderPhone').value.trim();
+    const dial      = document.getElementById('orderDial').value;
+    const bracelet  = document.getElementById('orderBracelet').value;
+    const notes     = document.getElementById('orderNotes').value.trim();
+
+    if (!model) {
+        document.getElementById('orderModel').focus();
+        document.getElementById('orderModel').style.borderColor = 'rgba(255,255,255,0.5)';
+        setTimeout(() => document.getElementById('orderModel').style.borderColor = '', 1500);
+        return;
+    }
+    if (!phone) {
+        document.getElementById('orderPhone').focus();
+        document.getElementById('orderPhone').style.borderColor = 'rgba(255,255,255,0.5)';
+        setTimeout(() => document.getElementById('orderPhone').style.borderColor = '', 1500);
+        return;
+    }
+
+    // Build WhatsApp message
+    const msg = [
+        '👋 Hello wearwc — I have a custom watch request:',
+        '',
+        '⌚ *Model:* ' + model,
+        dial      ? '🎨 *Dial:* ' + dial         : '',
+        bracelet  ? '🔗 *Bracelet:* ' + bracelet  : '',
+        phone     ? '📱 *My number:* ' + phone     : '',
+        notes     ? '📝 *Details:* ' + notes        : '',
+        '',
+        'Please confirm availability and pricing. Thank you!'
+    ].filter(Boolean).join('\n');
+
+    const waUrl = 'https://wa.me/213XXXXXXXXX?text=' + encodeURIComponent(msg);
+    window.open(waUrl, '_blank');
+
+    // Show success
+    document.getElementById('order-form-wrap').style.display = 'none';
+    document.getElementById('order-success').style.display   = 'block';
+    playSwoosh();
+}
+
+function resetOrderForm() {
+    document.getElementById('order-form-wrap').style.display = 'block';
+    document.getElementById('order-success').style.display   = 'none';
+    document.getElementById('orderModel').value    = '';
+    document.getElementById('orderPhone').value    = '';
+    document.getElementById('orderDial').value     = '';
+    document.getElementById('orderBracelet').value = '';
+    document.getElementById('orderNotes').value    = '';
+}
 let chatHistory = [], chatOpen = false;
 function toggleChat() {
     chatOpen = !chatOpen;
