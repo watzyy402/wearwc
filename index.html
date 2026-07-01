@@ -549,7 +549,6 @@
 </head>
 <body>
 
-<!-- Blurred background watch shapes -->
 <div id="bg-blur"></div>
 <div class="bg-watch-mid"></div>
 <div class="bg-watch-line h1"></div>
@@ -557,13 +556,9 @@
 <div class="bg-watch-line h2"></div>
 <div class="bg-watch-line v2"></div>
 
-<!-- Cursor -->
 <div class="c-dot" id="cDot"></div>
 <div class="c-ring" id="cRing"></div>
 
-<!-- ═══════════════════════════════════════
-     PRELOADER — original kinetic emblem
-═══════════════════════════════════════ -->
 <div id="preloader">
     <div class="pl-inner">
         <div class="pl-glow"></div>
@@ -594,24 +589,18 @@
     </div>
 </div>
 
-<!-- ═══════════════════════════════════════
-     MAIN CONTENT
-═══════════════════════════════════════ -->
 <div id="main">
 
-    <!-- ── HEADER ── -->
     <header>
         <div class="container">
             <div class="header-inner">
                 <a href="#" class="nav-wordmark">wear<span>wc</span></a>
-
                 <nav class="hidden md:flex" style="gap:32px;">
                     <a href="#collection" class="active">Collection</a>
                     <a href="#custom-order">Custom Order</a>
                     <a href="#reviews">Reviews</a>
                     <a href="#payment">Payment</a>
                 </nav>
-
                 <div style="display:flex; align-items:center; gap:16px;">
                     <select id="currencySelector" onchange="updateCurrency()"
                         style="background:transparent; color:#888; border:1px solid var(--border); font-size:10px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; padding:8px 10px; cursor:none; outline:none;">
@@ -627,7 +616,6 @@
         </div>
     </header>
 
-    <!-- ── TRANSPARENCY BANNER ── -->
     <div class="transparency-bar">
         <p>
             <strong>wearwc</strong> designs affordable, quality timepieces inspired by classic watchmaking codes.
@@ -635,7 +623,6 @@
         </p>
     </div>
 
-    <!-- ── HERO ── -->
     <section id="hero">
         <div class="container">
             <div class="hero-grid">
@@ -650,18 +637,15 @@
                     <p style="font-size:14px; color:var(--dim); line-height:1.8; max-width:420px; margin-bottom:32px; font-weight:300;">
                         Thoughtfully designed timepieces, crafted to look and feel exceptional — shipped worldwide, delivered to your door. Launching with opening prices.
                     </p>
-
                     <div style="border:1px solid var(--border2); padding:16px 20px; margin-bottom:32px; display:inline-block;">
                         <p class="label" style="margin-bottom:6px;">Grand Opening Sale</p>
                         <p style="font-size:13px; color:var(--white);">Was <span style="text-decoration:line-through; color:var(--dim);">$51</span> — now from <strong>$22</strong> while stock lasts.</p>
                     </div>
-
                     <div style="display:flex; gap:12px; flex-wrap:wrap;">
                         <a href="#collection" class="btn-primary">Shop the Drop</a>
                         <a href="#about" class="btn-ghost">Our Story</a>
                     </div>
                 </div>
-
                 <div class="reveal hero-img-card" id="heroImgCard" onclick="openLightbox('meridian-gmt.png','Meridian GMT')">
                     <img src="meridian-gmt.png" alt="Meridian GMT" onerror="this.style.opacity='0'"/>
                     <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.015) 0%,transparent 60%); pointer-events:none;"></div>
@@ -674,7 +658,6 @@
         </div>
     </section>
 
-    <!-- ── COLLECTION ── -->
     <section id="collection" style="padding:80px 0;">
         <div class="container">
             <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:40px;" class="reveal">
@@ -683,12 +666,9 @@
                     <h2 class="serif" style="font-size:clamp(28px,4vw,42px); font-weight:700; color:var(--white);">Collection</h2>
                 </div>
             </div>
-
             <div class="products-grid reveal" id="productsGrid">
-
-                <!-- Card 1: Meridian GMT -->
                 <div class="card" style="overflow:hidden;">
-                    <div class="product-img" style="background-image:url('meridian-gmt.png');"
+                    <div class="product-img" style="background-image:url('meridian-gmt.png');" 
                          onclick="openLightbox('meridian-gmt.png','Meridian GMT')">
                         <div class="zoom-icon">
                             <svg width="24" height="24" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
@@ -710,9 +690,8 @@
                     </div>
                 </div>
 
-                <!-- Card 2: The Regatta -->
                 <div class="card" style="overflow:hidden;">
-                    <div class="product-img" style="background-image:url('regatta.png');"
+                    <div class="product-img" style="background-image:url('regatta.png');" 
                          onclick="openLightbox('regatta.png','The Regatta')">
                         <div class="zoom-icon">
                             <svg width="24" height="24" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
@@ -734,9 +713,8 @@
                     </div>
                 </div>
 
-                <!-- Card 3: The Heritage -->
                 <div class="card" style="overflow:hidden;">
-                    <div class="product-img" id="heritage-img" style="background-image:url('heritage-steel.png');"
+                    <div class="product-img" id="heritage-img" style="background-image:url('heritage-steel.png');" 
                          onclick="openLightbox(document.getElementById('heritage-img').style.backgroundImage.replace(/url\(['\&quot;]?(.*?)['\&quot;]?\)/,'$1'),'The Heritage')">
                         <div class="zoom-icon">
                             <svg width="24" height="24" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
@@ -765,12 +743,10 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- ── ABOUT / TRANSPARENCY ── -->
     <section id="about" style="padding:80px 0; border-top:1px solid var(--border);">
         <div class="container reveal">
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;">
@@ -805,3 +781,6 @@
             </div>
         </div>
     </section>
+</div>
+</body>
+</html>
