@@ -1,1822 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wearwc | Designer-Inspired Timepieces</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
-
-        * { box-sizing: border-box; }
-
-        :root {
-            --black:   #080808;
-            --white:   #f4f4f4;
-            --mid:     #2a2a2a;
-            --border:  rgba(244,244,244,0.10);
-            --border2: rgba(244,244,244,0.18);
-            --gold:    #c9a84c;
-            --dim:     #888;
-        }
-
-        body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; }
-
-        .serif { font-family: 'Playfair Display', serif; }
-
-        /* ── Scrollbar ── */
-        ::-webkit-scrollbar { width: 2px; }
-        ::-webkit-scrollbar-track { background: var(--black); }
-        ::-webkit-scrollbar-thumb { background: var(--mid); }
-
-        /* ── Custom cursor ── */
-        @media (pointer: fine) {
-            body, a, button, select, input { cursor: none !important; }
-            .c-dot, .c-ring {
-                pointer-events: none; position: fixed; top: 0; left: 0;
-                transform: translate(-50%,-50%); border-radius: 50%; z-index: 9999;
-                transition: transform 0.08s linear;
-            }
-            .c-dot { width: 5px; height: 5px; background: #fff; }
-            .c-ring {
-                width: 28px; height: 28px;
-                border: 1px solid rgba(255,255,255,0.35);
-                transition: width 0.2s, height 0.2s, border-color 0.2s;
-            }
-            .cursor-active .c-ring { width: 44px; height: 44px; border-color: rgba(255,255,255,0.7); }
-        }
-
-        /* ══════════════════════════════
-           PRELOADER — Realistic Rolex
-        ══════════════════════════════ */
-        #preloader {
-            position: fixed; inset: 0; z-index: 200;
-            background: #000;
-            display: flex; align-items: center; justify-content: center;
-            transition: opacity 0.7s ease;
-        }
-        #preloader.fade-out { opacity: 0; pointer-events: none; }
-
-        .watch-wrap {
-            position: relative;
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        /* Lug straps */
-        .watch-lug {
-            position: absolute; width: 28px; background: #1a1a1a;
-            border: 1px solid #333; left: 50%; transform: translateX(-50%);
-        }
-        .watch-lug.top { top: -40px; height: 44px; border-radius: 4px 4px 0 0; }
-        .watch-lug.bottom { bottom: -40px; height: 44px; border-radius: 0 0 4px 4px; }
-
-        /* Watch case */
-        .watch-case {
-            position: relative; width: 130px; height: 130px; border-radius: 50%;
-            background: linear-gradient(145deg, #3a3a3a 0%, #1a1a1a 40%, #2d2d2d 100%);
-            box-shadow:
-                0 0 0 3px #444,
-                0 0 0 6px #222,
-                0 0 0 9px #555,
-                0 0 40px rgba(0,0,0,0.8),
-                inset 0 2px 4px rgba(255,255,255,0.05);
-            display: flex; align-items: center; justify-content: center;
-            animation: case-appear 0.6s cubic-bezier(0.16,1,0.3,1) forwards;
-            opacity: 0;
-        }
-
-        @keyframes case-appear {
-            from { opacity: 0; transform: scale(0.6); }
-            to   { opacity: 1; transform: scale(1); }
-        }
-
-        /* Crown (right side) */
-        .watch-crown {
-            position: absolute; right: -14px; top: 50%; transform: translateY(-50%);
-            width: 12px; height: 22px;
-            background: linear-gradient(90deg, #555 0%, #888 50%, #444 100%);
-            border-radius: 3px;
-            box-shadow: 2px 0 6px rgba(0,0,0,0.5);
-        }
-
-        /* Dial */
-        .watch-dial {
-            width: 106px; height: 106px; border-radius: 50%;
-            background: radial-gradient(circle at 35% 30%, #1c1c1c 0%, #0a0a0a 60%, #111 100%);
-            border: 1px solid rgba(255,255,255,0.06);
-            position: relative; overflow: hidden;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8), inset 0 0 4px rgba(255,255,255,0.03);
-        }
-
-        /* Dial hour indices */
-        .dial-index {
-            position: absolute; top: 50%; left: 50%;
-            transform-origin: 0 0;
-            width: 2px; height: 8px;
-            background: rgba(255,255,255,0.7);
-            border-radius: 1px;
-            margin-top: -42px; margin-left: -1px;
-        }
-
-        /* Brand text on dial */
-        .dial-brand {
-            position: absolute; top: 28px; left: 50%; transform: translateX(-50%);
-            text-align: center; line-height: 1.2;
-        }
-        .dial-brand .crown-icon {
-            width: 10px; height: 10px; display: block; margin: 0 auto 1px;
-            fill: #c9a84c; opacity: 0.9;
-        }
-        .dial-brand .name {
-            font-family: 'Inter', sans-serif; font-size: 7px; font-weight: 600;
-            color: rgba(255,255,255,0.85); letter-spacing: 1.5px; text-transform: uppercase;
-        }
-        .dial-brand .model {
-            font-family: 'Inter', sans-serif; font-size: 5px; font-weight: 300;
-            color: rgba(255,255,255,0.45); letter-spacing: 0.5px; margin-top: 1px;
-        }
-
-        /* Date window */
-        .date-window {
-            position: absolute; right: 18px; top: 50%; transform: translateY(-50%);
-            width: 14px; height: 12px;
-            background: #fff; border: 1px solid #ccc;
-            display: flex; align-items: center; justify-content: center;
-            font-family: 'Inter', sans-serif; font-size: 7px; font-weight: 600; color: #000;
-            border-radius: 1px;
-            box-shadow: inset 0 0 2px rgba(0,0,0,0.2);
-        }
-
-        /* Minute track dots */
-        .minute-dot {
-            position: absolute; width: 1px; height: 4px;
-            background: rgba(255,255,255,0.25);
-            top: 50%; left: 50%;
-            transform-origin: 0 0;
-            border-radius: 1px;
-            margin-top: -50px; margin-left: -0.5px;
-        }
-
-        /* Watch hands */
-        .hand-base {
-            position: absolute; bottom: 50%; left: 50%;
-            transform-origin: bottom center;
-            border-radius: 2px 2px 0 0;
-        }
-        .hand-hour {
-            width: 3px; height: 30px; margin-left: -1.5px;
-            background: linear-gradient(to top, #aaa 0%, #fff 100%);
-            box-shadow: 0 0 3px rgba(255,255,255,0.3);
-            transform: rotate(-60deg);
-        }
-        .hand-minute {
-            width: 2px; height: 40px; margin-left: -1px;
-            background: linear-gradient(to top, #888 0%, #fff 100%);
-            box-shadow: 0 0 3px rgba(255,255,255,0.2);
-            transform: rotate(120deg);
-        }
-        .hand-second {
-            width: 1px; height: 46px; margin-left: -0.5px;
-            background: #c9a84c;
-            transform: rotate(0deg);
-            animation: tick-second 60s steps(60, end) infinite;
-        }
-        .hand-second::after {
-            content: ''; position: absolute; bottom: -10px; left: -3px;
-            width: 7px; height: 12px;
-            background: #c9a84c; border-radius: 1px;
-        }
-
-        @keyframes tick-second {
-            from { transform: rotate(0deg); }
-            to   { transform: rotate(360deg); }
-        }
-
-        /* Sweep minute hand — slow continuous */
-        .hand-minute {
-            animation: sweep-minute 3600s linear infinite;
-            animation-delay: -300s;
-        }
-        @keyframes sweep-minute {
-            from { transform: rotate(120deg); }
-            to   { transform: rotate(480deg); }
-        }
-
-        /* Centre pin */
-        .hand-pin {
-            position: absolute; width: 8px; height: 8px; border-radius: 50%;
-            background: radial-gradient(circle, #fff 0%, #aaa 100%);
-            top: 50%; left: 50%; transform: translate(-50%,-50%);
-            z-index: 10;
-            box-shadow: 0 0 4px rgba(0,0,0,0.5);
-        }
-
-        /* Cyclops / glare */
-        .dial-glare {
-            position: absolute; inset: 0; border-radius: 50%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        /* Loader text */
-        .loader-wordmark {
-            margin-top: 32px; text-align: center;
-            font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
-            letter-spacing: 0.5em; text-transform: uppercase;
-            color: rgba(255,255,255,0.6);
-            animation: fade-letters 1s ease 0.5s both;
-        }
-        @keyframes fade-letters { from { opacity: 0; letter-spacing: 0.8em; } to { opacity: 1; letter-spacing: 0.5em; } }
-
-        /* ══════════════════════════════
-           NOISE TEXTURE
-        ══════════════════════════════ */
-        body::before {
-            content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-            background-size: 200px 200px; opacity: 0.4;
-        }
-
-        /* ══════════════════════════════
-           LAYOUT TOKENS
-        ══════════════════════════════ */
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-
-        /* Divider */
-        .hr { border: none; border-top: 1px solid var(--border); }
-
-        /* Reveal */
-        .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
-        .reveal.in { opacity: 1; transform: translateY(0); }
-
-        /* ══════════════════════════════
-           TYPOGRAPHY
-        ══════════════════════════════ */
-        .label {
-            font-size: 10px; font-weight: 600; letter-spacing: 0.25em;
-            text-transform: uppercase; color: var(--dim);
-        }
-
-        /* ══════════════════════════════
-           SALE BADGE + STRIKETHROUGH
-        ══════════════════════════════ */
-        .price-wrap { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-        .price-orig { font-size: 12px; color: var(--dim); text-decoration: line-through; }
-        .price-now  { font-size: 15px; font-weight: 600; color: var(--white); }
-        .sale-tag   {
-            font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-            background: var(--white); color: var(--black);
-            padding: 2px 6px; border-radius: 2px;
-        }
-
-        /* ══════════════════════════════
-           CARD
-        ══════════════════════════════ */
-        .card {
-            border: 1px solid var(--border);
-            background: rgba(255,255,255,0.02);
-            backdrop-filter: blur(12px);
-            transition: border-color 0.3s, background 0.3s, transform 0.4s cubic-bezier(0.16,1,0.3,1);
-        }
-        .card:hover {
-            border-color: var(--border2);
-            background: rgba(255,255,255,0.04);
-        }
-
-        /* ══════════════════════════════
-           BUTTONS
-        ══════════════════════════════ */
-        .btn-primary {
-            display: inline-block; padding: 14px 32px;
-            background: var(--white); color: var(--black);
-            font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
-            border: none; cursor: none;
-            transition: background 0.2s, color 0.2s, transform 0.15s;
-        }
-        .btn-primary:hover { background: #e0e0e0; }
-
-        .btn-ghost {
-            display: inline-block; padding: 12px 24px;
-            background: transparent; color: var(--white);
-            font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
-            border: 1px solid var(--border2); cursor: none;
-            transition: background 0.2s, border-color 0.2s;
-        }
-        .btn-ghost:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.35); }
-
-        /* ══════════════════════════════
-           HEADER
-        ══════════════════════════════ */
-        header {
-            position: sticky; top: 0; z-index: 50;
-            background: rgba(8,8,8,0.88); backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-        }
-        .header-inner {
-            height: 68px; display: flex; align-items: center; justify-content: space-between;
-        }
-
-        .nav-wordmark {
-            font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700;
-            letter-spacing: 0.06em; color: var(--white); text-decoration: none;
-        }
-        .nav-wordmark span { font-style: italic; color: var(--dim); }
-
-        nav a {
-            font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
-            color: var(--dim); text-decoration: none; transition: color 0.2s;
-        }
-        nav a:hover, nav a.active { color: var(--white); }
-
-        /* ══════════════════════════════
-           HERO
-        ══════════════════════════════ */
-        #hero {
-            min-height: 90vh; display: grid; align-items: center;
-            padding: 80px 0;
-        }
-        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-        @media (max-width: 768px) { .hero-grid { grid-template-columns: 1fr; gap: 48px; } }
-
-        /* Large italic counter */
-        .hero-eyebrow-number {
-            font-family: 'Playfair Display', serif; font-size: 80px; font-style: italic;
-            font-weight: 400; color: rgba(255,255,255,0.06); line-height: 1;
-            position: absolute; top: -24px; left: -12px; pointer-events: none; select: none;
-        }
-
-        /* New badge */
-        .new-badge {
-            display: inline-flex; align-items: center; gap: 6px;
-            border: 1px solid var(--border2);
-            padding: 5px 12px; font-size: 9px; font-weight: 600;
-            letter-spacing: 0.2em; text-transform: uppercase; color: var(--white);
-            margin-bottom: 28px;
-        }
-        .new-badge-dot { width: 5px; height: 5px; background: var(--white); border-radius: 50%; animation: pulse-dot 2s ease infinite; }
-        @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
-
-        /* Hero image card */
-        .hero-img-card {
-            position: relative; border: 1px solid var(--border);
-            background: rgba(255,255,255,0.015);
-            aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
-            cursor: none; overflow: hidden;
-            transition: border-color 0.3s;
-        }
-        .hero-img-card:hover { border-color: var(--border2); }
-        .hero-img-card img { width: 80%; height: 80%; object-fit: contain; display: block; }
-        .hero-img-card .overlay-label {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            padding: 20px; background: linear-gradient(to top, rgba(8,8,8,0.9), transparent);
-        }
-
-        /* ══════════════════════════════
-           TRANSPARENCY BANNER
-        ══════════════════════════════ */
-        .transparency-bar {
-            background: rgba(255,255,255,0.03);
-            border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-            padding: 14px 0; text-align: center;
-        }
-        .transparency-bar p {
-            font-size: 11px; color: var(--dim); letter-spacing: 0.05em;
-        }
-        .transparency-bar strong { color: rgba(255,255,255,0.5); font-weight: 600; }
-
-        /* ══════════════════════════════
-           PRODUCT CARDS
-        ══════════════════════════════ */
-        .products-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
-        }
-        @media (max-width: 900px) { .products-grid { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 600px) { .products-grid { grid-template-columns: 1fr; } }
-
-        .product-img {
-            aspect-ratio: 1; background: rgba(255,255,255,0.02);
-            background-size: cover; background-position: center;
-            overflow: hidden; position: relative;
-            cursor: none;
-            border-bottom: 1px solid var(--border);
-        }
-        .product-img .zoom-icon {
-            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-            opacity: 0; background: rgba(0,0,0,0.4); transition: opacity 0.25s;
-        }
-        .product-img:hover .zoom-icon { opacity: 1; }
-
-        /* Colour dots */
-        .colour-swatch {
-            width: 16px; height: 16px; border-radius: 50%; cursor: none;
-            border: 2px solid transparent; transition: border-color 0.2s, transform 0.2s;
-        }
-        .colour-swatch.active, .colour-swatch:hover {
-            border-color: rgba(255,255,255,0.6); transform: scale(1.15);
-        }
-
-        /* ══════════════════════════════
-           PAYMENT SECTION
-        ══════════════════════════════ */
-        .payment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
-        @media (max-width: 600px) { .payment-grid { grid-template-columns: 1fr; } }
-        .payment-cell { background: var(--black); padding: 40px 32px; }
-
-        /* ══════════════════════════════
-           CART PANEL
-        ══════════════════════════════ */
-        #cartPanel {
-            position: fixed; top: 0; right: 0; height: 100vh; width: 340px; z-index: 150;
-            background: rgba(8,8,8,0.98); border-left: 1px solid var(--border);
-            backdrop-filter: blur(24px);
-            transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
-            display: flex; flex-direction: column;
-        }
-        #cartPanel.open { transform: translateX(0); }
-        #cart-overlay { display: none; position: fixed; inset: 0; z-index: 140; background: rgba(0,0,0,0.6); }
-
-        /* Cart badge */
-        #cart-count { display: none; }
-        #cart-count.show { display: flex; }
-
-        /* ══════════════════════════════
-           LIGHTBOX
-        ══════════════════════════════ */
-        #lightbox {
-            display: none; position: fixed; inset: 0; z-index: 200;
-            background: rgba(0,0,0,0.95); backdrop-filter: blur(12px);
-            align-items: center; justify-content: center;
-        }
-        #lightbox.open { display: flex; }
-
-        /* ══════════════════════════════
-           AI CHAT
-        ══════════════════════════════ */
-        #chatPanel {
-            position: fixed; bottom: 88px; right: 20px; z-index: 50; width: 310px;
-            background: rgba(8,8,8,0.96); border: 1px solid var(--border2);
-            backdrop-filter: blur(24px);
-            display: flex; flex-direction: column;
-            opacity: 0; pointer-events: none; transform: translateY(12px);
-            transition: opacity 0.25s, transform 0.25s;
-        }
-        #chatPanel.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
-
-        /* Typing dots */
-        @keyframes blink { 0%,80%,100%{opacity:0.2} 40%{opacity:1} }
-        .dot-1{animation:blink 1.4s infinite 0s}
-        .dot-2{animation:blink 1.4s infinite .2s}
-        .dot-3{animation:blink 1.4s infinite .4s}
-
-        /* ══════════════════════════════
-           STARS
-        ══════════════════════════════ */
-        .stars { color: var(--gold); letter-spacing: 2px; }
-
-        /* ══════════════════════════════
-           FOOTER LINE
-        ══════════════════════════════ */
-        .footer-link { font-size: 11px; color: var(--dim); text-decoration: none; transition: color 0.2s; }
-        .footer-link:hover { color: var(--white); }
-
-        /* ══════════════════════════════
-           HIDE SCROLLBAR
-        ══════════════════════════════ */
-        .hide-scroll::-webkit-scrollbar { display: none; }
-        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* ══════════════════════════════
-           SHIMMER TEXT
-        ══════════════════════════════ */
-        @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
-        .text-shimmer {
-            background: linear-gradient(to right, #aaa 20%, #fff 40%, #fff 60%, #aaa 80%);
-            background-size: 200% auto;
-            color: #fff;
-            background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: shimmer 5s linear infinite;
-        }
-
-        /* ══════════════════════════════
-           MAIN CONTENT
-        ══════════════════════════════ */
-        #main { opacity: 0; transition: opacity 0.8s ease; }
-        #main.visible { opacity: 1; }
-
-        /* ══════════════════════════════
-           BLURRED BACKGROUND LAYER
-        ══════════════════════════════ */
-        #bg-blur {
-            position: fixed; inset: 0; z-index: -1; pointer-events: none;
-            overflow: hidden;
-        }
-        /* Large ghost watch faces scattered as CSS shapes */
-        #bg-blur::before, #bg-blur::after {
-            content: '';
-            position: absolute; border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.04);
-            background: radial-gradient(circle at 40% 35%,
-                rgba(255,255,255,0.035) 0%,
-                rgba(255,255,255,0.01) 40%,
-                transparent 70%
-            );
-            filter: blur(2px);
-        }
-        #bg-blur::before {
-            width: 560px; height: 560px;
-            top: -120px; left: -160px;
-            box-shadow:
-                0 0 0 18px rgba(255,255,255,0.018),
-                0 0 0 36px rgba(255,255,255,0.008),
-                inset 0 0 80px rgba(255,255,255,0.02);
-        }
-        #bg-blur::after {
-            width: 420px; height: 420px;
-            bottom: 5%; right: -100px;
-            box-shadow:
-                0 0 0 14px rgba(255,255,255,0.016),
-                0 0 0 28px rgba(255,255,255,0.006),
-                inset 0 0 60px rgba(255,255,255,0.015);
-        }
-        .bg-watch-mid {
-            position: fixed; z-index: -1; pointer-events: none;
-            border-radius: 50%; border: 1px solid rgba(255,255,255,0.03);
-            background: radial-gradient(circle at 50% 40%,
-                rgba(255,255,255,0.025) 0%,
-                transparent 65%
-            );
-            filter: blur(1px);
-            width: 320px; height: 320px;
-            top: 42%; left: 55%;
-            box-shadow:
-                0 0 0 10px rgba(255,255,255,0.012),
-                0 0 0 22px rgba(255,255,255,0.005);
-        }
-        /* Crosshair lines inside ghost watches */
-        .bg-watch-line {
-            position: fixed; z-index: -1; pointer-events: none;
-            background: rgba(255,255,255,0.025);
-            filter: blur(0.5px);
-        }
-        .bg-watch-line.h1 { width: 420px; height: 1px; top: 12%; left: -80px; transform: rotate(-8deg); }
-        .bg-watch-line.v1 { width: 1px; height: 380px; top: -60px; left: 13%; }
-        .bg-watch-line.h2 { width: 300px; height: 1px; bottom: 14%; right: -40px; transform: rotate(6deg); }
-        .bg-watch-line.v2 { width: 1px; height: 280px; bottom: 3%; right: 18%; }
-
-        /* ══════════════════════════════
-           MUSIC TOGGLE BUTTON
-        ══════════════════════════════ */
-        #musicBtn {
-            position: fixed; bottom: 20px; left: 20px; z-index: 50;
-            width: 46px; height: 46px;
-            background: rgba(8,8,8,0.88); border: 1px solid var(--border2);
-            backdrop-filter: blur(16px);
-            display: flex; align-items: center; justify-content: center;
-            cursor: none; transition: border-color 0.2s, background 0.2s;
-        }
-        #musicBtn:hover { border-color: rgba(255,255,255,0.35); background: rgba(20,20,20,0.95); }
-        #musicBtn .bars {
-            display: flex; align-items: flex-end; gap: 2px; height: 18px;
-        }
-        #musicBtn .bar {
-            width: 3px; background: rgba(255,255,255,0.7); border-radius: 2px;
-            transform-origin: bottom;
-        }
-        #musicBtn .bar:nth-child(1) { height: 8px; }
-        #musicBtn .bar:nth-child(2) { height: 14px; }
-        #musicBtn .bar:nth-child(3) { height: 10px; }
-        #musicBtn .bar:nth-child(4) { height: 16px; }
-        #musicBtn .bar:nth-child(5) { height: 6px; }
-
-        @keyframes bar-dance-1 { 0%,100%{height:8px}  50%{height:14px} }
-        @keyframes bar-dance-2 { 0%,100%{height:14px} 50%{height:6px}  }
-        @keyframes bar-dance-3 { 0%,100%{height:10px} 50%{height:18px} }
-        @keyframes bar-dance-4 { 0%,100%{height:16px} 50%{height:8px}  }
-        @keyframes bar-dance-5 { 0%,100%{height:6px}  50%{height:12px} }
-
-        #musicBtn.playing .bar:nth-child(1) { animation: bar-dance-1 0.9s ease-in-out infinite; }
-        #musicBtn.playing .bar:nth-child(2) { animation: bar-dance-2 0.7s ease-in-out infinite 0.1s; }
-        #musicBtn.playing .bar:nth-child(3) { animation: bar-dance-3 1.1s ease-in-out infinite 0.2s; }
-        #musicBtn.playing .bar:nth-child(4) { animation: bar-dance-4 0.8s ease-in-out infinite 0.05s; }
-        #musicBtn.playing .bar:nth-child(5) { animation: bar-dance-5 1.0s ease-in-out infinite 0.15s; }
-
-        /* Music tooltip */
-        #musicBtn::after {
-            content: attr(data-tip);
-            position: absolute; bottom: 52px; left: 0;
-            background: rgba(8,8,8,0.95); border: 1px solid var(--border2);
-            color: rgba(255,255,255,0.7); font-size: 9px; font-weight: 600;
-            letter-spacing: 0.15em; text-transform: uppercase;
-            padding: 5px 10px; white-space: nowrap;
-            opacity: 0; pointer-events: none; transition: opacity 0.2s;
-        }
-        #musicBtn:hover::after { opacity: 1; }
-
-        /* ══════════════════════════════
-           CUSTOM ORDER SECTION
-        ══════════════════════════════ */
-        #custom-order { padding: 100px 0; border-top: 1px solid var(--border); }
-
-        .custom-order-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-            border: 1px solid var(--border);
-        }
-        @media (max-width: 768px) {
-            .custom-order-grid { grid-template-columns: 1fr; }
-        }
-
-        .custom-order-left {
-            padding: 56px 48px;
-            background: rgba(255,255,255,0.015);
-            border-right: 1px solid var(--border);
-        }
-        @media (max-width: 768px) {
-            .custom-order-left { border-right: none; border-bottom: 1px solid var(--border); padding: 40px 28px; }
-        }
-
-        .custom-order-right { padding: 56px 48px; }
-        @media (max-width: 768px) { .custom-order-right { padding: 40px 28px; } }
-
-        /* Form fields */
-        .field-group { margin-bottom: 20px; }
-        .field-label {
-            display: block; font-size: 9px; font-weight: 600;
-            letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim);
-            margin-bottom: 8px;
-        }
-        .field-input, .field-textarea, .field-select {
-            width: 100%; background: rgba(255,255,255,0.04);
-            border: 1px solid var(--border); color: var(--white);
-            font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 300;
-            padding: 12px 14px; outline: none; cursor: none;
-            transition: border-color 0.2s, background 0.2s;
-            appearance: none; -webkit-appearance: none;
-        }
-        .field-input:focus, .field-textarea:focus, .field-select:focus {
-            border-color: rgba(255,255,255,0.35);
-            background: rgba(255,255,255,0.06);
-        }
-        .field-input::placeholder, .field-textarea::placeholder { color: #444; }
-        .field-textarea { resize: vertical; min-height: 90px; }
-        .field-select option { background: #111; color: var(--white); }
-
-        /* Success state */
-        #order-success {
-            display: none; text-align: center; padding: 32px 0;
-        }
-        #order-success .tick {
-            width: 48px; height: 48px; border: 1px solid var(--border2);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 16px;
-        }
-
-        /* Floating badge on section */
-        .section-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            border: 1px solid var(--border2); padding: 5px 14px;
-            font-size: 9px; font-weight: 600; letter-spacing: 0.2em;
-            text-transform: uppercase; color: var(--white); margin-bottom: 20px;
-        }
-        .badge-star { color: var(--gold); }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wearwc | Luxury Timepieces</title>
+  
+  <style>
+    /* =========================================
+       1. CORE THEME & VARIABLES
+       ========================================= */
+    :root {
+      /* Core Backgrounds */
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F4F7F9; 
+      
+      /* The Blue Atmosphere */
+      --blue-navy: #0B192C; 
+      --blue-vibrant: #1E90FF; 
+      --blue-hover: #0F6cbd; 
+      
+      /* Typography */
+      --text-main: var(--blue-navy);
+      --text-muted: #556B8D;
+      --text-inverse: #FFFFFF;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.6s ease; /* Smooth scroll transition */
+    }
+
+    /* Scroll-triggered background class */
+    body.scrolled-theme {
+      background-color: var(--bg-secondary);
+    }
+
+    /* =========================================
+       2. ANIMATIONS
+       ========================================= */
+    @keyframes smoothFadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in-element {
+      animation: smoothFadeUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      opacity: 0; 
+    }
+
+    /* =========================================
+       3. BUTTONS & UI ELEMENTS
+       ========================================= */
+    .action-button, 
+    .ui-chat-toggle {
+      background-color: var(--blue-vibrant);
+      color: var(--text-inverse);
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .action-button:hover, 
+    .ui-chat-toggle:hover {
+      background-color: var(--blue-hover);
+      transform: translateY(-2px);
+    }
+
+    /* Chat Button fixed to bottom right */
+    .ui-chat-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+
+    /* =========================================
+       4. LAYOUT & COMPONENTS
+       ========================================= */
+    header {
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #E1E8ED;
+      background-color: var(--bg-primary);
+    }
+
+    .catalog-grid {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 40px 20px;
+      flex-wrap: wrap;
+    }
+
+    .watch-card {
+      background-color: var(--bg-primary);
+      border: 1px solid #E1E8ED;
+      border-radius: 12px;
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    }
+
+    /* =========================================
+       5. CHECKOUT PANEL
+       ========================================= */
+    .checkout-panel {
+      background-color: var(--bg-primary);
+      border: 1px solid #E1E8ED;
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 400px;
+      margin: 40px auto;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .panel-heading {
+      color: var(--blue-navy);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .panel-subtext {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+      line-height: 1.4;
+    }
+
+    .input-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--blue-navy);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #CCC;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-family: inherit;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--blue-vibrant);
+      box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.15); 
+    }
+
+    .full-width {
+      width: 100%;
+      margin-top: 10px;
+      font-size: 1rem;
+    }
+
+    /* =========================================
+       6. SOCIAL CONNECT
+       ========================================= */
+    .social-connect {
+      text-align: center;
+      padding: 40px 20px;
+      border-top: 1px solid #E1E8ED;
+      background-color: var(--bg-primary);
+    }
+
+    .social-heading {
+      color: var(--blue-navy);
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .social-links-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .social-btn {
+      background-color: var(--blue-vibrant);
+      color: var(--text-inverse);
+      text-decoration: none;
+      padding: 10px 25px;
+      border-radius: 30px;
+      font-weight: bold;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .social-btn:hover {
+      background-color: var(--blue-hover);
+      transform: translateY(-3px);
+    }
+  </style>
 </head>
 <body>
 
-<!-- Blurred background watch shapes -->
-<div id="bg-blur"></div>
-<div class="bg-watch-mid"></div>
-<div class="bg-watch-line h1"></div>
-<div class="bg-watch-line v1"></div>
-<div class="bg-watch-line h2"></div>
-<div class="bg-watch-line v2"></div>
+  <!-- HEADER -->
+  <header class="fade-in-element">
+    <h1 style="margin: 0; color: var(--blue-navy);">WEARWC</h1>
+    <p style="margin: 5px 0 0 0; color: var(--text-muted); font-size: 0.9rem;">Currency Toggle: USD / DZD</p>
+  </header>
 
-<!-- Cursor -->
-<div class="c-dot" id="cDot"></div>
-<div class="c-ring" id="cRing"></div>
-
-<!-- ═══════════════════════════════════════
-     PRELOADER — Realistic watch
-═══════════════════════════════════════ -->
-<div id="preloader">
-    <div style="display:flex; flex-direction:column; align-items:center;">
-        <div class="watch-wrap">
-            <!-- Lugs -->
-            <div class="watch-lug top"></div>
-            <div class="watch-lug bottom"></div>
-
-            <!-- Case -->
-            <div class="watch-case">
-                <!-- Crown -->
-                <div class="watch-crown"></div>
-                <!-- Dial -->
-                <div class="watch-dial" id="dialEl">
-
-                    <!-- 60 minute dots -->
-                    <!-- rendered by JS -->
-
-                    <!-- 12 hour indices -->
-                    <!-- rendered by JS -->
-
-                    <!-- Brand -->
-                    <div class="dial-brand">
-                        <svg class="crown-icon" viewBox="0 0 100 80">
-                            <path d="M50,80 C45,80 44,73 44,70 C44,60 30,62 24,42 C21,33 14,38 8,18 C14,21 23,33 27,27 C31,21 25,8 35,5 C41,3 42,18 50,18 C58,18 59,3 65,5 C75,8 69,21 73,27 C77,33 86,21 92,18 C86,38 79,33 76,42 C70,62 56,60 56,70 C56,73 55,80 50,80 Z" fill="#c9a84c"/>
-                        </svg>
-                        <div class="name">Rolex</div>
-                        <div class="model">Oyster Perpetual</div>
-                    </div>
-
-                    <!-- Date window -->
-                    <div class="date-window" id="dateNum">11</div>
-
-                    <!-- Hands -->
-                    <div class="hand-base hand-hour"  id="handH"></div>
-                    <div class="hand-base hand-minute" id="handM"></div>
-                    <div class="hand-base hand-second" id="handS"></div>
-                    <div class="hand-pin"></div>
-
-                    <!-- Glare -->
-                    <div class="dial-glare"></div>
-                </div>
-            </div>
-        </div>
-        <div class="loader-wordmark">wearwc</div>
+  <!-- PRODUCT CATALOG PLACEHOLDER -->
+  <main class="catalog-grid">
+    <div class="watch-card fade-in-element" style="animation-delay: 0.1s;">
+      <h3 style="color: var(--blue-navy);">Rolex Oyster GMT-MASTER</h3>
+      <p style="color: var(--text-muted);">$26 USD / 6550.00 DZD</p>
     </div>
-</div>
-
-<!-- ═══════════════════════════════════════
-     MAIN CONTENT
-═══════════════════════════════════════ -->
-<div id="main">
-
-    <!-- ── HEADER ── -->
-    <header>
-        <div class="container">
-            <div class="header-inner">
-                <!-- Wordmark -->
-                <a href="#" class="nav-wordmark">wear<span>wc</span></a>
-
-                <!-- Nav -->
-                <nav class="hidden md:flex" style="gap:32px;">
-                    <a href="#collection" class="active">Collection</a>
-                    <a href="#custom-order">Custom Order</a>
-                    <a href="#reviews">Reviews</a>
-                    <a href="#payment">Payment</a>
-                </nav>
-
-                <!-- Right -->
-                <div style="display:flex; align-items:center; gap:16px;">
-                    <select id="currencySelector" onchange="updateCurrency()"
-                        style="background:transparent; color:#888; border:1px solid var(--border); font-size:10px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; padding:8px 10px; cursor:none; outline:none;">
-                        <option value="USD">USD ($)</option>
-                        <option value="DZD">DZD (د.ج)</option>
-                    </select>
-                    <button onclick="toggleCart()" style="background:none; border:none; color:#888; padding:4px; position:relative; cursor:none;" aria-label="Cart">
-                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 11H4L5 9z"/></svg>
-                        <span id="cart-count" style="position:absolute; top:-4px; right:-4px; width:16px; height:16px; background:var(--white); color:var(--black); font-size:9px; font-weight:700; border-radius:50%; align-items:center; justify-content:center;">0</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- ── TRANSPARENCY BANNER ── -->
-    <div class="transparency-bar">
-        <p>
-            <strong>wearwc</strong> sells designer-inspired replica timepieces — not genuine Rolex products.
-            Prices, quality, and style speak for themselves. We're new, and we're proud of what we offer.
-        </p>
+    
+    <div class="watch-card fade-in-element" style="animation-delay: 0.2s;">
+      <h3 style="color: var(--blue-navy);">Cartier (Diamond Reserve)</h3>
+      <p style="color: var(--text-muted);">Inquire for Pricing</p>
     </div>
+  </main>
 
-    <!-- ── HERO ── -->
-    <section id="hero">
-        <div class="container">
-            <div class="hero-grid">
-                <!-- Copy side -->
-                <div class="reveal" style="position:relative;">
-                    <div class="new-badge">
-                        <span class="new-badge-dot"></span>
-                        New Store · Now Open
-                    </div>
-                    <h1 class="serif" style="font-size:clamp(38px,5vw,62px); line-height:1.1; font-weight:700; margin-bottom:24px; color:var(--white);">
-                        Wear the<br><em style="font-style:italic; color:rgba(255,255,255,0.6);">icon.</em><br>Not the price.
-                    </h1>
-                    <p style="font-size:14px; color:var(--dim); line-height:1.8; max-width:420px; margin-bottom:32px; font-weight:300;">
-                        Designer-inspired Rolex replicas, crafted to look and feel the part — shipped worldwide, delivered to your door. Launching with opening prices.
-                    </p>
+  <!-- SECURE CHECKOUT PANEL -->
+  <div class="checkout-panel fade-in-element" style="animation-delay: 0.3s;">
+    <h3 class="panel-heading">Secure Your Timepiece</h3>
+    <p class="panel-subtext">Provide your information below and our concierge team will contact you to finalize the transaction.</p>
+    
+    <!-- REMEMBER TO CHANGE THE EMAIL HERE -->
+    <form action="https://formsubmit.co/YOUR_EMAIL@DOMAIN.COM" method="POST" id="order-form" class="order-form">
+      <input type="hidden" name="_subject" value="New Luxury Timepiece Inquiry!">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_autoresponse" value="Thank you for your inquiry. Our concierge team will reach out shortly to finalize your request.">
+      
+      <div class="input-group">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" name="FullName" placeholder="Enter your full name" required>
+      </div>
+      
+      <div class="input-group">
+        <label for="phoneNumber">Phone Number</label>
+        <input type="tel" id="phoneNumber" name="PhoneNumber" placeholder="+123 456 7890" required>
+      </div>
+      
+      <div class="input-group">
+        <label for="city">City</label>
+        <input type="text" id="city" name="City" placeholder="e.g., Algiers, Dubai, London" required>
+      </div>
+      
+      <button type="submit" class="action-button full-width">Request Purchase</button>
+    </form>
+  </div>
 
-                    <!-- Opening sale notice -->
-                    <div style="border:1px solid var(--border2); padding:16px 20px; margin-bottom:32px; display:inline-block;">
-                        <p class="label" style="margin-bottom:6px;">Grand Opening Sale</p>
-                        <p style="font-size:13px; color:var(--white);">Was <span style="text-decoration:line-through; color:var(--dim);">$51</span> — now from <strong>$22</strong> while stock lasts.</p>
-                    </div>
-
-                    <div style="display:flex; gap:12px; flex-wrap:wrap;">
-                        <a href="#collection" class="btn-primary">Shop the Drop</a>
-                        <a href="#about" class="btn-ghost">Our Story</a>
-                    </div>
-                </div>
-
-                <!-- Image side -->
-                <div class="reveal hero-img-card" onclick="openLightbox('rolex1.png','Oyster GMT-Master')">
-                    <img src="rolex1.png" alt="Oyster GMT-Master" onerror="this.style.opacity='0'"/>
-                    <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.015) 0%,transparent 60%); pointer-events:none;"></div>
-                    <div class="overlay-label">
-                        <p class="label" style="color:rgba(255,255,255,0.35); margin-bottom:3px;">Featured</p>
-                        <p style="font-size:14px; font-weight:500; color:var(--white);">GMT-Master — Opening Price</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── COLLECTION ── -->
-    <section id="collection" style="padding:80px 0;">
-        <div class="container">
-            <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:40px;" class="reveal">
-                <div>
-                    <p class="label" style="margin-bottom:10px;">The Drop</p>
-                    <h2 class="serif" style="font-size:clamp(28px,4vw,42px); font-weight:700; color:var(--white);">Collection</h2>
-                </div>
-                <p style="font-size:11px; color:var(--dim); display:none;" id="dragHint">← swipe →</p>
-            </div>
-
-            <div class="products-grid reveal">
-
-                <!-- Card 1: GMT-Master -->
-                <div class="card" style="overflow:hidden;">
-                    <div class="product-img" style="background-image:url('rolex1.png');"
-                         onclick="openLightbox('rolex1.png','Oyster GMT-Master')">
-                        <div class="zoom-icon">
-                            <svg width="24" height="24" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
-                        </div>
-                    </div>
-                    <div style="padding:20px;">
-                        <p class="label" style="margin-bottom:6px; color:var(--dim);">Rolex · GMT-Master</p>
-                        <h3 style="font-size:16px; font-weight:600; color:var(--white); margin-bottom:6px;">Oyster GMT-MASTER</h3>
-                        <p style="font-size:12px; color:var(--dim); line-height:1.7; margin-bottom:16px;">Dual time-zone bidirectional bezel. Jubilee bracelet. Bi-colour cerachrom insert.</p>
-                        <div class="price-wrap" style="margin-bottom:16px;">
-                            <span class="price-orig" data-usd-orig="51" data-dzd-orig="12800">$51</span>
-                            <span class="price-now price-display" data-usd="26" data-dzd="6550">$26 USD</span>
-                            <span class="sale-tag">New Store</span>
-                        </div>
-                        <div style="display:flex; gap:8px;">
-                            <button onclick="addToCart('Oyster GMT-Master','rolex1.png',26,6550)" class="btn-primary" style="padding:10px 20px; font-size:9px;">Add to Cart</button>
-                            <a href="YOUR_SHOPIFY_LINK_1" target="_blank" class="btn-ghost" style="padding:10px 20px; font-size:9px;">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 2: Yacht-Master -->
-                <div class="card" style="overflow:hidden;">
-                    <div class="product-img" style="background-image:url('rolex2.png');"
-                         onclick="openLightbox('rolex2.png','Oyster Yacht-Master')">
-                        <div class="zoom-icon">
-                            <svg width="24" height="24" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
-                        </div>
-                    </div>
-                    <div style="padding:20px;">
-                        <p class="label" style="margin-bottom:6px; color:var(--dim);">Rolex · Yacht-Master</p>
-                        <h3 style="font-size:16px; font-weight:600; color:var(--white); margin-bottom:6px;">Oyster YACHT-MASTER</h3>
-                        <p style="font-size:12px; color:var(--dim); line-height:1.7; margin-bottom:16px;">Rotatable graduated bezel. Polished Oyster bracelet. Maritime heritage silhouette.</p>
-                        <div class="price-wrap" style="margin-bottom:16px;">
-                            <span class="price-orig" data-usd-orig="51" data-dzd-orig="12800">$51</span>
-                            <span class="price-now price-display" data-usd="26" data-dzd="6550">$26 USD</span>
-                            <span class="sale-tag">New Store</span>
-                        </div>
-                        <div style="display:flex; gap:8px;">
-                            <button onclick="addToCart('Oyster Yacht-Master','rolex2.png',26,6550)" class="btn-primary" style="padding:10px 20px; font-size:9px;">Add to Cart</button>
-                            <a href="YOUR_SHOPIFY_LINK_2" target="_blank" class="btn-ghost" style="padding:10px 20px; font-size:9px;">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 3: Datejust -->
-                <div class="card" style="overflow:hidden;">
-                    <div class="product-img" id="datejust-img" style="background-image:url('rolex3.png');"
-                         onclick="openLightbox(document.getElementById('datejust-img').style.backgroundImage.replace(/url\(['\"]?(.*?)['\"]?\)/,'$1'),'Oyster Datejust')">
-                        <div class="zoom-icon">
-                            <svg width="24" height="24" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
-                        </div>
-                    </div>
-                    <div style="padding:20px;">
-                        <!-- Colour swatches -->
-                        <div style="display:flex; gap:10px; margin-bottom:14px;">
-                            <button title="Steel" class="colour-swatch active" style="background:#D8D8D8;"
-                                    onclick="switchDJ('rolex3.png',this)"></button>
-                            <button title="Gold" class="colour-swatch" style="background:#C9A84C;"
-                                    onclick="switchDJ('rolex3_gold.png',this)"></button>
-                            <button title="Rose Gold" class="colour-swatch" style="background:#B76E79;"
-                                    onclick="switchDJ('rolex3_rose.png',this)"></button>
-                        </div>
-                        <p class="label" style="margin-bottom:6px; color:var(--dim);">Rolex · Datejust · 3 Finishes</p>
-                        <h3 style="font-size:16px; font-weight:600; color:var(--white); margin-bottom:6px;">Oyster DATE JUST</h3>
-                        <p style="font-size:12px; color:var(--dim); line-height:1.7; margin-bottom:16px;">Fluted bezel. Cyclops date magnifier. The quintessential dress watch in three metals.</p>
-                        <div class="price-wrap" style="margin-bottom:16px;">
-                            <span class="price-orig" data-usd-orig="51" data-dzd-orig="12800">$51</span>
-                            <span class="price-now price-display" data-usd="22" data-dzd="5800">$22 USD</span>
-                            <span class="sale-tag">New Store</span>
-                        </div>
-                        <div style="display:flex; gap:8px;">
-                            <button onclick="addToCart('Oyster Datejust','rolex3.png',22,5800)" class="btn-primary" style="padding:10px 20px; font-size:9px;">Add to Cart</button>
-                            <a href="YOUR_SHOPIFY_LINK_3" target="_blank" class="btn-ghost" style="padding:10px 20px; font-size:9px;">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- ── ABOUT / TRANSPARENCY ── -->
-    <section id="about" style="padding:80px 0; border-top:1px solid var(--border);">
-        <div class="container reveal">
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;">
-                <div>
-                    <p class="label" style="margin-bottom:14px;">Who We Are</p>
-                    <h2 class="serif" style="font-size:clamp(28px,4vw,44px); font-weight:700; color:var(--white); margin-bottom:20px;">New. Honest. Built on quality.</h2>
-                    <p style="font-size:13px; color:var(--dim); line-height:1.9; margin-bottom:16px; font-weight:300;">
-                        <strong style="color:rgba(255,255,255,0.6);">wearwc</strong> is a brand-new store. We sell high-quality, designer-inspired replica timepieces — we're upfront about that. We're not pretending to be Rolex, and we're not hiding behind vague language.
-                    </p>
-                    <p style="font-size:13px; color:var(--dim); line-height:1.9; font-weight:300;">
-                        What we promise: remarkable build quality, discreet shipping, honest pricing, and real support. Because we're new, we're running an opening-price sale — every piece marked down from $51 while we build our name.
-                    </p>
-                </div>
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border);">
-                    <div style="background:var(--black); padding:28px 24px;">
-                        <p style="font-size:32px; font-weight:700; color:var(--white); font-family:'Playfair Display',serif;">3</p>
-                        <p class="label" style="margin-top:6px;">Models Available</p>
-                    </div>
-                    <div style="background:var(--black); padding:28px 24px;">
-                        <p style="font-size:32px; font-weight:700; color:var(--white); font-family:'Playfair Display',serif;">$22</p>
-                        <p class="label" style="margin-top:6px;">Starting Price</p>
-                    </div>
-                    <div style="background:var(--black); padding:28px 24px;">
-                        <p style="font-size:32px; font-weight:700; color:var(--white); font-family:'Playfair Display',serif;">14d</p>
-                        <p class="label" style="margin-top:6px;">Max Delivery</p>
-                    </div>
-                    <div style="background:var(--black); padding:28px 24px;">
-                        <p style="font-size:32px; font-weight:700; color:var(--white); font-family:'Playfair Display',serif;">100%</p>
-                        <p class="label" style="margin-top:6px;">Refund If Lost</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── PAYMENT ── -->
-    <section id="payment" style="padding:80px 0; border-top:1px solid var(--border);">
-        <div class="container reveal">
-            <div style="text-align:center; margin-bottom:48px;">
-                <p class="label" style="margin-bottom:10px;">How to Pay</p>
-                <h2 class="serif" style="font-size:clamp(28px,4vw,42px); font-weight:700; color:var(--white);">Payment Options</h2>
-            </div>
-
-            <div class="payment-grid">
-                <!-- Worldwide -->
-                <div class="payment-cell">
-                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
-                        <svg width="28" height="28" fill="none" stroke="white" stroke-width="1.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
-                        <p class="label" style="color:var(--white);">Worldwide</p>
-                    </div>
-                    <h3 style="font-size:22px; font-weight:700; color:var(--white); margin-bottom:12px; font-family:'Playfair Display',serif;">Card Payment</h3>
-                    <p style="font-size:13px; color:var(--dim); line-height:1.8; font-weight:300; margin-bottom:20px;">All major debit and credit cards accepted via our secure Shopify checkout. PayPal also available. Your payment info is never stored.</p>
-                    <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                        <span style="border:1px solid var(--border2); padding:6px 12px; font-size:10px; font-weight:600; letter-spacing:0.1em; color:var(--white);">VISA</span>
-                        <span style="border:1px solid var(--border2); padding:6px 12px; font-size:10px; font-weight:600; letter-spacing:0.1em; color:var(--white);">MASTERCARD</span>
-                        <span style="border:1px solid var(--border2); padding:6px 12px; font-size:10px; font-weight:600; letter-spacing:0.1em; color:var(--white);">PAYPAL</span>
-                    </div>
-                </div>
-
-                <!-- Algeria -->
-                <div class="payment-cell">
-                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
-                        <span style="font-size:24px; line-height:1;">🇩🇿</span>
-                        <p class="label" style="color:var(--white);">Algeria Only</p>
-                    </div>
-                    <h3 style="font-size:22px; font-weight:700; color:var(--white); margin-bottom:12px; font-family:'Playfair Display',serif;">Cash on Delivery</h3>
-                    <p style="font-size:13px; color:var(--dim); line-height:1.8; font-weight:300; margin-bottom:20px;">Based in Algeria? Pay when you receive your parcel — no card required. Simply place your order via WhatsApp and we'll arrange delivery to your wilaya.</p>
-                    <a href="https://wa.me/213XXXXXXXXX" target="_blank" class="btn-primary" style="font-size:9px; padding:12px 24px; display:inline-flex; align-items:center; gap:8px; text-decoration:none;">
-                        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                        Order via WhatsApp
-                    </a>
-                </div>
-            </div>
-
-            <!-- Shipping strip -->
-            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); margin-top:1px;">
-                <div style="background:var(--black); padding:24px 20px; text-align:center;">
-                    <svg width="22" height="22" fill="none" stroke="#888" stroke-width="1.5" viewBox="0 0 24 24" style="margin:0 auto 8px;"><path stroke-linecap="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
-                    <p style="font-size:12px; color:var(--white); font-weight:500; margin-bottom:3px;">Discreet Packing</p>
-                    <p style="font-size:11px; color:var(--dim);">Plain box, no branding</p>
-                </div>
-                <div style="background:var(--black); padding:24px 20px; text-align:center;">
-                    <svg width="22" height="22" fill="none" stroke="#888" stroke-width="1.5" viewBox="0 0 24 24" style="margin:0 auto 8px;"><path stroke-linecap="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    <p style="font-size:12px; color:var(--white); font-weight:500; margin-bottom:3px;">7–14 Days</p>
-                    <p style="font-size:11px; color:var(--dim);">Worldwide delivery</p>
-                </div>
-                <div style="background:var(--black); padding:24px 20px; text-align:center;">
-                    <svg width="22" height="22" fill="none" stroke="#888" stroke-width="1.5" viewBox="0 0 24 24" style="margin:0 auto 8px;"><path stroke-linecap="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                    <p style="font-size:12px; color:var(--white); font-weight:500; margin-bottom:3px;">Buyer Protection</p>
-                    <p style="font-size:11px; color:var(--dim);">Full refund if lost</p>
-                </div>
-                <div style="background:var(--black); padding:24px 20px; text-align:center;">
-                    <svg width="22" height="22" fill="none" stroke="#888" stroke-width="1.5" viewBox="0 0 24 24" style="margin:0 auto 8px;"><path stroke-linecap="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-                    <p style="font-size:12px; color:var(--white); font-weight:500; margin-bottom:3px;">Secure Checkout</p>
-                    <p style="font-size:11px; color:var(--dim);">Powered by Shopify</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── REVIEWS ── -->
-    <section id="reviews" style="padding:80px 0; border-top:1px solid var(--border);">
-        <div class="container reveal">
-            <div style="text-align:center; margin-bottom:48px;">
-                <p class="label" style="margin-bottom:10px;">Early Clients</p>
-                <h2 class="serif" style="font-size:clamp(28px,4vw,42px); font-weight:700; color:var(--white);">What They Said</h2>
-            </div>
-            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border);">
-                <div style="background:var(--black); padding:32px 28px;">
-                    <div class="stars" style="margin-bottom:14px;">★★★★★</div>
-                    <p style="font-size:13px; color:rgba(255,255,255,0.65); line-height:1.8; font-weight:300; font-style:italic;">"Arrived perfectly. Looks stunning — nobody suspects a thing. Fast shipping too."</p>
-                    <div style="margin-top:20px; display:flex; align-items:center; gap:10px;">
-                        <div style="width:32px; height:32px; border-radius:50%; background:var(--mid); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:var(--white);">KA</div>
-                        <div>
-                            <p style="font-size:12px; font-weight:500; color:var(--white);">Karim A.</p>
-                            <p style="font-size:11px; color:var(--dim);">Alger, DZ</p>
-                        </div>
-                    </div>
-                </div>
-                <div style="background:var(--black); padding:32px 28px;">
-                    <div class="stars" style="margin-bottom:14px;">★★★★★</div>
-                    <p style="font-size:13px; color:rgba(255,255,255,0.65); line-height:1.8; font-weight:300; font-style:italic;">"The GMT-Master is incredible quality for the price. Weight and feel are spot on."</p>
-                    <div style="margin-top:20px; display:flex; align-items:center; gap:10px;">
-                        <div style="width:32px; height:32px; border-radius:50%; background:var(--mid); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:var(--white);">YB</div>
-                        <div>
-                            <p style="font-size:12px; font-weight:500; color:var(--white);">Yacine B.</p>
-                            <p style="font-size:11px; color:var(--dim);">Oran, DZ</p>
-                        </div>
-                    </div>
-                </div>
-                <div style="background:var(--black); padding:32px 28px;">
-                    <div class="stars" style="margin-bottom:14px;">★★★★☆</div>
-                    <p style="font-size:13px; color:rgba(255,255,255,0.65); line-height:1.8; font-weight:300; font-style:italic;">"Datejust rose gold finish is gorgeous. WhatsApp support replied in minutes."</p>
-                    <div style="margin-top:20px; display:flex; align-items:center; gap:10px;">
-                        <div style="width:32px; height:32px; border-radius:50%; background:var(--mid); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:var(--white);">SM</div>
-                        <div>
-                            <p style="font-size:12px; font-weight:500; color:var(--white);">Sara M.</p>
-                            <p style="font-size:11px; color:var(--dim);">Constantine, DZ</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── LOOK FOR YOUR MODEL ── -->
-    <section id="custom-order">
-        <div class="container reveal">
-            <!-- Header -->
-            <div style="text-align:center; margin-bottom:56px;">
-                <div class="section-badge" style="margin:0 auto 20px; display:inline-flex;">
-                    <span class="badge-star">✦</span>
-                    Bespoke Service
-                    <span class="badge-star">✦</span>
-                </div>
-                <h2 class="serif" style="font-size:clamp(32px,5vw,56px); font-weight:700; color:var(--white); line-height:1.05; margin-bottom:16px;">
-                    Look for<br><em style="color:rgba(255,255,255,0.45);">Your Model.</em>
-                </h2>
-                <p style="font-size:14px; color:var(--dim); max-width:480px; margin:0 auto; line-height:1.8; font-weight:300;">
-                    Don't see the exact model you want? Tell us. We source to order — any Rolex reference, any dial, any bracelet. If it exists, we'll find it.
-                </p>
-            </div>
-
-            <!-- Main card -->
-            <div class="custom-order-grid">
-
-                <!-- Left: How it works -->
-                <div class="custom-order-left">
-                    <p class="label" style="margin-bottom:28px;">How It Works</p>
-
-                    <div style="display:flex; flex-direction:column; gap:0; border-top:1px solid var(--border);">
-                        <!-- Step 1 -->
-                        <div style="display:flex; gap:20px; padding:24px 0; border-bottom:1px solid var(--border);">
-                            <div style="width:28px; height:28px; border:1px solid var(--border2); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-                                <span style="font-size:11px; font-weight:700; color:var(--white);">01</span>
-                            </div>
-                            <div>
-                                <p style="font-size:13px; font-weight:600; color:var(--white); margin-bottom:5px;">Describe Your Watch</p>
-                                <p style="font-size:12px; color:var(--dim); line-height:1.7; font-weight:300;">Fill in the form with the model name, reference number if you have it, preferred dial colour, and bracelet type.</p>
-                            </div>
-                        </div>
-                        <!-- Step 2 -->
-                        <div style="display:flex; gap:20px; padding:24px 0; border-bottom:1px solid var(--border);">
-                            <div style="width:28px; height:28px; border:1px solid var(--border2); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-                                <span style="font-size:11px; font-weight:700; color:var(--white);">02</span>
-                            </div>
-                            <div>
-                                <p style="font-size:13px; font-weight:600; color:var(--white); margin-bottom:5px;">We Source It</p>
-                                <p style="font-size:12px; color:var(--dim); line-height:1.7; font-weight:300;">Within 24–48 hours our team responds via WhatsApp with pricing, photos, and availability confirmation.</p>
-                            </div>
-                        </div>
-                        <!-- Step 3 -->
-                        <div style="display:flex; gap:20px; padding:24px 0; border-bottom:1px solid var(--border);">
-                            <div style="width:28px; height:28px; border:1px solid var(--border2); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-                                <span style="font-size:11px; font-weight:700; color:var(--white);">03</span>
-                            </div>
-                            <div>
-                                <p style="font-size:13px; font-weight:600; color:var(--white); margin-bottom:5px;">Confirm & Ship</p>
-                                <p style="font-size:12px; color:var(--dim); line-height:1.7; font-weight:300;">Once you approve, we process payment and dispatch. Card worldwide — Cash on Delivery for Algeria.</p>
-                            </div>
-                        </div>
-                        <!-- Step 4 -->
-                        <div style="display:flex; gap:20px; padding:24px 0;">
-                            <div style="width:28px; height:28px; border:1px solid var(--border2); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-                                <span style="font-size:11px; font-weight:700; color:var(--white);">04</span>
-                            </div>
-                            <div>
-                                <p style="font-size:13px; font-weight:600; color:var(--white); margin-bottom:5px;">Delivered to You</p>
-                                <p style="font-size:12px; color:var(--dim); line-height:1.7; font-weight:300;">7–14 days to your door in discreet, plain packaging. Tracked and fully insured.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Popular requests chips -->
-                    <div style="margin-top:28px;">
-                        <p class="label" style="margin-bottom:12px; color:#555;">Popular Requests</p>
-                        <div style="display:flex; flex-wrap:wrap; gap:8px;">
-                            <span onclick="fillModel('Submariner Date')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Submariner Date</span>
-                            <span onclick="fillModel('Daytona Panda')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Daytona Panda</span>
-                            <span onclick="fillModel('Sky-Dweller Two-Tone')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Sky-Dweller Two-Tone</span>
-                            <span onclick="fillModel('Explorer II Black Dial')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Explorer II Black Dial</span>
-                            <span onclick="fillModel('Day-Date President')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Day-Date President</span>
-                            <span onclick="fillModel('Milgauss')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Milgauss</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right: Form -->
-                <div class="custom-order-right">
-                    <p class="label" style="margin-bottom:28px;">Your Request</p>
-
-                    <div id="order-form-wrap">
-                        <div class="field-group">
-                            <label class="field-label">Model Name *</label>
-                            <input type="text" id="orderModel" class="field-input" placeholder="e.g. Submariner No-Date, Daytona…"/>
-                        </div>
-                        <div class="field-group">
-                            <label class="field-label">Dial Colour</label>
-                            <select id="orderDial" class="field-select">
-                                <option value="" disabled selected>Select dial colour</option>
-                                <option>Black</option>
-                                <option>White / Silver</option>
-                                <option>Blue</option>
-                                <option>Green</option>
-                                <option>Champagne / Gold</option>
-                                <option>Grey / Slate</option>
-                                <option>Brown / Chocolate</option>
-                                <option>Other — I'll describe below</option>
-                            </select>
-                        </div>
-                        <div class="field-group">
-                            <label class="field-label">Bracelet / Strap</label>
-                            <select id="orderBracelet" class="field-select">
-                                <option value="" disabled selected>Select bracelet type</option>
-                                <option>Oyster (steel)</option>
-                                <option>Jubilee (steel)</option>
-                                <option>President (gold)</option>
-                                <option>Pearlmaster</option>
-                                <option>Leather strap</option>
-                                <option>Rubber / sport strap</option>
-                                <option>Not sure</option>
-                            </select>
-                        </div>
-                        <div class="field-group">
-                            <label class="field-label">Your WhatsApp Number *</label>
-                            <input type="tel" id="orderPhone" class="field-input" placeholder="+213 or international format"/>
-                        </div>
-                        <div class="field-group">
-                            <label class="field-label">Extra Details / Reference Number</label>
-                            <textarea id="orderNotes" class="field-textarea" placeholder="Any extra info — reference number, images you've seen, budget, country…"></textarea>
-                        </div>
-                        <button onclick="submitCustomOrder()" class="btn-primary" style="width:100%; font-size:10px; padding:16px; margin-top:4px;">
-                            Send My Request via WhatsApp →
-                        </button>
-                        <p style="font-size:10px; color:#444; margin-top:10px; text-align:center;">We respond within 24 hours. No spam, no obligation.</p>
-                    </div>
-
-                    <!-- Success message -->
-                    <div id="order-success">
-                        <div class="tick">
-                            <svg width="20" height="20" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <h3 class="serif" style="font-size:22px; color:var(--white); margin-bottom:10px;">Request Sent!</h3>
-                        <p style="font-size:13px; color:var(--dim); line-height:1.7; font-weight:300; max-width:280px; margin:0 auto;">Opening WhatsApp with your request pre-filled. We'll reply within 24 hours.</p>
-                        <button onclick="resetOrderForm()" class="btn-ghost" style="margin-top:24px; font-size:9px; padding:10px 24px;">Send Another Request</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── DIAMOND RESERVE ── -->
-    <section style="padding:100px 0; border-top:1px solid var(--border); text-align:center;">
-        <div class="container reveal">
-            <p class="label" style="margin-bottom:14px;">Coming Soon</p>
-            <h2 class="serif text-shimmer" style="font-size:clamp(40px,6vw,72px); font-weight:700; line-height:1.05; margin-bottom:32px;">The Diamond Reserve</h2>
-            <div style="border:1px solid var(--border2); display:inline-block; padding:20px 40px;">
-                <p style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:var(--dim);">Collection Unlocking Soon</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── FOOTER ── -->
-    <footer style="border-top:1px solid var(--border); background:rgba(0,0,0,0.6); padding:64px 0 32px;">
-        <div class="container">
-            <div style="display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:48px; margin-bottom:48px;">
-                <div>
-                    <a href="#" class="nav-wordmark" style="display:inline-block; margin-bottom:12px; text-decoration:none;">wear<span>wc</span></a>
-                    <p style="font-size:12px; color:var(--dim); line-height:1.8; font-weight:300; max-width:280px;">Designer-inspired timepieces. We're transparent, new, and proud. Opening prices now live.</p>
-                </div>
-                <div>
-                    <p class="label" style="margin-bottom:16px;">Navigate</p>
-                    <div style="display:flex; flex-direction:column; gap:10px;">
-                        <a href="#collection" class="footer-link">Collection</a>
-                        <a href="#about" class="footer-link">About Us</a>
-                        <a href="#reviews" class="footer-link">Reviews</a>
-                        <a href="#payment" class="footer-link">Payment & Shipping</a>
-                    </div>
-                </div>
-                <div>
-                    <p class="label" style="margin-bottom:16px;">Connect</p>
-                    <div style="display:flex; flex-direction:column; gap:10px;">
-                        <a href="https://wa.me/213XXXXXXXXX" target="_blank" class="footer-link" style="display:flex; align-items:center; gap:8px;">
-                            <svg width="14" height="14" fill="#22c55e" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                            WhatsApp
-                        </a>
-                        <a href="https://instagram.com/YOUR_INSTAGRAM" target="_blank" class="footer-link" style="display:flex; align-items:center; gap:8px;">
-                            <svg width="14" height="14" fill="#e1306c" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                            Instagram
-                        </a>
-                        <a href="https://tiktok.com/@YOUR_TIKTOK" target="_blank" class="footer-link" style="display:flex; align-items:center; gap:8px;">
-                            <svg width="14" height="14" fill="#69C9D0" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.99a8.18 8.18 0 004.77 1.53V7.07a4.85 4.85 0 01-1-.38z"/></svg>
-                            TikTok
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div style="border-top:1px solid var(--border); padding-top:24px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px;">
-                <p style="font-size:11px; color:#444;">&copy; 2025 wearwc. All rights reserved.</p>
-                <p style="font-size:11px; color:#444;">Designer-inspired replicas. Not affiliated with Rolex SA or any luxury brand.</p>
-            </div>
-        </div>
-    </footer>
-
-</div><!-- end #main -->
-
-<!-- ═══════════════════════════════════════
-     LIGHTBOX
-═══════════════════════════════════════ -->
-<div id="lightbox" onclick="closeLightbox()">
-    <div style="position:relative; max-width:500px; width:90%; margin:0 auto;" onclick="event.stopPropagation()">
-        <button onclick="closeLightbox()" style="position:absolute; top:-40px; right:0; background:none; border:none; color:#888; font-size:28px; cursor:none;">&times;</button>
-        <div style="border:1px solid var(--border2); background:#0a0a0a; padding:16px;">
-            <img id="lightbox-img" src="" alt="" style="width:100%; aspect-ratio:1; object-fit:contain; display:block;" onerror="this.style.display='none'"/>
-            <p id="lightbox-title" style="text-align:center; font-family:'Playfair Display',serif; font-size:18px; color:var(--white); margin-top:16px;"></p>
-        </div>
+  <!-- SOCIAL LINKS -->
+  <section class="social-connect fade-in-element" style="animation-delay: 0.4s;">
+    <h3 class="social-heading">Follow The Collection</h3>
+    <div class="social-links-container">
+      <a href="YOUR_INSTAGRAM_LINK" target="_blank" class="social-btn">Instagram</a>
+      <a href="YOUR_TIKTOK_LINK" target="_blank" class="social-btn">TikTok</a>
     </div>
-</div>
+  </section>
 
-<!-- ═══════════════════════════════════════
-     CART PANEL
-═══════════════════════════════════════ -->
-<div id="cartPanel">
-    <div style="padding:20px 20px 16px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
-        <h3 style="font-family:'Playfair Display',serif; font-size:18px; color:var(--white);">Your Selection</h3>
-        <button onclick="toggleCart()" style="background:none; border:none; color:#888; font-size:24px; cursor:none;">&times;</button>
-    </div>
-    <div id="cartItems" class="hide-scroll" style="flex:1; overflow-y:auto; padding:16px;">
-        <p id="cart-empty" style="color:var(--dim); font-size:13px; text-align:center; margin-top:32px;">Your cart is empty.</p>
-    </div>
-    <div style="padding:16px; border-top:1px solid var(--border);">
-        <div style="display:flex; justify-content:space-between; margin-bottom:14px;">
-            <span style="font-size:13px; color:var(--dim);">Total</span>
-            <span id="cart-total" style="font-size:14px; font-weight:600; color:var(--white);">$0 USD</span>
-        </div>
-        <a id="checkout-btn" href="YOUR_SHOPIFY_CHECKOUT_LINK" target="_blank" class="btn-primary" style="width:100%; text-align:center; display:block; text-decoration:none; font-size:10px;">Proceed to Checkout</a>
-        <p style="font-size:10px; color:#444; text-align:center; margin-top:8px;">Secured by Shopify</p>
-    </div>
-</div>
-<div id="cart-overlay" onclick="toggleCart()"></div>
+  <!-- UI CHAT TOGGLE (With Whoop Sound) -->
+  <button id="ui-chat-btn" class="ui-chat-toggle fade-in-element" style="animation-delay: 0.5s;">
+    Message Us
+  </button>
 
-<!-- ═══════════════════════════════════════
-     FAB BUTTONS
-═══════════════════════════════════════ -->
-<!-- Music toggle -->
-<button id="musicBtn" onclick="toggleMusic()" data-tip="AMBIENT MUSIC" aria-label="Toggle ambient music">
-    <div class="bars">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-    </div>
-</button>
-
-<!-- WhatsApp -->
-<a href="https://wa.me/213XXXXXXXXX" target="_blank"
-   style="position:fixed; bottom:20px; right:72px; z-index:50; background:#16a34a; color:#fff; padding:14px; border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; cursor:none;"
-   aria-label="WhatsApp">
-    <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
-<!-- Chat -->
-<button onclick="toggleChat()"
-   style="position:fixed; bottom:20px; right:20px; z-index:50; background:var(--white); color:var(--black); padding:14px; border:none; display:flex; align-items:center; justify-content:center; cursor:none;"
-   aria-label="AI Chat">
-    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
-</button>
-
-<!-- ═══════════════════════════════════════
-     AI CHAT PANEL
-═══════════════════════════════════════ -->
-<div id="chatPanel">
-    <div style="padding:14px 16px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
-        <div>
-            <p style="font-family:'Playfair Display',serif; font-size:15px; color:var(--white);">Concierge</p>
-            <p style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--dim);">AI · wearwc</p>
-        </div>
-        <button onclick="toggleChat()" style="background:none; border:none; color:#888; font-size:20px; cursor:none;">&times;</button>
-    </div>
-    <div id="chatMessages" class="hide-scroll" style="padding:14px; height:220px; overflow-y:auto; display:flex; flex-direction:column; gap:10px;">
-        <div style="background:rgba(255,255,255,0.04); border:1px solid var(--border); padding:12px; border-radius:2px;">
-            <p style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:var(--dim); margin-bottom:5px;">Concierge</p>
-            <p style="font-size:12px; color:rgba(255,255,255,0.8); line-height:1.7; font-weight:300;">Welcome to wearwc. Ask me about models, pricing, shipping, or Cash on Delivery in Algeria.</p>
-        </div>
-    </div>
-    <div style="padding:12px; border-top:1px solid var(--border);">
-        <form onsubmit="sendChatMessage(event)" style="display:flex; gap:8px;">
-            <input type="text" id="chatInput" placeholder="Ask anything..." autocomplete="off"
-                   style="flex:1; background:rgba(255,255,255,0.04); border:1px solid var(--border); padding:10px 12px; color:var(--white); font-size:12px; outline:none; font-family:'Inter',sans-serif; font-weight:300; cursor:none;"/>
-            <button type="submit" id="chatSendBtn" class="btn-primary" style="padding:0 16px; font-size:9px;">→</button>
-        </form>
-    </div>
-</div>
-
-<!-- ═══════════════════════════════════════
-     SCRIPTS
-═══════════════════════════════════════ -->
-<script>
-// ── Preloader: build dial indices ────────────────────────────────────────────
-(function buildDial() {
-    const dial = document.getElementById('dialEl');
-    // 60 minute dots
-    for (let i = 0; i < 60; i++) {
-        const dot = document.createElement('div');
-        dot.className = 'minute-dot';
-        dot.style.transform = `rotate(${i * 6}deg)`;
-        dial.appendChild(dot);
-    }
-    // 12 hour markers (override dots at hour positions)
-    for (let i = 0; i < 12; i++) {
-        const idx = document.createElement('div');
-        idx.className = 'dial-index';
-        idx.style.transform = `rotate(${i * 30}deg)`;
-        idx.style.background = i % 3 === 0 ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.6)';
-        idx.style.height = i % 3 === 0 ? '10px' : '6px';
-        idx.style.width = i % 3 === 0 ? '3px' : '2px';
-        dial.appendChild(idx);
-    }
-    // Set date to today
-    document.getElementById('dateNum').textContent = new Date().getDate();
-    // Set hour hand to actual time
-    const now = new Date();
-    const h = now.getHours() % 12 + now.getMinutes() / 60;
-    document.getElementById('handH').style.transform = `rotate(${h * 30}deg)`;
-})();
-
-// ── Preloader dismiss ────────────────────────────────────────────────────────
-window.addEventListener('load', function() {
-    setTimeout(function() {
-        const pl = document.getElementById('preloader');
-        const main = document.getElementById('main');
-        pl.style.opacity = '0';
-        pl.style.pointerEvents = 'none';
-        main.classList.add('visible');
-        setTimeout(() => { pl.style.display = 'none'; }, 800);
-    }, 2600);
-});
-
-// ── Custom cursor ─────────────────────────────────────────────────────────────
-(function() {
-    if (!window.matchMedia('(pointer: fine)').matches) return;
-    const dot = document.getElementById('cDot');
-    const ring = document.getElementById('cRing');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    window.addEventListener('mousemove', e => {
-        mx = e.clientX; my = e.clientY;
-        dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
+  <!-- =========================================
+       JAVASCRIPT 
+       ========================================= -->
+  <script>
+    // 1. SCROLL-TRIGGERED THEME SHIFT
+    window.addEventListener('scroll', () => {
+      const body = document.body;
+      if (window.scrollY > 150) {
+        body.classList.add('scrolled-theme');
+      } else {
+        body.classList.remove('scrolled-theme');
+      }
     });
-    (function animate() {
-        rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
-        ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
-        requestAnimationFrame(animate);
-    })();
-    document.querySelectorAll('a, button, select, input, [onclick], .card').forEach(el => {
-        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
-        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
-    });
-})();
 
-// ── Scroll reveal ─────────────────────────────────────────────────────────────
-new IntersectionObserver((entries, obs) => {
-    entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
-    });
-}, { threshold: 0.08 }).observe(...[document.querySelectorAll('.reveal')].map(n => { n.forEach(el => new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){e[0].target.classList.add('in');o.disconnect();}},{threshold:0.08}).observe(el)); return document.createElement('div'); }));
-
-// Simpler reveal loop
-document.querySelectorAll('.reveal').forEach(el => {
-    new IntersectionObserver((entries, obs) => {
-        if (entries[0].isIntersecting) { el.classList.add('in'); obs.disconnect(); }
-    }, { threshold: 0.08 }).observe(el);
-});
-
-// ── Colour switcher ───────────────────────────────────────────────────────────
-function switchDJ(src, btn) {
-    document.getElementById('datejust-img').style.backgroundImage = `url('${src}')`;
-    btn.closest('div').querySelectorAll('.colour-swatch').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-}
-
-// ── Currency ──────────────────────────────────────────────────────────────────
-let currency = 'USD';
-function updateCurrency() {
-    currency = document.getElementById('currencySelector').value;
-    document.querySelectorAll('.price-display').forEach(el => {
-        el.textContent = currency === 'DZD'
-            ? el.dataset.dzd + '.00 DZD'
-            : '$' + el.dataset.usd + ' USD';
-    });
-    document.querySelectorAll('.price-orig').forEach(el => {
-        el.textContent = currency === 'DZD'
-            ? el.dataset.dzdOrig + '.00 DZD'
-            : '$' + el.dataset.usdOrig;
-    });
-    renderCart();
-}
-
-// ── Lightbox ──────────────────────────────────────────────────────────────────
-function openLightbox(src, title) {
-    document.getElementById('lightbox-img').src = src;
-    document.getElementById('lightbox-title').textContent = title;
-    document.getElementById('lightbox').classList.add('open');
-    document.body.style.overflow = 'hidden';
-}
-function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('open');
-    document.body.style.overflow = '';
-}
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeLightbox(); closeCart(); } });
-
-// ── Cart ──────────────────────────────────────────────────────────────────────
-let cart = [];
-function addToCart(name, img, usd, dzd) {
-    const ex = cart.find(i => i.name === name);
-    if (ex) ex.qty++; else cart.push({ name, img, usd, dzd, qty: 1 });
-    renderCart(); openCart(); playSwoosh();
-}
-function removeFromCart(name) {
-    cart = cart.filter(i => i.name !== name);
-    renderCart();
-}
-function renderCart() {
-    const wrap = document.getElementById('cartItems');
-    wrap.querySelectorAll('.cart-row').forEach(e => e.remove());
-    const empty = document.getElementById('cart-empty');
-    const totalEl = document.getElementById('cart-total');
-    const countEl = document.getElementById('cart-count');
-    let total = 0, count = 0;
-    cart.forEach(item => {
-        const price = currency === 'DZD' ? item.dzd : item.usd;
-        const label = currency === 'DZD' ? (item.dzd * item.qty) + '.00 DZD' : '$' + (item.usd * item.qty) + ' USD';
-        total += price * item.qty; count += item.qty;
-        const div = document.createElement('div');
-        div.className = 'cart-row';
-        div.style.cssText = 'display:flex;align-items:center;gap:12px;border:1px solid var(--border);padding:12px;margin-bottom:8px;';
-        div.innerHTML = `
-            <div style="width:44px;height:44px;flex-shrink:0;background:#111 url('${item.img}') center/cover;border:1px solid var(--border);"></div>
-            <div style="flex:1;min-width:0;">
-                <p style="font-size:12px;font-weight:500;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.name}</p>
-                <p style="font-size:11px;color:#888;margin-top:2px;">${label} · Qty ${item.qty}</p>
-            </div>
-            <button onclick="removeFromCart('${item.name}')" style="background:none;border:none;color:#555;font-size:18px;cursor:none;flex-shrink:0;" onmouseenter="this.style.color='#fff'" onmouseleave="this.style.color='#555'">&times;</button>`;
-        wrap.appendChild(div);
-    });
-    empty.style.display = cart.length === 0 ? 'block' : 'none';
-    totalEl.textContent = currency === 'DZD' ? total.toFixed(0) + '.00 DZD' : '$' + total + ' USD';
-    countEl.textContent = count;
-    if (count > 0) { countEl.classList.add('show'); } else { countEl.classList.remove('show'); }
-}
-function openCart() {
-    document.getElementById('cartPanel').classList.add('open');
-    document.getElementById('cart-overlay').style.display = 'block';
-}
-function closeCart() {
-    document.getElementById('cartPanel').classList.remove('open');
-    document.getElementById('cart-overlay').style.display = 'none';
-}
-function toggleCart() {
-    document.getElementById('cartPanel').classList.contains('open') ? closeCart() : openCart();
-}
-
-// ── Sound ─────────────────────────────────────────────────────────────────────
-function playSwoosh() {
-    try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator(), gain = ctx.createGain();
-        osc.connect(gain); gain.connect(ctx.destination);
-        osc.frequency.setValueAtTime(320, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(640, ctx.currentTime + 0.12);
-        gain.gain.setValueAtTime(0, ctx.currentTime);
-        gain.gain.linearRampToValueAtTime(0.2, ctx.currentTime + 0.04);
-        gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.14);
-        osc.start(); osc.stop(ctx.currentTime + 0.2);
-    } catch(e) {}
-}
-
-// ── Ambient Music Engine ──────────────────────────────────────────────────────
-// Generates a lush, slow ambient soundscape using Web Audio API — no external file needed.
-// Based on slow-moving pad chords (Cmaj7 → Am7 → Fmaj7 → G9) at ~60bpm
-let audioCtx = null;
-let musicPlaying = false;
-let masterGain = null;
-let musicNodes = [];
-
-function buildAmbient() {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    masterGain = audioCtx.createGain();
-    masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
-    masterGain.gain.linearRampToValueAtTime(0.18, audioCtx.currentTime + 3);
-
-    // Reverb (convolver with synthetic impulse)
-    const reverb = audioCtx.createConvolver();
-    const revLen = audioCtx.sampleRate * 4;
-    const revBuf = audioCtx.createBuffer(2, revLen, audioCtx.sampleRate);
-    for (let ch = 0; ch < 2; ch++) {
-        const d = revBuf.getChannelData(ch);
-        for (let i = 0; i < revLen; i++) {
-            d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / revLen, 2.5);
-        }
-    }
-    reverb.buffer = revBuf;
-
-    // Lo-pass filter for warmth
-    const filter = audioCtx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.value = 1200;
-    filter.Q.value = 0.8;
-
-    masterGain.connect(reverb);
-    reverb.connect(filter);
-    filter.connect(audioCtx.destination);
-
-    // Also connect dry signal quietly
-    const dryGain = audioCtx.createGain();
-    dryGain.gain.value = 0.04;
-    masterGain.connect(dryGain);
-    dryGain.connect(audioCtx.destination);
-
-    // Chord sequences: Cmaj7, Am7, Fmaj7, Gsus4 — frequencies in Hz
-    const chords = [
-        [130.81, 164.81, 196.00, 246.94, 329.63], // Cmaj7
-        [110.00, 130.81, 164.81, 196.00, 261.63], // Am7
-        [87.31,  130.81, 164.81, 174.61, 220.00],  // Fmaj7
-        [98.00,  130.81, 164.81, 185.00, 246.94],  // G9
-    ];
-
-    const beatLen = 8; // seconds per chord
-    const totalBeats = chords.length;
-
-    function scheduleChord(chord, startTime) {
-        chord.forEach((freq, i) => {
-            const osc = audioCtx.createOscillator();
-            const oscGain = audioCtx.createGain();
-            osc.type = 'sine';
-            // Slight detune for lushness
-            osc.frequency.value = freq * (1 + (i % 2 === 0 ? 0.001 : -0.0008));
-            osc.connect(oscGain);
-            oscGain.connect(masterGain);
-            oscGain.gain.setValueAtTime(0, startTime);
-            oscGain.gain.linearRampToValueAtTime(0.22 / chord.length, startTime + 1.2);
-            oscGain.gain.setValueAtTime(0.22 / chord.length, startTime + beatLen - 1.4);
-            oscGain.gain.linearRampToValueAtTime(0, startTime + beatLen);
-            osc.start(startTime);
-            osc.stop(startTime + beatLen + 0.1);
-            musicNodes.push(osc, oscGain);
-
-            // Subtle harmonic overtone (one octave up, very quiet)
-            const osc2 = audioCtx.createOscillator();
-            const osc2G = audioCtx.createGain();
-            osc2.type = 'triangle';
-            osc2.frequency.value = freq * 2.005;
-            osc2.connect(osc2G);
-            osc2G.connect(masterGain);
-            osc2G.gain.setValueAtTime(0, startTime);
-            osc2G.gain.linearRampToValueAtTime(0.04 / chord.length, startTime + 2);
-            osc2G.gain.linearRampToValueAtTime(0, startTime + beatLen);
-            osc2.start(startTime);
-            osc2.stop(startTime + beatLen + 0.1);
-            musicNodes.push(osc2, osc2G);
-        });
+    // 2. WHOOP SOUND EFFECT FOR UI CHAT
+    function playWhoopSound() {
+      const whoop = new Audio('https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3');
+      whoop.play().catch(error => {
+        console.log("Browser blocked audio playback until the user interacts with the page.");
+      });
+      // Add any chat opening logic here
+      alert("Chat panel opened!"); 
     }
 
-    // Gentle sub-bass pad (root notes only)
-    function scheduleBass(rootFreq, startTime) {
-        const osc = audioCtx.createOscillator();
-        const g = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.value = rootFreq / 2;
-        osc.connect(g); g.connect(masterGain);
-        g.gain.setValueAtTime(0, startTime);
-        g.gain.linearRampToValueAtTime(0.12, startTime + 2);
-        g.gain.linearRampToValueAtTime(0, startTime + beatLen);
-        osc.start(startTime); osc.stop(startTime + beatLen + 0.1);
-        musicNodes.push(osc, g);
-    }
+    // Attach sound to the chat button
+    document.getElementById('ui-chat-btn').addEventListener('click', playWhoopSound);
+  </script>
 
-    function loop(iteration) {
-        const now = audioCtx.currentTime;
-        chords.forEach((chord, i) => {
-            const t = now + i * beatLen;
-            scheduleChord(chord, t);
-            scheduleBass(chord[0], t);
-        });
-        // Schedule next loop
-        const loopDuration = beatLen * totalBeats;
-        const loopTimer = setTimeout(() => {
-            if (musicPlaying) loop(iteration + 1);
-        }, (loopDuration - 0.5) * 1000);
-        musicNodes.push({ stop: () => clearTimeout(loopTimer) });
-    }
-
-    loop(0);
-}
-
-function toggleMusic() {
-    const btn = document.getElementById('musicBtn');
-    if (!musicPlaying) {
-        musicPlaying = true;
-        buildAmbient();
-        btn.classList.add('playing');
-        btn.setAttribute('data-tip', 'PAUSE MUSIC');
-    } else {
-        musicPlaying = false;
-        if (masterGain) {
-            masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
-            setTimeout(() => {
-                musicNodes.forEach(n => { try { if (n.stop) n.stop(); } catch(e){} });
-                musicNodes = [];
-                if (audioCtx) { audioCtx.close(); audioCtx = null; }
-            }, 1800);
-        }
-        btn.classList.remove('playing');
-        btn.setAttribute('data-tip', 'AMBIENT MUSIC');
-    }
-}
-
-// ── Custom Order ──────────────────────────────────────────────────────────────
-function fillModel(name) {
-    const field = document.getElementById('orderModel');
-    if (field) {
-        field.value = name;
-        field.focus();
-        // Scroll to form
-        document.getElementById('custom-order').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-}
-
-function submitCustomOrder() {
-    const model     = document.getElementById('orderModel').value.trim();
-    const phone     = document.getElementById('orderPhone').value.trim();
-    const dial      = document.getElementById('orderDial').value;
-    const bracelet  = document.getElementById('orderBracelet').value;
-    const notes     = document.getElementById('orderNotes').value.trim();
-
-    if (!model) {
-        document.getElementById('orderModel').focus();
-        document.getElementById('orderModel').style.borderColor = 'rgba(255,255,255,0.5)';
-        setTimeout(() => document.getElementById('orderModel').style.borderColor = '', 1500);
-        return;
-    }
-    if (!phone) {
-        document.getElementById('orderPhone').focus();
-        document.getElementById('orderPhone').style.borderColor = 'rgba(255,255,255,0.5)';
-        setTimeout(() => document.getElementById('orderPhone').style.borderColor = '', 1500);
-        return;
-    }
-
-    // Build WhatsApp message
-    const msg = [
-        '👋 Hello wearwc — I have a custom watch request:',
-        '',
-        '⌚ *Model:* ' + model,
-        dial      ? '🎨 *Dial:* ' + dial         : '',
-        bracelet  ? '🔗 *Bracelet:* ' + bracelet  : '',
-        phone     ? '📱 *My number:* ' + phone     : '',
-        notes     ? '📝 *Details:* ' + notes        : '',
-        '',
-        'Please confirm availability and pricing. Thank you!'
-    ].filter(Boolean).join('\n');
-
-    const waUrl = 'https://wa.me/213XXXXXXXXX?text=' + encodeURIComponent(msg);
-    window.open(waUrl, '_blank');
-
-    // Show success
-    document.getElementById('order-form-wrap').style.display = 'none';
-    document.getElementById('order-success').style.display   = 'block';
-    playSwoosh();
-}
-
-function resetOrderForm() {
-    document.getElementById('order-form-wrap').style.display = 'block';
-    document.getElementById('order-success').style.display   = 'none';
-    document.getElementById('orderModel').value    = '';
-    document.getElementById('orderPhone').value    = '';
-    document.getElementById('orderDial').value     = '';
-    document.getElementById('orderBracelet').value = '';
-    document.getElementById('orderNotes').value    = '';
-}
-let chatHistory = [], chatOpen = false;
-function toggleChat() {
-    chatOpen = !chatOpen;
-    document.getElementById('chatPanel').classList.toggle('open', chatOpen);
-}
-function appendMsg(role, text) {
-    const msgs = document.getElementById('chatMessages');
-    const isUser = role === 'user';
-    const div = document.createElement('div');
-    div.style.cssText = isUser
-        ? 'background:rgba(255,255,255,0.06);border:1px solid var(--border);padding:10px 12px;border-radius:2px;text-align:right;'
-        : 'background:rgba(255,255,255,0.03);border:1px solid var(--border);padding:10px 12px;border-radius:2px;';
-    div.innerHTML = `
-        <p style="font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--dim);margin-bottom:4px;">${isUser ? 'You' : 'Concierge'}</p>
-        <p style="font-size:12px;color:rgba(255,255,255,0.8);line-height:1.7;font-weight:300;">${text}</p>`;
-    msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight;
-}
-function showTyping() {
-    const msgs = document.getElementById('chatMessages');
-    const div = document.createElement('div');
-    div.id = 'typing';
-    div.style.cssText = 'background:rgba(255,255,255,0.03);border:1px solid var(--border);padding:10px 12px;display:flex;align-items:center;gap:3px;';
-    div.innerHTML = `<span style="font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--dim);margin-right:8px;">Concierge</span>
-        <span class="dot-1" style="width:5px;height:5px;background:#888;border-radius:50%;"></span>
-        <span class="dot-2" style="width:5px;height:5px;background:#888;border-radius:50%;"></span>
-        <span class="dot-3" style="width:5px;height:5px;background:#888;border-radius:50%;"></span>`;
-    msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight;
-}
-function removeTyping() { const el = document.getElementById('typing'); if (el) el.remove(); }
-
-async function sendChatMessage(event) {
-    event.preventDefault();
-    const input = document.getElementById('chatInput');
-    const btn = document.getElementById('chatSendBtn');
-    const text = input.value.trim();
-    if (!text) return;
-    input.value = '';
-    appendMsg('user', text);
-    chatHistory.push({ role: 'user', content: text });
-    btn.disabled = true; btn.textContent = '…';
-    showTyping(); playSwoosh();
-    try {
-        const res = await fetch('https://api.anthropic.com/v1/messages', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                model: 'claude-sonnet-4-20250514',
-                max_tokens: 1000,
-                system: `You are the concierge for wearwc, a new designer-inspired watch replica store. Be brief and elegant (2-4 sentences). Key facts:
-• Models: GMT-Master ($26 / 6,550 DZD), Yacht-Master ($26 / 6,550 DZD), Datejust ($22 / 5,800 DZD). All marked down from $51 as a new-store launch price.
-• Shipping: 7–14 business days worldwide, discreet plain-box packaging.
-• Payment: Card / PayPal for worldwide customers. Cash on Delivery (COD) available ONLY for Algeria — customer orders via WhatsApp.
-• Refund policy: full refund if parcel not delivered.
-• We are transparent: these are designer-inspired replicas, not genuine Rolex.
-Reply in the same language the customer writes in.`,
-                messages: chatHistory
-            })
-        });
-        removeTyping();
-        if (!res.ok) throw new Error();
-        const data = await res.json();
-        const reply = data.content.map(b => b.type === 'text' ? b.text : '').join('');
-        appendMsg('concierge', reply);
-        chatHistory.push({ role: 'assistant', content: reply });
-    } catch {
-        removeTyping();
-        appendMsg('concierge', 'Our concierge is momentarily offline. Please reach us on WhatsApp for instant support.');
-    }
-    btn.disabled = false; btn.textContent = '→';
-}
-</script>
 </body>
 </html>
