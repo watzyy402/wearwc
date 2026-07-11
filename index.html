@@ -1,277 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wearwc | Designer-Inspired Timepieces</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>wearwc | Exclusive Timepieces</title>
+  <style>
+    /* --- Premium Theme --- */
+    :root {
+      --bg-color: #0a0a0c;
+      --card-bg: #16181d;
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --accent: #eab308; /* Luxury gold */
+      --border-color: #272a30;
+    }
 
-        * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
 
-        :root {
-            /* New Premium Theme: Crisp White & Midnight Blue */
-            --bg:        #f5f5f7;
-            --surface:   #ffffff;
-            --text:      #1d1d1f;
-            --text-dim:  #86868b;
-            --accent:    #0a142f; /* Midnight Blue */
-            --border:    rgba(0, 0, 0, 0.08);
-            --border-hover: rgba(0, 0, 0, 0.2);
-        }
+    /* Standard cursor restored */
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
 
-        body { 
-            background: var(--bg); 
-            color: var(--text); 
-            font-family: 'Inter', sans-serif; 
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
+    header {
+      margin-bottom: 40px;
+      text-align: center;
+      animation: fadeInDown 0.8s ease-out;
+    }
 
-        .serif { font-family: 'Playfair Display', serif; }
+    header h1 {
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      font-weight: 300;
+    }
 
-        /* ── Scrollbar ── */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+    /* --- Smooth Animations --- */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        /* ── Core Layout & Utilities ── */
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-        .label { font-size: 10px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-dim); }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        .price-wrap { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-        .price-orig { font-size: 12px; color: var(--text-dim); text-decoration: line-through; }
-        .price-now  { font-size: 16px; font-weight: 600; color: var(--text); }
-        .sale-tag   { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; background: var(--accent); color: #fff; padding: 3px 8px; border-radius: 4px; }
+    /* --- Product Display --- */
+    .product-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+      animation: fadeInUp 0.8s ease-out;
+    }
 
-        /* ── Buttons ── */
-        .btn-primary { 
-            display: inline-block; padding: 14px 32px; 
-            background: var(--accent); color: #fff; 
-            font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; 
-            border: none; border-radius: 4px; cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.16,1,0.3,1); 
-        }
-        .btn-primary:hover { background: #152755; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(10, 20, 47, 0.2); }
-        
-        .btn-ghost { 
-            display: inline-block; padding: 13px 24px; 
-            background: transparent; color: var(--accent); 
-            font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; 
-            border: 1px solid var(--accent); border-radius: 4px; cursor: pointer;
-            transition: all 0.3s ease; 
-        }
-        .btn-ghost:hover { background: var(--accent); color: #fff; }
+    .buy-btn {
+      background-color: var(--accent);
+      color: #000;
+      border: none;
+      padding: 14px 28px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+      transition: transform 0.2s, background-color 0.2s;
+    }
 
-        /* ── Animations ── */
-        .animate-fade-up {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) forwards;
-        }
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-        
-        @keyframes fadeUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
+    .buy-btn:hover {
+      transform: scale(1.02);
+      background-color: #facc15;
+    }
 
-        /* ── Header ── */
-        header { position: sticky; top: 0; z-index: 50; background: rgba(245, 245, 247, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
-        .header-inner { height: 72px; display: flex; align-items: center; justify-content: space-between; }
-        .nav-wordmark { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; letter-spacing: 0.04em; color: var(--text); text-decoration: none; }
-        .nav-wordmark span { font-style: italic; color: var(--text-dim); }
-        nav a { font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
-        nav a:hover, nav a.active { color: var(--accent); }
+    /* --- Checkout Modal --- */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+    }
 
-        /* ── Hero ── */
-        #hero { min-height: 85vh; display: grid; align-items: center; padding: 80px 0; }
-        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-        @media (max-width: 768px) { .hero-grid { grid-template-columns: 1fr; gap: 48px; } }
+    .modal-content {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      margin: 10vh auto;
+      padding: 30px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 450px;
+      animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
 
-        .hero-img-card { 
-            position: relative; border-radius: 12px; background: var(--surface); 
-            aspect-ratio: 1; display: flex; align-items: center; justify-content: center; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.04);
-            border: 1px solid var(--border);
-            transition: transform 0.5s cubic-bezier(0.16,1,0.3,1); 
-        }
-        .hero-img-card:hover { transform: scale(1.02); }
-        .hero-img-card img { width: 85%; height: 85%; object-fit: contain; }
+    .close-btn {
+      color: var(--text-muted);
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-        /* ── Checkout Modal (The Special Tab) ── */
-        #checkout-modal {
-            position: fixed; inset: 0; z-index: 100;
-            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(6px);
-            display: flex; justify-content: flex-end;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        #checkout-modal.active { opacity: 1; pointer-events: all; }
-        
-        .checkout-panel {
-            width: 100%; max-width: 450px; background: var(--surface); height: 100%;
-            padding: 40px 32px; box-shadow: -10px 0 40px rgba(0,0,0,0.1);
-            transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
-            display: flex; flex-direction: column; overflow-y: auto;
-        }
-        #checkout-modal.active .checkout-panel { transform: translateX(0); }
+    .close-btn:hover { color: var(--text-main); }
 
-        .close-btn { align-self: flex-end; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-dim); }
-        .close-btn:hover { color: var(--text); }
+    .input-group {
+      margin-top: 15px;
+      text-align: left;
+    }
 
-        .order-summary { background: var(--bg); padding: 20px; border-radius: 8px; margin-bottom: 32px; border: 1px solid var(--border); }
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 14px; }
-        .summary-row.total { font-weight: 700; font-size: 18px; border-top: 1px solid var(--border); padding-top: 12px; margin-bottom: 0; color: var(--accent); }
+    .input-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
 
-        .field-group { margin-bottom: 20px; }
-        .field-label { display: block; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
-        .field-input { 
-            width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 4px;
-            color: var(--text); font-family: 'Inter', sans-serif; font-size: 14px; padding: 14px; 
-            outline: none; transition: border-color 0.2s; 
-        }
-        .field-input:focus { border-color: var(--accent); }
+    .input-group input, .input-group select {
+      width: 100%;
+      padding: 12px;
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      border-radius: 6px;
+      outline: none;
+    }
 
-    </style>
+    .input-group input:focus, .input-group select:focus {
+      border-color: var(--accent);
+    }
+
+    .order-summary {
+      margin-top: 25px;
+      padding: 15px;
+      background: var(--bg-color);
+      border-radius: 8px;
+      text-align: left;
+    }
+
+    .order-summary p {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      color: var(--text-muted);
+    }
+
+    .order-summary hr {
+      border: 0;
+      height: 1px;
+      background: var(--border-color);
+      margin: 15px 0;
+    }
+
+    .order-summary h3 {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-main);
+    }
+
+  </style>
 </head>
 <body>
 
-    <!-- HEADER -->
-    <header>
-        <div class="container">
-            <div class="header-inner">
-                <a href="#" class="nav-wordmark">wear<span>wc</span></a>
-                <nav class="hidden md:flex" style="gap:32px;">
-                    <a href="#collection" class="active">Collection</a>
-                    <a href="#custom-order">Custom Order</a>
-                </nav>
-            </div>
+  <header>
+    <h1>wearwc</h1>
+    <p style="color: var(--text-muted);">Redefining Time</p>
+  </header>
+
+  <div class="product-container">
+    <h2>Luxury Chronograph</h2>
+    <p style="color: var(--text-muted); margin: 15px 0;">Premium automatic movement with a sleek stainless steel finish.</p>
+    <button class="buy-btn" onclick="openCheckout()">Buy Now</button>
+  </div>
+
+  <!-- The Checkout Modal -->
+  <div id="checkoutModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeCheckout()">&times;</span>
+      <h2 style="margin-bottom: 20px;">Complete Your Order</h2>
+      
+      <form id="orderForm" onsubmit="submitOrder(event)">
+        <div class="input-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" required placeholder="Enter your full name">
         </div>
-    </header>
-
-    <!-- HERO -->
-    <section id="hero" class="container">
-        <div class="hero-grid">
-            <div class="animate-fade-up">
-                <div class="label" style="margin-bottom: 16px; color: var(--accent);">New Arrival</div>
-                <h1 class="serif" style="font-size: 56px; line-height: 1.1; margin-bottom: 24px; letter-spacing: -0.02em;">The Apex<br>Chronograph</h1>
-                <p style="color: var(--text-dim); margin-bottom: 40px; max-width: 400px; font-size: 15px; line-height: 1.6;">
-                    Precision engineering meets uncompromising design. Crafted from 316L stainless steel with a sapphire crystal display.
-                </p>
-                <div class="price-wrap animate-fade-up delay-1" style="margin-bottom: 32px;">
-                    <span class="price-now" id="hero-price" data-price="495">$495.00</span>
-                    <span class="sale-tag">Fast Delivery</span>
-                </div>
-                <div class="flex gap-4 animate-fade-up delay-2">
-                    <button class="btn-primary" onclick="openCheckout('The Apex Chronograph', 495)">Buy Now</button>
-                    <button class="btn-ghost">View Details</button>
-                </div>
-            </div>
-            
-            <!-- Hero Image Placeholder (Cleaned up) -->
-            <div class="hero-img-card animate-fade-up delay-3">
-                <div style="width: 250px; height: 250px; border-radius: 50%; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; color: var(--text-dim);">
-                    [ Watch Image Here ]
-                </div>
-                <div style="position: absolute; bottom: 16px; left: 16px; background: rgba(255,255,255,0.9); padding: 6px 12px; border-radius: 4px; font-size: 10px; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-                    REF: APX-204
-                </div>
-            </div>
+        
+        <div class="input-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" required placeholder="0555 00 00 00">
         </div>
-    </section>
-
-    <!-- CHECKOUT MODAL (Special Tab) -->
-    <div id="checkout-modal">
-        <div class="checkout-panel">
-            <button class="close-btn" onclick="closeCheckout()">&times;</button>
-            
-            <h2 class="serif" style="font-size: 28px; margin: 16px 0 24px;">Complete Order</h2>
-            
-            <div class="order-summary">
-                <div class="summary-row">
-                    <span id="co-item-name">The Apex Chronograph</span>
-                    <span id="co-item-price">$495.00</span>
-                </div>
-                <div class="summary-row">
-                    <span style="color: var(--text-dim);">Delivery to <span id="co-city-display">your city</span></span>
-                    <span id="co-delivery-price">$15.00</span>
-                </div>
-                <div class="summary-row total">
-                    <span>Total</span>
-                    <span id="co-total-price">$510.00</span>
-                </div>
-            </div>
-
-            <form id="purchase-form" onsubmit="event.preventDefault(); alert('Order Confirmed!'); closeCheckout();">
-                <div class="field-group">
-                    <label class="field-label">Full Name</label>
-                    <input type="text" class="field-input" placeholder="e.g. John Doe" required>
-                </div>
-                
-                <div class="field-group">
-                    <label class="field-label">Phone Number</label>
-                    <input type="tel" class="field-input" placeholder="e.g. +213 555 123 456" required>
-                </div>
-                
-                <div class="field-group">
-                    <label class="field-label">City / Town</label>
-                    <input type="text" id="city-input" class="field-input" placeholder="Enter your city" required oninput="updateCityDisplay(this.value)">
-                </div>
-
-                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 12px; padding: 16px;">Confirm Purchase</button>
-            </form>
+        
+        <div class="input-group">
+          <label for="city">Delivery City</label>
+          <select id="city" required onchange="updateTotal()">
+            <option value="" disabled selected>Select your wilaya...</option>
+            <option value="msila">M'Sila</option>
+            <option value="algiers">Algiers</option>
+            <option value="other">Other Wilayas</option>
+          </select>
         </div>
+
+        <div class="order-summary">
+          <p>Watch Price: <span><span id="watchPriceDisplay">0</span> DZD</span></p>
+          <p>Delivery: <span><span id="deliveryPriceDisplay">0</span> DZD</span></p>
+          <hr>
+          <h3>Total: <span><span id="totalPriceDisplay">0</span> DZD</span></h3>
+        </div>
+
+        <button type="submit" class="buy-btn">Confirm Order</button>
+      </form>
     </div>
+  </div>
 
-    <script>
-        // Delivery constant
-        const DELIVERY_FEE = 15;
+  <script>
+    // --- Pricing Configuration ---
+    const watchPrice = 45000; 
+    const deliveryRates = {
+      msila: 500,     
+      algiers: 800,   
+      other: 1200     
+    };
 
-        // Modal Elements
-        const modal = document.getElementById('checkout-modal');
-        const itemNameEl = document.getElementById('co-item-name');
-        const itemPriceEl = document.getElementById('co-item-price');
-        const deliveryPriceEl = document.getElementById('co-delivery-price');
-        const totalPriceEl = document.getElementById('co-total-price');
-        const cityDisplayEl = document.getElementById('co-city-display');
-        const cityInput = document.getElementById('city-input');
+    const modal = document.getElementById("checkoutModal");
 
-        function openCheckout(itemName, itemPrice) {
-            // Populate data
-            itemNameEl.textContent = itemName;
-            itemPriceEl.textContent = `$${itemPrice.toFixed(2)}`;
-            deliveryPriceEl.textContent = `$${DELIVERY_FEE.toFixed(2)}`;
-            
-            const total = itemPrice + DELIVERY_FEE;
-            totalPriceEl.textContent = `$${total.toFixed(2)}`;
-            
-            // Reset form city text
-            cityDisplayEl.textContent = cityInput.value ? cityInput.value : 'your city';
-            
-            // Open modal
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling in background
-        }
+    function openCheckout() {
+      modal.style.display = "block";
+      document.getElementById("watchPriceDisplay").textContent = watchPrice.toLocaleString();
+      updateTotal(); 
+    }
 
-        function closeCheckout() {
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
+    function closeCheckout() {
+      modal.style.display = "none";
+    }
 
-        function updateCityDisplay(val) {
-            cityDisplayEl.textContent = val.trim() !== '' ? val : 'your city';
-        }
+    function updateTotal() {
+      const citySelect = document.getElementById("city");
+      const deliveryDisplay = document.getElementById("deliveryPriceDisplay");
+      const totalDisplay = document.getElementById("totalPriceDisplay");
 
-        // Close modal if clicked outside the panel
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeCheckout();
-            }
-        });
-    </script>
+      const selectedCity = citySelect.value;
+      const deliveryCost = deliveryRates[selectedCity] || 0;
+      
+      deliveryDisplay.textContent = deliveryCost.toLocaleString();
+      totalDisplay.textContent = (watchPrice + deliveryCost).toLocaleString();
+    }
+
+    function submitOrder(event) {
+      event.preventDefault();
+      alert("Order confirmed! Your data has been securely processed.");
+      closeCheckout();
+    }
+
+    // Close modal if user clicks outside of it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        closeCheckout();
+      }
+    }
+  </script>
+
 </body>
 </html>
