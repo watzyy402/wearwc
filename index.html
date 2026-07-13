@@ -10,14 +10,23 @@
 
         * { box-sizing: border-box; }
 
+        /* ══════════════════════════════
+           THEME TOKENS — white / black / soft grey
+           (--black holds the light "paper" value and --white holds the
+           dark "ink" value on purpose, so background:var(--black) still
+           reads as "match the page" and color:var(--white) still reads
+           as "main text" everywhere below, just like before.)
+        ══════════════════════════════ */
         :root {
-            --black:   #080808;
-            --white:   #f4f4f4;
-            --mid:     #2a2a2a;
-            --border:  rgba(244,244,244,0.10);
-            --border2: rgba(244,244,244,0.18);
-            --silver:  #b9b9b9;
-            --dim:     #888;
+            --black:    #fbfbfa;
+            --white:    #141414;
+            --mid:      #d8d6d1;
+            --border:   rgba(20,20,20,0.09);
+            --border2:  rgba(20,20,20,0.16);
+            --silver:   #8f8d89;
+            --dim:      #6b6b68;
+            --soft:     #eae7e1;
+            --soft-hov: #ddd9d1;
         }
 
         body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; }
@@ -37,13 +46,13 @@
                 transform: translate(-50%,-50%); border-radius: 50%; z-index: 9999;
                 transition: transform 0.08s linear;
             }
-            .c-dot { width: 5px; height: 5px; background: #fff; }
+            .c-dot { width: 5px; height: 5px; background: #141414; }
             .c-ring {
                 width: 28px; height: 28px;
-                border: 1px solid rgba(255,255,255,0.35);
+                border: 1px solid rgba(20,20,20,0.35);
                 transition: width 0.2s, height 0.2s, border-color 0.2s;
             }
-            .cursor-active .c-ring { width: 44px; height: 44px; border-color: rgba(255,255,255,0.7); }
+            .cursor-active .c-ring { width: 44px; height: 44px; border-color: rgba(20,20,20,0.7); }
         }
 
         /* ══════════════════════════════
@@ -51,25 +60,18 @@
         ══════════════════════════════ */
         body::before {
             content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-            background-size: 200px 200px; opacity: 0.4;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+            background-size: 200px 200px; opacity: 0.35;
         }
 
         /* ══════════════════════════════
            LAYOUT TOKENS
         ══════════════════════════════ */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-
-        /* Divider */
         .hr { border: none; border-top: 1px solid var(--border); }
-
-        /* Reveal */
         .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
         .reveal.in { opacity: 1; transform: translateY(0); }
 
-        /* ══════════════════════════════
-           TYPOGRAPHY
-        ══════════════════════════════ */
         .label {
             font-size: 10px; font-weight: 600; letter-spacing: 0.25em;
             text-transform: uppercase; color: var(--dim);
@@ -92,13 +94,13 @@
         ══════════════════════════════ */
         .card {
             border: 1px solid var(--border);
-            background: rgba(255,255,255,0.02);
+            background: rgba(20,20,20,0.02);
             backdrop-filter: blur(12px);
             transition: border-color 0.3s, background 0.3s, transform 0.4s cubic-bezier(0.16,1,0.3,1);
         }
         .card:hover {
             border-color: var(--border2);
-            background: rgba(255,255,255,0.04);
+            background: rgba(20,20,20,0.045);
             transform: translateY(-3px);
         }
 
@@ -112,29 +114,27 @@
             border: none; cursor: none;
             transition: background 0.2s, color 0.2s, transform 0.15s;
         }
-        .btn-primary:hover { background: #e0e0e0; }
+        .btn-primary:hover { background: #2a2a2a; }
         .btn-primary:disabled { opacity: 0.4; }
 
         .btn-ghost {
             display: inline-block; padding: 12px 24px;
-            background: transparent; color: var(--white);
+            background: var(--soft); color: var(--white);
             font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
             border: 1px solid var(--border2); cursor: none;
             transition: background 0.2s, border-color 0.2s;
         }
-        .btn-ghost:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.35); }
+        .btn-ghost:hover { background: var(--soft-hov); border-color: rgba(20,20,20,0.28); }
 
         /* ══════════════════════════════
            HEADER
         ══════════════════════════════ */
         header {
             position: sticky; top: 0; z-index: 50;
-            background: rgba(8,8,8,0.88); backdrop-filter: blur(20px);
+            background: rgba(251,251,250,0.9); backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
         }
-        .header-inner {
-            height: 68px; display: flex; align-items: center; justify-content: space-between;
-        }
+        .header-inner { height: 68px; display: flex; align-items: center; justify-content: space-between; }
 
         .nav-wordmark {
             font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700;
@@ -151,21 +151,16 @@
         /* ══════════════════════════════
            HERO
         ══════════════════════════════ */
-        #hero {
-            min-height: 90vh; display: grid; align-items: center;
-            padding: 80px 0;
-        }
+        #hero { min-height: 80vh; display: grid; align-items: center; padding: 72px 0; }
         .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
         @media (max-width: 768px) { .hero-grid { grid-template-columns: 1fr; gap: 48px; } }
 
-        /* Large italic counter */
         .hero-eyebrow-number {
             font-family: 'Playfair Display', serif; font-size: 80px; font-style: italic;
-            font-weight: 400; color: rgba(255,255,255,0.06); line-height: 1;
-            position: absolute; top: -24px; left: -12px; pointer-events: none; select: none;
+            font-weight: 400; color: rgba(20,20,20,0.05); line-height: 1;
+            position: absolute; top: -24px; left: -12px; pointer-events: none;
         }
 
-        /* New badge */
         .new-badge {
             display: inline-flex; align-items: center; gap: 6px;
             border: 1px solid var(--border2);
@@ -176,10 +171,9 @@
         .new-badge-dot { width: 5px; height: 5px; background: var(--white); border-radius: 50%; animation: pulse-dot 2s ease infinite; }
         @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
 
-        /* Hero image card */
         .hero-img-card {
             position: relative; border: 1px solid var(--border);
-            background: rgba(255,255,255,0.015);
+            background: rgba(20,20,20,0.015);
             aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
             cursor: none; overflow: hidden;
             transition: border-color 0.3s;
@@ -188,33 +182,29 @@
         .hero-img-card img { width: 80%; height: 80%; object-fit: contain; display: block; }
         .hero-img-card .overlay-label {
             position: absolute; bottom: 0; left: 0; right: 0;
-            padding: 20px; background: linear-gradient(to top, rgba(8,8,8,0.9), transparent);
+            padding: 20px; background: linear-gradient(to top, rgba(10,10,10,0.85), transparent);
         }
 
         /* ══════════════════════════════
            TRANSPARENCY BANNER
         ══════════════════════════════ */
         .transparency-bar {
-            background: rgba(255,255,255,0.03);
+            background: rgba(20,20,20,0.035);
             border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
             padding: 14px 0; text-align: center;
         }
-        .transparency-bar p {
-            font-size: 11px; color: var(--dim); letter-spacing: 0.05em;
-        }
-        .transparency-bar strong { color: rgba(255,255,255,0.5); font-weight: 600; }
+        .transparency-bar p { font-size: 11px; color: var(--dim); letter-spacing: 0.05em; }
+        .transparency-bar strong { color: rgba(20,20,20,0.62); font-weight: 600; }
 
         /* ══════════════════════════════
            PRODUCT CARDS
         ══════════════════════════════ */
-        .products-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
-        }
+        .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         @media (max-width: 900px) { .products-grid { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 600px) { .products-grid { grid-template-columns: 1fr; } }
 
         .product-img {
-            aspect-ratio: 1; background: rgba(255,255,255,0.02);
+            aspect-ratio: 1; background: rgba(20,20,20,0.02);
             background-size: cover; background-position: center;
             overflow: hidden; position: relative;
             cursor: none;
@@ -226,14 +216,11 @@
         }
         .product-img:hover .zoom-icon { opacity: 1; }
 
-        /* Colour dots */
         .colour-swatch {
             width: 16px; height: 16px; border-radius: 50%; cursor: none;
             border: 2px solid transparent; transition: border-color 0.2s, transform 0.2s;
         }
-        .colour-swatch.active, .colour-swatch:hover {
-            border-color: rgba(255,255,255,0.6); transform: scale(1.15);
-        }
+        .colour-swatch.active, .colour-swatch:hover { border-color: rgba(20,20,20,0.55); transform: scale(1.15); }
 
         /* ══════════════════════════════
            PAYMENT SECTION
@@ -247,20 +234,19 @@
         ══════════════════════════════ */
         #cartPanel {
             position: fixed; top: 0; right: 0; height: 100vh; width: 340px; z-index: 150;
-            background: rgba(8,8,8,0.98); border-left: 1px solid var(--border);
+            background: rgba(255,255,255,0.98); border-left: 1px solid var(--border);
             backdrop-filter: blur(24px);
             transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
             display: flex; flex-direction: column;
         }
         #cartPanel.open { transform: translateX(0); }
-        #cart-overlay { display: none; position: fixed; inset: 0; z-index: 140; background: rgba(0,0,0,0.6); }
+        #cart-overlay { display: none; position: fixed; inset: 0; z-index: 140; background: rgba(0,0,0,0.45); }
 
-        /* Cart badge */
         #cart-count { display: none; }
         #cart-count.show { display: flex; }
 
         /* ══════════════════════════════
-           LIGHTBOX
+           LIGHTBOX (kept dark on purpose — a theatrical viewer regardless of site theme)
         ══════════════════════════════ */
         #lightbox {
             display: none; position: fixed; inset: 0; z-index: 200;
@@ -274,7 +260,7 @@
         ══════════════════════════════ */
         #chatPanel {
             position: fixed; bottom: 88px; right: 20px; z-index: 50; width: 310px;
-            background: rgba(8,8,8,0.96); border: 1px solid var(--border2);
+            background: rgba(255,255,255,0.97); border: 1px solid var(--border2);
             backdrop-filter: blur(24px);
             display: flex; flex-direction: column;
             opacity: 0; pointer-events: none; transform: translateY(12px);
@@ -282,16 +268,10 @@
         }
         #chatPanel.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
 
-        /* Typing dots */
         @keyframes blink { 0%,80%,100%{opacity:0.2} 40%{opacity:1} }
         .dot-1{animation:blink 1.4s infinite 0s}
         .dot-2{animation:blink 1.4s infinite .2s}
         .dot-3{animation:blink 1.4s infinite .4s}
-
-        /* ══════════════════════════════
-           STARS
-        ══════════════════════════════ */
-        .stars { color: var(--silver); letter-spacing: 2px; }
 
         /* ══════════════════════════════
            FOOTER LINE
@@ -299,9 +279,6 @@
         .footer-link { font-size: 11px; color: var(--dim); text-decoration: none; transition: color 0.2s; }
         .footer-link:hover { color: var(--white); }
 
-        /* ══════════════════════════════
-           HIDE SCROLLBAR
-        ══════════════════════════════ */
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -310,73 +287,43 @@
         ══════════════════════════════ */
         @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
         .text-shimmer {
-            background: linear-gradient(to right, #aaa 20%, #fff 40%, #fff 60%, #aaa 80%);
+            background: linear-gradient(to right, #555 20%, #111 40%, #111 60%, #555 80%);
             background-size: 200% auto;
-            color: #fff;
+            color: #111;
             background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             animation: shimmer 5s linear infinite;
         }
 
-        /* ══════════════════════════════
-           MAIN CONTENT
-        ══════════════════════════════ */
         #main { opacity: 1; }
 
         /* ══════════════════════════════
            BLURRED BACKGROUND LAYER
         ══════════════════════════════ */
-        #bg-blur {
-            position: fixed; inset: 0; z-index: -1; pointer-events: none;
-            overflow: hidden;
-        }
-        /* Large ghost watch faces scattered as CSS shapes */
+        #bg-blur { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
         #bg-blur::before, #bg-blur::after {
             content: '';
             position: absolute; border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.04);
-            background: radial-gradient(circle at 40% 35%,
-                rgba(255,255,255,0.035) 0%,
-                rgba(255,255,255,0.01) 40%,
-                transparent 70%
-            );
+            border: 1px solid rgba(20,20,20,0.05);
+            background: radial-gradient(circle at 40% 35%, rgba(20,20,20,0.035) 0%, rgba(20,20,20,0.012) 40%, transparent 70%);
             filter: blur(2px);
         }
         #bg-blur::before {
-            width: 560px; height: 560px;
-            top: -120px; left: -160px;
-            box-shadow:
-                0 0 0 18px rgba(255,255,255,0.018),
-                0 0 0 36px rgba(255,255,255,0.008),
-                inset 0 0 80px rgba(255,255,255,0.02);
+            width: 560px; height: 560px; top: -120px; left: -160px;
+            box-shadow: 0 0 0 18px rgba(20,20,20,0.02), 0 0 0 36px rgba(20,20,20,0.01), inset 0 0 80px rgba(20,20,20,0.02);
         }
         #bg-blur::after {
-            width: 420px; height: 420px;
-            bottom: 5%; right: -100px;
-            box-shadow:
-                0 0 0 14px rgba(255,255,255,0.016),
-                0 0 0 28px rgba(255,255,255,0.006),
-                inset 0 0 60px rgba(255,255,255,0.015);
+            width: 420px; height: 420px; bottom: 5%; right: -100px;
+            box-shadow: 0 0 0 14px rgba(20,20,20,0.018), 0 0 0 28px rgba(20,20,20,0.008), inset 0 0 60px rgba(20,20,20,0.016);
         }
         .bg-watch-mid {
             position: fixed; z-index: -1; pointer-events: none;
-            border-radius: 50%; border: 1px solid rgba(255,255,255,0.03);
-            background: radial-gradient(circle at 50% 40%,
-                rgba(255,255,255,0.025) 0%,
-                transparent 65%
-            );
+            border-radius: 50%; border: 1px solid rgba(20,20,20,0.04);
+            background: radial-gradient(circle at 50% 40%, rgba(20,20,20,0.028) 0%, transparent 65%);
             filter: blur(1px);
-            width: 320px; height: 320px;
-            top: 42%; left: 55%;
-            box-shadow:
-                0 0 0 10px rgba(255,255,255,0.012),
-                0 0 0 22px rgba(255,255,255,0.005);
+            width: 320px; height: 320px; top: 42%; left: 55%;
+            box-shadow: 0 0 0 10px rgba(20,20,20,0.014), 0 0 0 22px rgba(20,20,20,0.006);
         }
-        /* Crosshair lines inside ghost watches */
-        .bg-watch-line {
-            position: fixed; z-index: -1; pointer-events: none;
-            background: rgba(255,255,255,0.025);
-            filter: blur(0.5px);
-        }
+        .bg-watch-line { position: fixed; z-index: -1; pointer-events: none; background: rgba(20,20,20,0.03); filter: blur(0.5px); }
         .bg-watch-line.h1 { width: 420px; height: 1px; top: 12%; left: -80px; transform: rotate(-8deg); }
         .bg-watch-line.v1 { width: 1px; height: 380px; top: -60px; left: 13%; }
         .bg-watch-line.h2 { width: 300px; height: 1px; bottom: 14%; right: -40px; transform: rotate(6deg); }
@@ -388,19 +335,14 @@
         #musicBtn {
             position: fixed; bottom: 20px; left: 20px; z-index: 50;
             width: 46px; height: 46px;
-            background: rgba(8,8,8,0.88); border: 1px solid var(--border2);
+            background: rgba(255,255,255,0.92); border: 1px solid var(--border2);
             backdrop-filter: blur(16px);
             display: flex; align-items: center; justify-content: center;
             cursor: none; transition: border-color 0.2s, background 0.2s;
         }
-        #musicBtn:hover { border-color: rgba(255,255,255,0.35); background: rgba(20,20,20,0.95); }
-        #musicBtn .bars {
-            display: flex; align-items: flex-end; gap: 2px; height: 18px;
-        }
-        #musicBtn .bar {
-            width: 3px; background: rgba(255,255,255,0.7); border-radius: 2px;
-            transform-origin: bottom;
-        }
+        #musicBtn:hover { border-color: rgba(20,20,20,0.35); background: rgba(248,247,245,0.98); }
+        #musicBtn .bars { display: flex; align-items: flex-end; gap: 2px; height: 18px; }
+        #musicBtn .bar { width: 3px; background: rgba(20,20,20,0.65); border-radius: 2px; transform-origin: bottom; }
         #musicBtn .bar:nth-child(1) { height: 8px; }
         #musicBtn .bar:nth-child(2) { height: 14px; }
         #musicBtn .bar:nth-child(3) { height: 10px; }
@@ -419,15 +361,15 @@
         #musicBtn.playing .bar:nth-child(4) { animation: bar-dance-4 0.8s ease-in-out infinite 0.05s; }
         #musicBtn.playing .bar:nth-child(5) { animation: bar-dance-5 1.0s ease-in-out infinite 0.15s; }
 
-        /* Music tooltip */
         #musicBtn::after {
             content: attr(data-tip);
             position: absolute; bottom: 52px; left: 0;
-            background: rgba(8,8,8,0.95); border: 1px solid var(--border2);
-            color: rgba(255,255,255,0.7); font-size: 9px; font-weight: 600;
+            background: rgba(255,255,255,0.98); border: 1px solid var(--border2);
+            color: rgba(20,20,20,0.75); font-size: 9px; font-weight: 600;
             letter-spacing: 0.15em; text-transform: uppercase;
             padding: 5px 10px; white-space: nowrap;
             opacity: 0; pointer-events: none; transition: opacity 0.2s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
         }
         #musicBtn:hover::after { opacity: 1; }
 
@@ -435,28 +377,15 @@
            CUSTOM ORDER SECTION
         ══════════════════════════════ */
         #custom-order { padding: 100px 0; border-top: 1px solid var(--border); }
+        .custom-order-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); }
+        @media (max-width: 768px) { .custom-order-grid { grid-template-columns: 1fr; } }
 
-        .custom-order-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-            border: 1px solid var(--border);
-        }
-        @media (max-width: 768px) {
-            .custom-order-grid { grid-template-columns: 1fr; }
-        }
-
-        .custom-order-left {
-            padding: 56px 48px;
-            background: rgba(255,255,255,0.015);
-            border-right: 1px solid var(--border);
-        }
-        @media (max-width: 768px) {
-            .custom-order-left { border-right: none; border-bottom: 1px solid var(--border); padding: 40px 28px; }
-        }
+        .custom-order-left { padding: 56px 48px; background: rgba(20,20,20,0.015); border-right: 1px solid var(--border); }
+        @media (max-width: 768px) { .custom-order-left { border-right: none; border-bottom: 1px solid var(--border); padding: 40px 28px; } }
 
         .custom-order-right { padding: 56px 48px; }
         @media (max-width: 768px) { .custom-order-right { padding: 40px 28px; } }
 
-        /* Form fields */
         .field-group { margin-bottom: 20px; }
         .field-label {
             display: block; font-size: 9px; font-weight: 600;
@@ -464,7 +393,7 @@
             margin-bottom: 8px;
         }
         .field-input, .field-textarea, .field-select {
-            width: 100%; background: rgba(255,255,255,0.04);
+            width: 100%; background: rgba(20,20,20,0.035);
             border: 1px solid var(--border); color: var(--white);
             font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 300;
             padding: 12px 14px; outline: none; cursor: none;
@@ -472,24 +401,20 @@
             appearance: none; -webkit-appearance: none;
         }
         .field-input:focus, .field-textarea:focus, .field-select:focus {
-            border-color: rgba(255,255,255,0.35);
-            background: rgba(255,255,255,0.06);
+            border-color: rgba(20,20,20,0.32);
+            background: rgba(20,20,20,0.055);
         }
-        .field-input::placeholder, .field-textarea::placeholder { color: #444; }
+        .field-input::placeholder, .field-textarea::placeholder { color: #a3a19c; }
         .field-textarea { resize: vertical; min-height: 90px; }
-        .field-select option { background: #111; color: var(--white); }
+        .field-select option { background: #ffffff; color: #141414; }
 
-        /* Success state */
-        #order-success {
-            display: none; text-align: center; padding: 32px 0;
-        }
         .tick {
             width: 48px; height: 48px; border: 1px solid var(--border2);
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
             margin: 0 auto 16px;
         }
+        #order-success { display: none; text-align: center; padding: 32px 0; }
 
-        /* Floating badge on section */
         .section-badge {
             display: inline-flex; align-items: center; gap: 8px;
             border: 1px solid var(--border2); padding: 5px 14px;
@@ -501,7 +426,6 @@
 </head>
 <body>
 
-<!-- Blurred background watch shapes -->
 <div id="bg-blur"></div>
 <div class="bg-watch-mid"></div>
 <div class="bg-watch-line h1"></div>
@@ -509,38 +433,30 @@
 <div class="bg-watch-line h2"></div>
 <div class="bg-watch-line v2"></div>
 
-<!-- Cursor -->
 <div class="c-dot" id="cDot"></div>
 <div class="c-ring" id="cRing"></div>
 
-<!-- ═══════════════════════════════════════
-     MAIN CONTENT
-═══════════════════════════════════════ -->
 <div id="main">
 
     <!-- ── HEADER ── -->
     <header>
         <div class="container">
             <div class="header-inner">
-                <!-- Wordmark -->
                 <a href="#" class="nav-wordmark">wear<span>wc</span></a>
 
-                <!-- Nav -->
                 <nav class="hidden md:flex" style="gap:32px;">
                     <a href="#collection" class="active">Collection</a>
                     <a href="#custom-order">Custom Order</a>
-                    <a href="#reviews">Reviews</a>
                     <a href="#payment">Payment</a>
                 </nav>
 
-                <!-- Right -->
                 <div style="display:flex; align-items:center; gap:16px;">
                     <select id="currencySelector" onchange="updateCurrency()"
-                        style="background:transparent; color:#888; border:1px solid var(--border); font-size:10px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; padding:8px 10px; cursor:none; outline:none;">
+                        style="background:transparent; color:var(--dim); border:1px solid var(--border); font-size:10px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; padding:8px 10px; cursor:none; outline:none;">
+                        <option value="DZD" selected>DZD (د.ج)</option>
                         <option value="USD">USD ($)</option>
-                        <option value="DZD">DZD (د.ج)</option>
                     </select>
-                    <button onclick="toggleCart()" style="background:none; border:none; color:#888; padding:4px; position:relative; cursor:none;" aria-label="Cart">
+                    <button onclick="toggleCart()" style="background:none; border:none; color:var(--dim); padding:4px; position:relative; cursor:none;" aria-label="Cart">
                         <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 11H4L5 9z"/></svg>
                         <span id="cart-count" style="position:absolute; top:-4px; right:-4px; width:16px; height:16px; background:var(--white); color:var(--black); font-size:9px; font-weight:700; border-radius:50%; align-items:center; justify-content:center;">0</span>
                     </button>
@@ -561,23 +477,21 @@
     <section id="hero">
         <div class="container">
             <div class="hero-grid">
-                <!-- Copy side -->
                 <div class="reveal" style="position:relative;">
                     <div class="new-badge">
                         <span class="new-badge-dot"></span>
                         New Store · Now Open
                     </div>
                     <h1 class="serif" style="font-size:clamp(38px,5vw,62px); line-height:1.1; font-weight:700; margin-bottom:24px; color:var(--white);">
-                        Wear the<br><em style="font-style:italic; color:rgba(255,255,255,0.6);">icon.</em><br>Not the price.
+                        Wear the<br><em style="font-style:italic; color:rgba(20,20,20,0.55);">icon.</em><br>Not the price.
                     </h1>
                     <p style="font-size:14px; color:var(--dim); line-height:1.8; max-width:420px; margin-bottom:32px; font-weight:300;">
                         Original timepieces inspired by classic watchmaking — sharp lines, real weight, honest pricing — shipped worldwide, delivered to your door. Launching with opening prices.
                     </p>
 
-                    <!-- Opening sale notice -->
                     <div style="border:1px solid var(--border2); padding:16px 20px; margin-bottom:32px; display:inline-block;">
                         <p class="label" style="margin-bottom:6px;">Grand Opening Sale</p>
-                        <p style="font-size:13px; color:var(--white);">Was <span style="text-decoration:line-through; color:var(--dim);">$51</span> — now from <strong>$22</strong> while stock lasts.</p>
+                        <p style="font-size:13px; color:var(--white);">Was <span class="price-orig" data-usd-orig="51" data-dzd-orig="12800">$51</span> — now from <strong class="price-display" data-usd="22" data-dzd="5800">$22 USD</strong> while stock lasts.</p>
                     </div>
 
                     <div style="display:flex; gap:12px; flex-wrap:wrap;">
@@ -586,113 +500,62 @@
                     </div>
                 </div>
 
-                <!-- Image side -->
-                <div class="reveal hero-img-card" onclick="openLightbox('rolex1.png','Voyager GMT')">
-                    <img src="rolex1.png" alt="Voyager GMT" onerror="this.style.opacity='0'"/>
-                    <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.015) 0%,transparent 60%); pointer-events:none;"></div>
+                <div class="reveal hero-img-card" onclick="openLightbox('voyager-gmt.png','Voyager GMT')">
+                    <img src="voyager-gmt.png" alt="Voyager GMT" onerror="this.style.opacity='0'"/>
+                    <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(20,20,20,0.02) 0%,transparent 60%); pointer-events:none;"></div>
                     <div class="overlay-label">
-                        <p class="label" style="color:rgba(255,255,255,0.35); margin-bottom:3px;">Featured</p>
-                        <p style="font-size:14px; font-weight:500; color:var(--white);">Voyager GMT — Opening Price</p>
+                        <p class="label" style="color:rgba(255,255,255,0.4); margin-bottom:3px;">Featured</p>
+                        <p style="font-size:14px; font-weight:500; color:#f4f4f4;">Voyager GMT — Opening Price</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ── PREVIEW VIDEOS ── -->
+    <section id="previews" style="padding:20px 0 72px;">
+        <div class="container reveal">
+            <div style="text-align:center; margin-bottom:32px;">
+                <p class="label" style="margin-bottom:10px;">See It In Motion</p>
+                <h2 class="serif" style="font-size:clamp(24px,3.4vw,34px); font-weight:700; color:var(--white);">Watch Previews</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="card" style="overflow:hidden;">
+                    <video src="p_video1.mp4" autoplay muted loop playsinline controls preload="none" style="width:100%; height:auto; max-height:520px; display:block; background:rgba(20,20,20,0.03);"></video>
+                </div>
+                <div class="card" style="overflow:hidden;">
+                    <video src="p_video2.mp4" autoplay muted loop playsinline controls preload="none" style="width:100%; height:auto; max-height:520px; display:block; background:rgba(20,20,20,0.03);"></video>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ── COLLECTION ── -->
-    <section id="collection" style="padding:80px 0;">
+    <section id="collection" style="padding:40px 0 80px;">
         <div class="container">
             <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:40px;" class="reveal">
                 <div>
                     <p class="label" style="margin-bottom:10px;">The Drop</p>
                     <h2 class="serif" style="font-size:clamp(28px,4vw,42px); font-weight:700; color:var(--white);">Collection</h2>
                 </div>
-                <p style="font-size:11px; color:var(--dim); display:none;" id="dragHint">← swipe →</p>
             </div>
 
-            <div class="products-grid reveal">
+            <div id="productsGrid" class="products-grid reveal"></div>
+        </div>
+    </section>
 
-                <!-- Card 1: Voyager GMT -->
-                <div class="card" style="overflow:hidden;">
-                    <div class="product-img" style="background-image:url('rolex1.png');"
-                         onclick="openLightbox('rolex1.png','Voyager GMT')">
-                        <div class="zoom-icon">
-                            <svg width="24" height="24" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
-                        </div>
-                    </div>
-                    <div style="padding:20px;">
-                        <p class="label" style="margin-bottom:6px; color:var(--dim);">wearwc · Dual-Time Collection</p>
-                        <h3 style="font-size:16px; font-weight:600; color:var(--white); margin-bottom:6px;">VOYAGER GMT</h3>
-                        <p style="font-size:12px; color:var(--dim); line-height:1.7; margin-bottom:16px;">Dual time-zone bidirectional bezel. Five-link bracelet. Bi-colour ceramic bezel insert.</p>
-                        <div class="price-wrap" style="margin-bottom:16px;">
-                            <span class="price-orig" data-usd-orig="51" data-dzd-orig="12800">$51</span>
-                            <span class="price-now price-display" data-usd="26" data-dzd="6550">$26 USD</span>
-                            <span class="sale-tag">New Store</span>
-                        </div>
-                        <div style="display:flex; gap:8px;">
-                            <button onclick="addToCart('Voyager GMT','rolex1.png',26,6550)" class="btn-primary" style="padding:10px 20px; font-size:9px;">Add to Cart</button>
-                            <button onclick="buyNow('Voyager GMT','rolex1.png',26,6550)" class="btn-ghost" style="padding:10px 20px; font-size:9px;">Buy Now</button>
-                        </div>
-                    </div>
+    <!-- ── PERSONAL VIDEO VERIFICATION ── -->
+    <section id="video-proof" style="padding:0 0 80px;">
+        <div class="container reveal">
+            <div class="card" style="display:flex; align-items:center; gap:20px; padding:26px 30px; flex-wrap:wrap;">
+                <div style="width:44px; height:44px; flex-shrink:0; background:#16a34a; display:flex; align-items:center; justify-content:center;">
+                    <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 </div>
-
-                <!-- Card 2: The Mariner -->
-                <div class="card" style="overflow:hidden;">
-                    <div class="product-img" style="background-image:url('rolex2.png');"
-                         onclick="openLightbox('rolex2.png','The Mariner')">
-                        <div class="zoom-icon">
-                            <svg width="24" height="24" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
-                        </div>
-                    </div>
-                    <div style="padding:20px;">
-                        <p class="label" style="margin-bottom:6px; color:var(--dim);">wearwc · Nautical Collection</p>
-                        <h3 style="font-size:16px; font-weight:600; color:var(--white); margin-bottom:6px;">THE MARINER</h3>
-                        <p style="font-size:12px; color:var(--dim); line-height:1.7; margin-bottom:16px;">Rotatable graduated bezel. Polished three-link bracelet. Maritime heritage silhouette.</p>
-                        <div class="price-wrap" style="margin-bottom:16px;">
-                            <span class="price-orig" data-usd-orig="51" data-dzd-orig="12800">$51</span>
-                            <span class="price-now price-display" data-usd="26" data-dzd="6550">$26 USD</span>
-                            <span class="sale-tag">New Store</span>
-                        </div>
-                        <div style="display:flex; gap:8px;">
-                            <button onclick="addToCart('The Mariner','rolex2.png',26,6550)" class="btn-primary" style="padding:10px 20px; font-size:9px;">Add to Cart</button>
-                            <button onclick="buyNow('The Mariner','rolex2.png',26,6550)" class="btn-ghost" style="padding:10px 20px; font-size:9px;">Buy Now</button>
-                        </div>
-                    </div>
+                <div style="flex:1; min-width:220px;">
+                    <p style="font-size:14px; font-weight:600; color:var(--white); margin-bottom:4px;">Want to see your exact watch before it ships?</p>
+                    <p style="font-size:12px; color:var(--dim); line-height:1.6; font-weight:300;">Message us personally on WhatsApp and we'll send you a real video of your model — no obligation.</p>
                 </div>
-
-                <!-- Card 3: The Heritage -->
-                <div class="card" style="overflow:hidden;">
-                    <div class="product-img" id="heritage-img" style="background-image:url('rolex3.png');"
-                         onclick="openLightbox(document.getElementById('heritage-img').style.backgroundImage.replace(/url\(['\"]?(.*?)['\"]?\)/,'$1'),'The Heritage')">
-                        <div class="zoom-icon">
-                            <svg width="24" height="24" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
-                        </div>
-                    </div>
-                    <div style="padding:20px;">
-                        <!-- Colour swatches -->
-                        <div style="display:flex; gap:10px; margin-bottom:14px;">
-                            <button title="Steel" class="colour-swatch active" style="background:#D8D8D8;"
-                                    onclick="switchDJ('rolex3.png',this)"></button>
-                            <button title="Gold" class="colour-swatch" style="background:#C9A84C;"
-                                    onclick="switchDJ('rolex3_gold.png',this)"></button>
-                            <button title="Rose Gold" class="colour-swatch" style="background:#B76E79;"
-                                    onclick="switchDJ('rolex3_rose.png',this)"></button>
-                        </div>
-                        <p class="label" style="margin-bottom:6px; color:var(--dim);">wearwc · Heritage Collection · 3 Finishes</p>
-                        <h3 style="font-size:16px; font-weight:600; color:var(--white); margin-bottom:6px;">THE HERITAGE</h3>
-                        <p style="font-size:12px; color:var(--dim); line-height:1.7; margin-bottom:16px;">Fluted bezel. Magnified date window. The quintessential dress watch in three finishes.</p>
-                        <div class="price-wrap" style="margin-bottom:16px;">
-                            <span class="price-orig" data-usd-orig="51" data-dzd-orig="12800">$51</span>
-                            <span class="price-now price-display" data-usd="22" data-dzd="5800">$22 USD</span>
-                            <span class="sale-tag">New Store</span>
-                        </div>
-                        <div style="display:flex; gap:8px;">
-                            <button onclick="addToCart('The Heritage','rolex3.png',22,5800)" class="btn-primary" style="padding:10px 20px; font-size:9px;">Add to Cart</button>
-                            <button onclick="buyNow('The Heritage','rolex3.png',22,5800)" class="btn-ghost" style="padding:10px 20px; font-size:9px;">Buy Now</button>
-                        </div>
-                    </div>
-                </div>
-
+                <a href="https://wa.me/213555639302" target="_blank" class="btn-primary" style="font-size:9px; padding:12px 22px; white-space:nowrap; text-decoration:none;">Message Us</a>
             </div>
         </div>
     </section>
@@ -705,23 +568,23 @@
                     <p class="label" style="margin-bottom:14px;">Who We Are</p>
                     <h2 class="serif" style="font-size:clamp(28px,4vw,44px); font-weight:700; color:var(--white); margin-bottom:20px;">New. Honest. Built on quality.</h2>
                     <p style="font-size:13px; color:var(--dim); line-height:1.9; margin-bottom:16px; font-weight:300;">
-                        <strong style="color:rgba(255,255,255,0.6);">wearwc</strong> is a brand-new store. We design and sell high-quality timepieces inspired by classic watchmaking — we're upfront about that. We're not affiliated with any luxury watch house, and we're not hiding behind vague language.
+                        <strong style="color:rgba(20,20,20,0.7);">wearwc</strong> is a brand-new store. We design and sell high-quality timepieces inspired by classic watchmaking — we're upfront about that. We're not affiliated with any luxury watch house, and we're not hiding behind vague language.
                     </p>
                     <p style="font-size:13px; color:var(--dim); line-height:1.9; font-weight:300;">
-                        What we promise: remarkable build quality, discreet shipping, honest pricing, and real support. Because we're new, we're running an opening-price sale — every piece marked down from $51 while we build our name.
+                        What we promise: remarkable build quality, discreet shipping, honest pricing, and real support. Because we're new, we're running an opening-price sale — every piece marked down while we build our name.
                     </p>
                 </div>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border);">
                     <div style="background:var(--black); padding:28px 24px;">
-                        <p style="font-size:32px; font-weight:700; color:var(--white); font-family:'Playfair Display',serif;">3</p>
+                        <p style="font-size:32px; font-weight:700; color:var(--white); font-family:'Playfair Display',serif;">5</p>
                         <p class="label" style="margin-top:6px;">Models Available</p>
                     </div>
                     <div style="background:var(--black); padding:28px 24px;">
-                        <p style="font-size:32px; font-weight:700; color:var(--white); font-family:'Playfair Display',serif;">$22</p>
+                        <p style="font-size:32px; font-weight:700; color:var(--white); font-family:'Playfair Display',serif;" class="price-display" data-usd="22" data-dzd="5800">$22</p>
                         <p class="label" style="margin-top:6px;">Starting Price</p>
                     </div>
                     <div style="background:var(--black); padding:28px 24px;">
-                        <p style="font-size:32px; font-weight:700; color:var(--white); font-family:'Playfair Display',serif;">14d</p>
+                        <p style="font-size:32px; font-weight:700; color:var(--white); font-family:'Playfair Display',serif;">2d</p>
                         <p class="label" style="margin-top:6px;">Max Delivery</p>
                     </div>
                     <div style="background:var(--black); padding:28px 24px;">
@@ -742,14 +605,13 @@
             </div>
 
             <div class="payment-grid">
-                <!-- Worldwide -->
                 <div class="payment-cell">
                     <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
-                        <svg width="28" height="28" fill="none" stroke="white" stroke-width="1.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+                        <svg width="28" height="28" fill="none" stroke="#141414" stroke-width="1.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
                         <p class="label" style="color:var(--white);">Worldwide</p>
                     </div>
                     <h3 style="font-size:22px; font-weight:700; color:var(--white); margin-bottom:12px; font-family:'Playfair Display',serif;">Card Payment</h3>
-                    <p style="font-size:13px; color:var(--dim); line-height:1.8; font-weight:300; margin-bottom:20px;">All major debit and credit cards accepted via our secure Shopify checkout. PayPal also available. Your payment info is never stored.</p>
+                    <p style="font-size:13px; color:var(--dim); line-height:1.8; font-weight:300; margin-bottom:20px;">Card and PayPal payment can be arranged directly with us once your order is confirmed on WhatsApp — we'll send a secure payment link. Your payment info is never stored on this site.</p>
                     <div style="display:flex; gap:8px; flex-wrap:wrap;">
                         <span style="border:1px solid var(--border2); padding:6px 12px; font-size:10px; font-weight:600; letter-spacing:0.1em; color:var(--white);">VISA</span>
                         <span style="border:1px solid var(--border2); padding:6px 12px; font-size:10px; font-weight:600; letter-spacing:0.1em; color:var(--white);">MASTERCARD</span>
@@ -757,7 +619,6 @@
                     </div>
                 </div>
 
-                <!-- Algeria -->
                 <div class="payment-cell">
                     <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
                         <span style="font-size:24px; line-height:1;">🇩🇿</span>
@@ -772,72 +633,26 @@
                 </div>
             </div>
 
-            <!-- Shipping strip -->
             <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); margin-top:1px;">
                 <div style="background:var(--black); padding:24px 20px; text-align:center;">
-                    <svg width="22" height="22" fill="none" stroke="#888" stroke-width="1.5" viewBox="0 0 24 24" style="margin:0 auto 8px;"><path stroke-linecap="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+                    <svg width="22" height="22" fill="none" stroke="#6b6b68" stroke-width="1.5" viewBox="0 0 24 24" style="margin:0 auto 8px;"><path stroke-linecap="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
                     <p style="font-size:12px; color:var(--white); font-weight:500; margin-bottom:3px;">Discreet Packing</p>
                     <p style="font-size:11px; color:var(--dim);">Plain box, no branding</p>
                 </div>
                 <div style="background:var(--black); padding:24px 20px; text-align:center;">
-                    <svg width="22" height="22" fill="none" stroke="#888" stroke-width="1.5" viewBox="0 0 24 24" style="margin:0 auto 8px;"><path stroke-linecap="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    <p style="font-size:12px; color:var(--white); font-weight:500; margin-bottom:3px;">7–14 Days</p>
+                    <svg width="22" height="22" fill="none" stroke="#6b6b68" stroke-width="1.5" viewBox="0 0 24 24" style="margin:0 auto 8px;"><path stroke-linecap="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <p style="font-size:12px; color:var(--white); font-weight:500; margin-bottom:3px;">Up to 2 Days</p>
                     <p style="font-size:11px; color:var(--dim);">Worldwide delivery</p>
                 </div>
                 <div style="background:var(--black); padding:24px 20px; text-align:center;">
-                    <svg width="22" height="22" fill="none" stroke="#888" stroke-width="1.5" viewBox="0 0 24 24" style="margin:0 auto 8px;"><path stroke-linecap="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    <svg width="22" height="22" fill="none" stroke="#6b6b68" stroke-width="1.5" viewBox="0 0 24 24" style="margin:0 auto 8px;"><path stroke-linecap="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                     <p style="font-size:12px; color:var(--white); font-weight:500; margin-bottom:3px;">Buyer Protection</p>
                     <p style="font-size:11px; color:var(--dim);">Full refund if lost</p>
                 </div>
                 <div style="background:var(--black); padding:24px 20px; text-align:center;">
-                    <svg width="22" height="22" fill="none" stroke="#888" stroke-width="1.5" viewBox="0 0 24 24" style="margin:0 auto 8px;"><path stroke-linecap="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                    <svg width="22" height="22" fill="none" stroke="#6b6b68" stroke-width="1.5" viewBox="0 0 24 24" style="margin:0 auto 8px;"><path stroke-linecap="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
                     <p style="font-size:12px; color:var(--white); font-weight:500; margin-bottom:3px;">Secure Checkout</p>
                     <p style="font-size:11px; color:var(--dim);">Confirmed on WhatsApp</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── REVIEWS ── -->
-    <section id="reviews" style="padding:80px 0; border-top:1px solid var(--border);">
-        <div class="container reveal">
-            <div style="text-align:center; margin-bottom:48px;">
-                <p class="label" style="margin-bottom:10px;">Early Clients</p>
-                <h2 class="serif" style="font-size:clamp(28px,4vw,42px); font-weight:700; color:var(--white);">What They Said</h2>
-            </div>
-            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border);">
-                <div style="background:var(--black); padding:32px 28px;">
-                    <div class="stars" style="margin-bottom:14px;">★★★★★</div>
-                    <p style="font-size:13px; color:rgba(255,255,255,0.65); line-height:1.8; font-weight:300; font-style:italic;">"Arrived perfectly. Looks stunning — nobody suspects a thing. Fast shipping too."</p>
-                    <div style="margin-top:20px; display:flex; align-items:center; gap:10px;">
-                        <div style="width:32px; height:32px; border-radius:50%; background:var(--mid); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:var(--white);">KA</div>
-                        <div>
-                            <p style="font-size:12px; font-weight:500; color:var(--white);">Karim A.</p>
-                            <p style="font-size:11px; color:var(--dim);">Alger, DZ</p>
-                        </div>
-                    </div>
-                </div>
-                <div style="background:var(--black); padding:32px 28px;">
-                    <div class="stars" style="margin-bottom:14px;">★★★★★</div>
-                    <p style="font-size:13px; color:rgba(255,255,255,0.65); line-height:1.8; font-weight:300; font-style:italic;">"The Voyager GMT is incredible quality for the price. Weight and feel are spot on."</p>
-                    <div style="margin-top:20px; display:flex; align-items:center; gap:10px;">
-                        <div style="width:32px; height:32px; border-radius:50%; background:var(--mid); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:var(--white);">YB</div>
-                        <div>
-                            <p style="font-size:12px; font-weight:500; color:var(--white);">Yacine B.</p>
-                            <p style="font-size:11px; color:var(--dim);">Oran, DZ</p>
-                        </div>
-                    </div>
-                </div>
-                <div style="background:var(--black); padding:32px 28px;">
-                    <div class="stars" style="margin-bottom:14px;">★★★★☆</div>
-                    <p style="font-size:13px; color:rgba(255,255,255,0.65); line-height:1.8; font-weight:300; font-style:italic;">"The Heritage rose gold finish is gorgeous. WhatsApp support replied in minutes."</p>
-                    <div style="margin-top:20px; display:flex; align-items:center; gap:10px;">
-                        <div style="width:32px; height:32px; border-radius:50%; background:var(--mid); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:var(--white);">SM</div>
-                        <div>
-                            <p style="font-size:12px; font-weight:500; color:var(--white);">Sara M.</p>
-                            <p style="font-size:11px; color:var(--dim);">Constantine, DZ</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -846,7 +661,6 @@
     <!-- ── LOOK FOR YOUR MODEL ── -->
     <section id="custom-order">
         <div class="container reveal">
-            <!-- Header -->
             <div style="text-align:center; margin-bottom:56px;">
                 <div class="section-badge" style="margin:0 auto 20px; display:inline-flex;">
                     <span class="badge-star">✦</span>
@@ -854,22 +668,18 @@
                     <span class="badge-star">✦</span>
                 </div>
                 <h2 class="serif" style="font-size:clamp(32px,5vw,56px); font-weight:700; color:var(--white); line-height:1.05; margin-bottom:16px;">
-                    Build<br><em style="color:rgba(255,255,255,0.45);">Your Own.</em>
+                    Build<br><em style="color:rgba(20,20,20,0.5);">Your Own.</em>
                 </h2>
                 <p style="font-size:14px; color:var(--dim); max-width:480px; margin:0 auto; line-height:1.8; font-weight:300;">
                     Don't see the exact style you want? Tell us. We build to order — your choice of dial, bracelet, and finish. If you can picture it, we can craft it.
                 </p>
             </div>
 
-            <!-- Main card -->
             <div class="custom-order-grid">
-
-                <!-- Left: How it works -->
                 <div class="custom-order-left">
                     <p class="label" style="margin-bottom:28px;">How It Works</p>
 
                     <div style="display:flex; flex-direction:column; gap:0; border-top:1px solid var(--border);">
-                        <!-- Step 1 -->
                         <div style="display:flex; gap:20px; padding:24px 0; border-bottom:1px solid var(--border);">
                             <div style="width:28px; height:28px; border:1px solid var(--border2); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
                                 <span style="font-size:11px; font-weight:700; color:var(--white);">01</span>
@@ -879,7 +689,6 @@
                                 <p style="font-size:12px; color:var(--dim); line-height:1.7; font-weight:300;">Fill in the form with your preferred style, dial colour, and bracelet type — as much or as little detail as you like.</p>
                             </div>
                         </div>
-                        <!-- Step 2 -->
                         <div style="display:flex; gap:20px; padding:24px 0; border-bottom:1px solid var(--border);">
                             <div style="width:28px; height:28px; border:1px solid var(--border2); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
                                 <span style="font-size:11px; font-weight:700; color:var(--white);">02</span>
@@ -889,7 +698,6 @@
                                 <p style="font-size:12px; color:var(--dim); line-height:1.7; font-weight:300;">Within 24–48 hours our team responds via WhatsApp with pricing, photos, and availability confirmation.</p>
                             </div>
                         </div>
-                        <!-- Step 3 -->
                         <div style="display:flex; gap:20px; padding:24px 0; border-bottom:1px solid var(--border);">
                             <div style="width:28px; height:28px; border:1px solid var(--border2); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
                                 <span style="font-size:11px; font-weight:700; color:var(--white);">03</span>
@@ -899,33 +707,30 @@
                                 <p style="font-size:12px; color:var(--dim); line-height:1.7; font-weight:300;">Once you approve, we process payment and dispatch. Card worldwide — Cash on Delivery for Algeria.</p>
                             </div>
                         </div>
-                        <!-- Step 4 -->
                         <div style="display:flex; gap:20px; padding:24px 0;">
                             <div style="width:28px; height:28px; border:1px solid var(--border2); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
                                 <span style="font-size:11px; font-weight:700; color:var(--white);">04</span>
                             </div>
                             <div>
                                 <p style="font-size:13px; font-weight:600; color:var(--white); margin-bottom:5px;">Delivered to You</p>
-                                <p style="font-size:12px; color:var(--dim); line-height:1.7; font-weight:300;">7–14 days to your door in discreet, plain packaging. Tracked and fully insured.</p>
+                                <p style="font-size:12px; color:var(--dim); line-height:1.7; font-weight:300;">Up to 2 days to your door in discreet, plain packaging. Tracked and fully insured.</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Popular requests chips -->
                     <div style="margin-top:28px;">
-                        <p class="label" style="margin-bottom:12px; color:#555;">Popular Requests</p>
+                        <p class="label" style="margin-bottom:12px; color:#8a8a86;">Popular Requests</p>
                         <div style="display:flex; flex-wrap:wrap; gap:8px;">
-                            <span onclick="fillModel('Black Diver, Date Window')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Black Diver, Date Window</span>
-                            <span onclick="fillModel('Panda Chronograph')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Panda Chronograph</span>
-                            <span onclick="fillModel('Two-Tone Dress GMT')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Two-Tone Dress GMT</span>
-                            <span onclick="fillModel('Black Dial Field Watch')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Black Dial Field Watch</span>
-                            <span onclick="fillModel('Gold Dress, Day Display')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Gold Dress, Day Display</span>
-                            <span onclick="fillModel('Antimagnetic Sport Dial')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Antimagnetic Sport Dial</span>
+                            <span onclick="fillModel('Black Diver, Date Window')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(20,20,20,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Black Diver, Date Window</span>
+                            <span onclick="fillModel('Panda Chronograph')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(20,20,20,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Panda Chronograph</span>
+                            <span onclick="fillModel('Two-Tone Dress GMT')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(20,20,20,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Two-Tone Dress GMT</span>
+                            <span onclick="fillModel('Black Dial Field Watch')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(20,20,20,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Black Dial Field Watch</span>
+                            <span onclick="fillModel('Gold Dress, Day Display')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(20,20,20,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Gold Dress, Day Display</span>
+                            <span onclick="fillModel('Antimagnetic Sport Dial')" style="border:1px solid var(--border); padding:5px 12px; font-size:11px; color:var(--dim); cursor:none; transition:border-color 0.2s, color 0.2s;" onmouseenter="this.style.borderColor='rgba(20,20,20,0.35)';this.style.color='var(--white)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">Antimagnetic Sport Dial</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right: Form -->
                 <div class="custom-order-right">
                     <p class="label" style="margin-bottom:28px;">Your Request</p>
 
@@ -972,13 +777,12 @@
                         <button onclick="submitCustomOrder()" class="btn-primary" style="width:100%; font-size:10px; padding:16px; margin-top:4px;">
                             Send My Request via WhatsApp →
                         </button>
-                        <p style="font-size:10px; color:#444; margin-top:10px; text-align:center;">We respond within 24 hours. No spam, no obligation.</p>
+                        <p style="font-size:10px; color:#9a9a96; margin-top:10px; text-align:center;">We respond within 24 hours. No spam, no obligation.</p>
                     </div>
 
-                    <!-- Success message -->
                     <div id="order-success">
                         <div class="tick">
-                            <svg width="20" height="20" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                            <svg width="20" height="20" fill="none" stroke="#141414" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                         </div>
                         <h3 class="serif" style="font-size:22px; color:var(--white); margin-bottom:10px;">Request Sent!</h3>
                         <p style="font-size:13px; color:var(--dim); line-height:1.7; font-weight:300; max-width:280px; margin:0 auto;">Opening WhatsApp with your request pre-filled. We'll reply within 24 hours.</p>
@@ -1001,7 +805,7 @@
     </section>
 
     <!-- ── FOOTER ── -->
-    <footer style="border-top:1px solid var(--border); background:rgba(0,0,0,0.6); padding:64px 0 32px;">
+    <footer style="border-top:1px solid var(--border); background:rgba(20,20,20,0.02); padding:64px 0 32px;">
         <div class="container">
             <div style="display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:48px; margin-bottom:48px;">
                 <div>
@@ -1013,7 +817,6 @@
                     <div style="display:flex; flex-direction:column; gap:10px;">
                         <a href="#collection" class="footer-link">Collection</a>
                         <a href="#about" class="footer-link">About Us</a>
-                        <a href="#reviews" class="footer-link">Reviews</a>
                         <a href="#payment" class="footer-link">Payment & Shipping</a>
                     </div>
                 </div>
@@ -1036,42 +839,36 @@
                 </div>
             </div>
             <div style="border-top:1px solid var(--border); padding-top:24px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px;">
-                <p style="font-size:11px; color:#444;">&copy; 2025 wearwc. All rights reserved.</p>
-                <p style="font-size:11px; color:#444;">Independently designed timepieces. Not affiliated with any luxury watch brand or manufacturer.</p>
+                <p style="font-size:11px; color:#9a9a96;">&copy; 2025 wearwc. All rights reserved.</p>
+                <p style="font-size:11px; color:#9a9a96;">Independently designed timepieces. Not affiliated with any luxury watch brand or manufacturer.</p>
             </div>
         </div>
     </footer>
 
 </div><!-- end #main -->
 
-<!-- ═══════════════════════════════════════
-     LIGHTBOX
-═══════════════════════════════════════ -->
+<!-- ═══ LIGHTBOX ═══ -->
 <div id="lightbox" onclick="closeLightbox()">
     <div style="position:relative; max-width:500px; width:90%; margin:0 auto;" onclick="event.stopPropagation()">
-        <button onclick="closeLightbox()" style="position:absolute; top:-40px; right:0; background:none; border:none; color:#888; font-size:28px; cursor:none;">&times;</button>
+        <button onclick="closeLightbox()" style="position:absolute; top:-40px; right:0; background:none; border:none; color:#aaa; font-size:28px; cursor:none;">&times;</button>
         <div style="border:1px solid var(--border2); background:#0a0a0a; padding:16px;">
             <img id="lightbox-img" src="" alt="" style="width:100%; aspect-ratio:1; object-fit:contain; display:block;" onerror="this.style.display='none'"/>
-            <p id="lightbox-title" style="text-align:center; font-family:'Playfair Display',serif; font-size:18px; color:var(--white); margin-top:16px;"></p>
+            <p id="lightbox-title" style="text-align:center; font-family:'Playfair Display',serif; font-size:18px; color:#f4f4f4; margin-top:16px;"></p>
         </div>
     </div>
 </div>
 
-<!-- ═══════════════════════════════════════
-     CART PANEL
-═══════════════════════════════════════ -->
+<!-- ═══ CART PANEL ═══ -->
 <div id="cartPanel">
     <div style="padding:20px 20px 16px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
         <h3 id="cartPanelTitle" style="font-family:'Playfair Display',serif; font-size:18px; color:var(--white);">Your Selection</h3>
-        <button onclick="toggleCart()" style="background:none; border:none; color:#888; font-size:24px; cursor:none;">&times;</button>
+        <button onclick="toggleCart()" style="background:none; border:none; color:var(--dim); font-size:24px; cursor:none;">&times;</button>
     </div>
 
-    <!-- View 1: cart items -->
     <div id="cartItems" class="hide-scroll" style="flex:1; overflow-y:auto; padding:16px;">
         <p id="cart-empty" style="color:var(--dim); font-size:13px; text-align:center; margin-top:32px;">Your cart is empty.</p>
     </div>
 
-    <!-- View 2: checkout form -->
     <div id="cartCheckoutForm" class="hide-scroll" style="display:none; flex:1; overflow-y:auto; padding:16px;">
         <p id="checkoutSummaryLine" style="font-size:12px; color:var(--dim); margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid var(--border);"></p>
         <div class="field-group">
@@ -1092,24 +889,22 @@
         </div>
     </div>
 
-    <!-- View 3: order success -->
     <div id="cartOrderSuccess" style="display:none; flex:1; padding:32px 24px; text-align:center;">
         <div class="tick">
-            <svg width="18" height="18" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <svg width="18" height="18" fill="none" stroke="#141414" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </div>
         <p style="font-size:16px; font-family:'Playfair Display',serif; color:var(--white); margin-bottom:8px;">Order Sent!</p>
         <p style="font-size:12px; color:var(--dim); line-height:1.7; font-weight:300;">We've opened WhatsApp with your order details. We'll confirm within 24 hours.</p>
     </div>
 
-    <!-- Footer: swaps between 3 states -->
     <div style="padding:16px; border-top:1px solid var(--border);">
         <div id="cartFooterDefault">
             <div style="display:flex; justify-content:space-between; margin-bottom:14px;">
                 <span style="font-size:13px; color:var(--dim);">Total</span>
-                <span id="cart-total" style="font-size:14px; font-weight:600; color:var(--white);">$0 USD</span>
+                <span id="cart-total" style="font-size:14px; font-weight:600; color:var(--white);">0.00 DZD</span>
             </div>
             <button id="checkout-btn" onclick="openCheckoutForm()" class="btn-primary" style="width:100%; font-size:10px;" disabled>Checkout</button>
-            <p style="font-size:10px; color:#444; text-align:center; margin-top:8px;">Orders are confirmed with you directly on WhatsApp</p>
+            <p style="font-size:10px; color:#9a9a96; text-align:center; margin-top:8px;">Orders are confirmed with you directly on WhatsApp</p>
         </div>
         <div id="cartFooterCheckout" style="display:none;">
             <button onclick="submitCheckout()" class="btn-primary" style="width:100%; font-size:10px; padding:14px;">Place Order via WhatsApp →</button>
@@ -1122,11 +917,8 @@
 </div>
 <div id="cart-overlay" onclick="toggleCart()"></div>
 
-<!-- ═══════════════════════════════════════
-     FAB BUTTONS
-═══════════════════════════════════════ -->
-<!-- Music toggle -->
-<button id="musicBtn" onclick="toggleMusic()" data-tip="AMBIENT MUSIC" aria-label="Toggle ambient music">
+<!-- ═══ FAB BUTTONS ═══ -->
+<button id="musicBtn" onclick="toggleMusic()" data-tip="PLAY MUSIC" aria-label="Toggle background music">
     <div class="bars">
         <div class="bar"></div>
         <div class="bar"></div>
@@ -1135,51 +927,152 @@
         <div class="bar"></div>
     </div>
 </button>
+<audio id="bgMusic" src="theme1.mp3" loop preload="none"></audio>
 
-<!-- WhatsApp -->
 <a href="https://wa.me/213555639302" target="_blank"
    style="position:fixed; bottom:20px; right:72px; z-index:50; background:#16a34a; color:#fff; padding:14px; border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; cursor:none;"
    aria-label="WhatsApp">
     <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
-<!-- Chat -->
 <button onclick="toggleChat()"
    style="position:fixed; bottom:20px; right:20px; z-index:50; background:var(--white); color:var(--black); padding:14px; border:none; display:flex; align-items:center; justify-content:center; cursor:none;"
    aria-label="AI Chat">
     <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
 </button>
 
-<!-- ═══════════════════════════════════════
-     AI CHAT PANEL
-═══════════════════════════════════════ -->
+<!-- ═══ AI CHAT PANEL ═══ -->
 <div id="chatPanel">
     <div style="padding:14px 16px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
         <div>
             <p style="font-family:'Playfair Display',serif; font-size:15px; color:var(--white);">Concierge</p>
             <p style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--dim);">AI · wearwc</p>
         </div>
-        <button onclick="toggleChat()" style="background:none; border:none; color:#888; font-size:20px; cursor:none;">&times;</button>
+        <button onclick="toggleChat()" style="background:none; border:none; color:var(--dim); font-size:20px; cursor:none;">&times;</button>
     </div>
     <div id="chatMessages" class="hide-scroll" style="padding:14px; height:220px; overflow-y:auto; display:flex; flex-direction:column; gap:10px;">
-        <div style="background:rgba(255,255,255,0.04); border:1px solid var(--border); padding:12px; border-radius:2px;">
+        <div style="background:rgba(20,20,20,0.03); border:1px solid var(--border); padding:12px; border-radius:2px;">
             <p style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:var(--dim); margin-bottom:5px;">Concierge</p>
-            <p style="font-size:12px; color:rgba(255,255,255,0.8); line-height:1.7; font-weight:300;">Welcome to wearwc. Ask me about models, pricing, shipping, or Cash on Delivery in Algeria.</p>
+            <p style="font-size:12px; color:rgba(20,20,20,0.82); line-height:1.7; font-weight:300;">Welcome to wearwc. Ask me about models, pricing, shipping, or Cash on Delivery in Algeria.</p>
         </div>
     </div>
     <div style="padding:12px; border-top:1px solid var(--border);">
         <form onsubmit="sendChatMessage(event)" style="display:flex; gap:8px;">
             <input type="text" id="chatInput" placeholder="Ask anything..." autocomplete="off"
-                   style="flex:1; background:rgba(255,255,255,0.04); border:1px solid var(--border); padding:10px 12px; color:var(--white); font-size:12px; outline:none; font-family:'Inter',sans-serif; font-weight:300; cursor:none;"/>
+                   style="flex:1; background:rgba(20,20,20,0.04); border:1px solid var(--border); padding:10px 12px; color:var(--white); font-size:12px; outline:none; font-family:'Inter',sans-serif; font-weight:300; cursor:none;"/>
             <button type="submit" id="chatSendBtn" class="btn-primary" style="padding:0 16px; font-size:9px;">→</button>
         </form>
     </div>
 </div>
 
-<!-- ═══════════════════════════════════════
-     SCRIPTS
-═══════════════════════════════════════ -->
 <script>
-// ── Custom cursor ─────────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════
+// YOUR WATCHES — edit this list to add, remove, rename, or
+// reprice models. Each watch is one { } block below.
+//   id           → short internal code, no spaces (used behind the scenes)
+//   collection   → small label shown above the title
+//   name         → the product title
+//   description  → the short line under the title
+//   img          → filename of the photo — upload it next to this file
+//   usd / dzd    → current sale price
+//   usdOrig/dzdOrig → the crossed-out "was" price
+//   finishes     → OPTIONAL — only add this if the watch comes in more
+//                  than one colour (copy the "heritage" example below)
+// ══════════════════════════════════════════════════════════════
+const PRODUCTS = [
+    {
+        id: 'voyager-gmt',
+        collection: 'wearwc · Dual-Time Collection',
+        name: 'VOYAGER GMT',
+        description: 'Dual time-zone bidirectional bezel. Five-link bracelet. Bi-colour ceramic bezel insert.',
+        img: 'voyager-gmt.png',
+        usd: 26, usdOrig: 51, dzd: 6550, dzdOrig: 12800,
+        finishes: null
+    },
+    {
+        id: 'mariner',
+        collection: 'wearwc · Nautical Collection',
+        name: 'THE MARINER',
+        description: 'Rotatable graduated bezel. Polished three-link bracelet. Maritime heritage silhouette.',
+        img: 'mariner.png',
+        usd: 26, usdOrig: 51, dzd: 6550, dzdOrig: 12800,
+        finishes: null
+    },
+    {
+        id: 'heritage',
+        collection: 'wearwc · Heritage Collection · 3 Finishes',
+        name: 'THE HERITAGE',
+        description: 'Fluted bezel. Magnified date window. The quintessential dress watch in three finishes.',
+        img: 'heritage.png',
+        usd: 22, usdOrig: 51, dzd: 5800, dzdOrig: 12800,
+        finishes: [
+            { name: 'Steel', color: '#D8D8D8', img: 'heritage.png' },
+            { name: 'Gold', color: '#C9A84C', img: 'heritage-gold.png' },
+            { name: 'Rose Gold', color: '#B76E79', img: 'heritage-rose.png' }
+        ]
+    },
+    {
+        id: 'diver',
+        collection: 'wearwc · Dive Collection',
+        name: 'THE DIVER',
+        description: 'Unidirectional dive bezel. Lumed hands and markers. Water-resistant sport bracelet.',
+        img: 'diver.png',
+        usd: 24, usdOrig: 51, dzd: 6100, dzdOrig: 12800,
+        finishes: null
+    },
+    {
+        id: 'chronograph',
+        collection: 'wearwc · Chronograph Collection',
+        name: 'THE CHRONOGRAPH',
+        description: 'Tri-register panda dial. Tachymeter scale. Polished steel pushers.',
+        img: 'chronograph.png',
+        usd: 28, usdOrig: 55, dzd: 7000, dzdOrig: 13800,
+        finishes: null
+    }
+    // ↑ To add a new watch, copy one of the blocks above (including the
+    // comma before it), paste it here, and change the values.
+];
+
+function renderProducts() {
+    const grid = document.getElementById('productsGrid');
+    grid.innerHTML = PRODUCTS.map(p => {
+        const swatches = p.finishes ? `
+            <div style="display:flex; gap:10px; margin-bottom:14px;">
+                ${p.finishes.map((f, i) => `<button title="${f.name}" class="colour-swatch${i === 0 ? ' active' : ''}" style="background:${f.color};" onclick="switchFinish('${p.id}','${f.img}',this)"></button>`).join('')}
+            </div>` : '';
+        const nameEsc = p.name.replace(/'/g, "\\'");
+        return `
+        <div class="card" style="overflow:hidden;">
+            <div class="product-img" id="img-${p.id}" style="background-image:url('${p.img}');" onclick="openLightbox(document.getElementById('img-${p.id}').style.backgroundImage.replace(/url\\(['\\"]?(.*?)['\\"]?\\)/,'$1'),'${nameEsc}')">
+                <div class="zoom-icon">
+                    <svg width="24" height="24" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
+                </div>
+            </div>
+            <div style="padding:20px;">
+                ${swatches}
+                <p class="label" style="margin-bottom:6px; color:var(--dim);">${p.collection}</p>
+                <h3 style="font-size:16px; font-weight:600; color:var(--white); margin-bottom:6px;">${p.name}</h3>
+                <p style="font-size:12px; color:var(--dim); line-height:1.7; margin-bottom:16px;">${p.description}</p>
+                <div class="price-wrap" style="margin-bottom:16px;">
+                    <span class="price-orig" data-usd-orig="${p.usdOrig}" data-dzd-orig="${p.dzdOrig}"></span>
+                    <span class="price-now price-display" data-usd="${p.usd}" data-dzd="${p.dzd}"></span>
+                    <span class="sale-tag">New Store</span>
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <button onclick="addToCart('${nameEsc}','${p.img}',${p.usd},${p.dzd})" class="btn-primary" style="padding:10px 20px; font-size:9px;">Add to Cart</button>
+                    <button onclick="buyNow('${nameEsc}','${p.img}',${p.usd},${p.dzd})" class="btn-ghost" style="padding:10px 20px; font-size:9px;">Buy Now</button>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function switchFinish(id, src, btn) {
+    document.getElementById('img-' + id).style.backgroundImage = `url('${src}')`;
+    btn.closest('div').querySelectorAll('.colour-swatch').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+// ── Custom cursor ──
 (function() {
     if (!window.matchMedia('(pointer: fine)').matches) return;
     const dot = document.getElementById('cDot');
@@ -1200,41 +1093,33 @@
     });
 })();
 
-// ── Scroll reveal ─────────────────────────────────────────────────────────────
-document.querySelectorAll('.reveal').forEach(el => {
-    new IntersectionObserver((entries, obs) => {
-        if (entries[0].isIntersecting) { el.classList.add('in'); obs.disconnect(); }
-    }, { threshold: 0.08 }).observe(el);
-});
-
-// ── Colour switcher ───────────────────────────────────────────────────────────
-function switchDJ(src, btn) {
-    document.getElementById('heritage-img').style.backgroundImage = `url('${src}')`;
-    btn.closest('div').querySelectorAll('.colour-swatch').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+// ── Scroll reveal ──
+function initReveal() {
+    document.querySelectorAll('.reveal').forEach(el => {
+        new IntersectionObserver((entries, obs) => {
+            if (entries[0].isIntersecting) { el.classList.add('in'); obs.disconnect(); }
+        }, { threshold: 0.08 }).observe(el);
+    });
 }
 
-// ── Currency ──────────────────────────────────────────────────────────────────
-let currency = 'USD';
-function updateCurrency() {
-    currency = document.getElementById('currencySelector').value;
+// ── Currency ──
+let currency = 'DZD';
+function applyCurrencyToDOM() {
     document.querySelectorAll('.price-display').forEach(el => {
-        el.textContent = currency === 'DZD'
-            ? el.dataset.dzd + '.00 DZD'
-            : '$' + el.dataset.usd + ' USD';
+        el.textContent = currency === 'DZD' ? el.dataset.dzd + '.00 DZD' : '$' + el.dataset.usd + ' USD';
     });
     document.querySelectorAll('.price-orig').forEach(el => {
-        el.textContent = currency === 'DZD'
-            ? el.dataset.dzdOrig + '.00 DZD'
-            : '$' + el.dataset.usdOrig;
+        el.textContent = currency === 'DZD' ? el.dataset.dzdOrig + '.00 DZD' : '$' + el.dataset.usdOrig;
     });
+}
+function updateCurrency() {
+    currency = document.getElementById('currencySelector').value;
+    applyCurrencyToDOM();
     renderCart();
-    if (document.getElementById('cartCheckoutForm').style.display === 'block') {
-        refreshCheckoutSummary();
-    }
+    if (document.getElementById('cartCheckoutForm').style.display === 'block') refreshCheckoutSummary();
 }
 
-// ── Lightbox ──────────────────────────────────────────────────────────────────
+// ── Lightbox ──
 function openLightbox(src, title) {
     document.getElementById('lightbox-img').src = src;
     document.getElementById('lightbox-title').textContent = title;
@@ -1247,7 +1132,7 @@ function closeLightbox() {
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeLightbox(); closeCart(); } });
 
-// ── Cart ──────────────────────────────────────────────────────────────────────
+// ── Cart ──
 let cart = [];
 function addToCart(name, img, usd, dzd) {
     const ex = cart.find(i => i.name === name);
@@ -1274,12 +1159,12 @@ function renderCart() {
         div.className = 'cart-row';
         div.style.cssText = 'display:flex;align-items:center;gap:12px;border:1px solid var(--border);padding:12px;margin-bottom:8px;';
         div.innerHTML = `
-            <div style="width:44px;height:44px;flex-shrink:0;background:#111 url('${item.img}') center/cover;border:1px solid var(--border);"></div>
+            <div style="width:44px;height:44px;flex-shrink:0;background:#eee url('${item.img}') center/cover;border:1px solid var(--border);"></div>
             <div style="flex:1;min-width:0;">
                 <p style="font-size:12px;font-weight:500;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.name}</p>
-                <p style="font-size:11px;color:#888;margin-top:2px;">${label} · Qty ${item.qty}</p>
+                <p style="font-size:11px;color:#706f6b;margin-top:2px;">${label} · Qty ${item.qty}</p>
             </div>
-            <button onclick="removeFromCart('${item.name}')" style="background:none;border:none;color:#555;font-size:18px;cursor:none;flex-shrink:0;" onmouseenter="this.style.color='#fff'" onmouseleave="this.style.color='#555'">&times;</button>`;
+            <button onclick="removeFromCart('${item.name}')" style="background:none;border:none;color:#555;font-size:18px;cursor:none;flex-shrink:0;" onmouseenter="this.style.color='#000'" onmouseleave="this.style.color='#555'">&times;</button>`;
         wrap.appendChild(div);
     });
     empty.style.display = cart.length === 0 ? 'block' : 'none';
@@ -1298,7 +1183,6 @@ function openCart() {
 function closeCart() {
     document.getElementById('cartPanel').classList.remove('open');
     document.getElementById('cart-overlay').style.display = 'none';
-    // Reset to default view for next time the panel opens
     document.getElementById('cartCheckoutForm').style.display = 'none';
     document.getElementById('cartOrderSuccess').style.display = 'none';
     document.getElementById('cartItems').style.display = 'block';
@@ -1311,7 +1195,7 @@ function toggleCart() {
     document.getElementById('cartPanel').classList.contains('open') ? closeCart() : openCart();
 }
 
-// ── Checkout ──────────────────────────────────────────────────────────────────
+// ── Checkout ──
 function refreshCheckoutSummary() {
     let total = 0, count = 0;
     cart.forEach(item => { total += (currency === 'DZD' ? item.dzd : item.usd) * item.qty; count += item.qty; });
@@ -1334,9 +1218,7 @@ function closeCheckoutForm() {
     document.getElementById('cartFooterDefault').style.display = 'block';
     document.getElementById('cartPanelTitle').textContent = 'Your Selection';
 }
-function closeCartSuccess() {
-    closeCart();
-}
+function closeCartSuccess() { closeCart(); }
 function buyNow(name, img, usd, dzd) {
     addToCart(name, img, usd, dzd);
     openCheckoutForm();
@@ -1344,7 +1226,7 @@ function buyNow(name, img, usd, dzd) {
 function flagField(id) {
     const el = document.getElementById(id);
     el.focus();
-    el.style.borderColor = 'rgba(255,255,255,0.5)';
+    el.style.borderColor = 'rgba(20,20,20,0.5)';
     setTimeout(() => el.style.borderColor = '', 1500);
 }
 function submitCheckout() {
@@ -1398,7 +1280,7 @@ function submitCheckout() {
     playSwoosh();
 }
 
-// ── Sound ─────────────────────────────────────────────────────────────────────
+// ── Sound effect (short UI blip, unrelated to the background music track) ──
 function playSwoosh() {
     try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1413,157 +1295,37 @@ function playSwoosh() {
     } catch(e) {}
 }
 
-// ── Ambient Music Engine ──────────────────────────────────────────────────────
-// Generates a lush, slow ambient soundscape using Web Audio API — no external file needed.
-// Based on slow-moving pad chords (Cmaj7 → Am7 → Fmaj7 → G9) at ~60bpm
-let audioCtx = null;
+// ── Background music — plays theme1.mp3 on loop. Upload that file next
+//    to this HTML file and this button will play/pause it. ──
 let musicPlaying = false;
-let masterGain = null;
-let musicNodes = [];
-
-function buildAmbient() {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    masterGain = audioCtx.createGain();
-    masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
-    masterGain.gain.linearRampToValueAtTime(0.18, audioCtx.currentTime + 3);
-
-    // Reverb (convolver with synthetic impulse)
-    const reverb = audioCtx.createConvolver();
-    const revLen = audioCtx.sampleRate * 4;
-    const revBuf = audioCtx.createBuffer(2, revLen, audioCtx.sampleRate);
-    for (let ch = 0; ch < 2; ch++) {
-        const d = revBuf.getChannelData(ch);
-        for (let i = 0; i < revLen; i++) {
-            d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / revLen, 2.5);
-        }
-    }
-    reverb.buffer = revBuf;
-
-    // Lo-pass filter for warmth
-    const filter = audioCtx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.value = 1200;
-    filter.Q.value = 0.8;
-
-    masterGain.connect(reverb);
-    reverb.connect(filter);
-    filter.connect(audioCtx.destination);
-
-    // Also connect dry signal quietly
-    const dryGain = audioCtx.createGain();
-    dryGain.gain.value = 0.04;
-    masterGain.connect(dryGain);
-    dryGain.connect(audioCtx.destination);
-
-    // Chord sequences: Cmaj7, Am7, Fmaj7, Gsus4 — frequencies in Hz
-    const chords = [
-        [130.81, 164.81, 196.00, 246.94, 329.63], // Cmaj7
-        [110.00, 130.81, 164.81, 196.00, 261.63], // Am7
-        [87.31,  130.81, 164.81, 174.61, 220.00],  // Fmaj7
-        [98.00,  130.81, 164.81, 185.00, 246.94],  // G9
-    ];
-
-    const beatLen = 8; // seconds per chord
-    const totalBeats = chords.length;
-
-    function scheduleChord(chord, startTime) {
-        chord.forEach((freq, i) => {
-            const osc = audioCtx.createOscillator();
-            const oscGain = audioCtx.createGain();
-            osc.type = 'sine';
-            // Slight detune for lushness
-            osc.frequency.value = freq * (1 + (i % 2 === 0 ? 0.001 : -0.0008));
-            osc.connect(oscGain);
-            oscGain.connect(masterGain);
-            oscGain.gain.setValueAtTime(0, startTime);
-            oscGain.gain.linearRampToValueAtTime(0.22 / chord.length, startTime + 1.2);
-            oscGain.gain.setValueAtTime(0.22 / chord.length, startTime + beatLen - 1.4);
-            oscGain.gain.linearRampToValueAtTime(0, startTime + beatLen);
-            osc.start(startTime);
-            osc.stop(startTime + beatLen + 0.1);
-            musicNodes.push(osc, oscGain);
-
-            // Subtle harmonic overtone (one octave up, very quiet)
-            const osc2 = audioCtx.createOscillator();
-            const osc2G = audioCtx.createGain();
-            osc2.type = 'triangle';
-            osc2.frequency.value = freq * 2.005;
-            osc2.connect(osc2G);
-            osc2G.connect(masterGain);
-            osc2G.gain.setValueAtTime(0, startTime);
-            osc2G.gain.linearRampToValueAtTime(0.04 / chord.length, startTime + 2);
-            osc2G.gain.linearRampToValueAtTime(0, startTime + beatLen);
-            osc2.start(startTime);
-            osc2.stop(startTime + beatLen + 0.1);
-            musicNodes.push(osc2, osc2G);
-        });
-    }
-
-    // Gentle sub-bass pad (root notes only)
-    function scheduleBass(rootFreq, startTime) {
-        const osc = audioCtx.createOscillator();
-        const g = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.value = rootFreq / 2;
-        osc.connect(g); g.connect(masterGain);
-        g.gain.setValueAtTime(0, startTime);
-        g.gain.linearRampToValueAtTime(0.12, startTime + 2);
-        g.gain.linearRampToValueAtTime(0, startTime + beatLen);
-        osc.start(startTime); osc.stop(startTime + beatLen + 0.1);
-        musicNodes.push(osc, g);
-    }
-
-    function loop(iteration) {
-        const now = audioCtx.currentTime;
-        chords.forEach((chord, i) => {
-            const t = now + i * beatLen;
-            scheduleChord(chord, t);
-            scheduleBass(chord[0], t);
-        });
-        // Schedule next loop
-        const loopDuration = beatLen * totalBeats;
-        const loopTimer = setTimeout(() => {
-            if (musicPlaying) loop(iteration + 1);
-        }, (loopDuration - 0.5) * 1000);
-        musicNodes.push({ stop: () => clearTimeout(loopTimer) });
-    }
-
-    loop(0);
-}
-
 function toggleMusic() {
     const btn = document.getElementById('musicBtn');
+    const audio = document.getElementById('bgMusic');
     if (!musicPlaying) {
-        musicPlaying = true;
-        buildAmbient();
-        btn.classList.add('playing');
-        btn.setAttribute('data-tip', 'PAUSE MUSIC');
+        audio.play().then(() => {
+            musicPlaying = true;
+            btn.classList.add('playing');
+            btn.setAttribute('data-tip', 'PAUSE MUSIC');
+        }).catch(() => {
+            btn.setAttribute('data-tip', 'ADD theme1.mp3');
+        });
     } else {
+        audio.pause();
         musicPlaying = false;
-        if (masterGain) {
-            masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
-            setTimeout(() => {
-                musicNodes.forEach(n => { try { if (n.stop) n.stop(); } catch(e){} });
-                musicNodes = [];
-                if (audioCtx) { audioCtx.close(); audioCtx = null; }
-            }, 1800);
-        }
         btn.classList.remove('playing');
-        btn.setAttribute('data-tip', 'AMBIENT MUSIC');
+        btn.setAttribute('data-tip', 'PLAY MUSIC');
     }
 }
 
-// ── Custom Order ──────────────────────────────────────────────────────────────
+// ── Custom Order ──
 function fillModel(name) {
     const field = document.getElementById('orderModel');
     if (field) {
         field.value = name;
         field.focus();
-        // Scroll to form
         document.getElementById('custom-order').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 }
-
 function submitCustomOrder() {
     const model     = document.getElementById('orderModel').value.trim();
     const phone     = document.getElementById('orderPhone').value.trim();
@@ -1571,20 +1333,9 @@ function submitCustomOrder() {
     const bracelet  = document.getElementById('orderBracelet').value;
     const notes     = document.getElementById('orderNotes').value.trim();
 
-    if (!model) {
-        document.getElementById('orderModel').focus();
-        document.getElementById('orderModel').style.borderColor = 'rgba(255,255,255,0.5)';
-        setTimeout(() => document.getElementById('orderModel').style.borderColor = '', 1500);
-        return;
-    }
-    if (!phone) {
-        document.getElementById('orderPhone').focus();
-        document.getElementById('orderPhone').style.borderColor = 'rgba(255,255,255,0.5)';
-        setTimeout(() => document.getElementById('orderPhone').style.borderColor = '', 1500);
-        return;
-    }
+    if (!model) { flagField('orderModel'); return; }
+    if (!phone) { flagField('orderPhone'); return; }
 
-    // Build WhatsApp message
     const msg = [
         '👋 Hello wearwc — I have a custom watch request:',
         '',
@@ -1597,15 +1348,12 @@ function submitCustomOrder() {
         'Please confirm availability and pricing. Thank you!'
     ].filter(Boolean).join('\n');
 
-    const waUrl = 'https://wa.me/213555639302?text=' + encodeURIComponent(msg);
-    window.open(waUrl, '_blank');
+    window.open('https://wa.me/213555639302?text=' + encodeURIComponent(msg), '_blank');
 
-    // Show success
     document.getElementById('order-form-wrap').style.display = 'none';
     document.getElementById('order-success').style.display   = 'block';
     playSwoosh();
 }
-
 function resetOrderForm() {
     document.getElementById('order-form-wrap').style.display = 'block';
     document.getElementById('order-success').style.display   = 'none';
@@ -1615,6 +1363,8 @@ function resetOrderForm() {
     document.getElementById('orderBracelet').value = '';
     document.getElementById('orderNotes').value    = '';
 }
+
+// ── AI Concierge Chat ──
 let chatHistory = [], chatOpen = false;
 function toggleChat() {
     chatOpen = !chatOpen;
@@ -1625,22 +1375,22 @@ function appendMsg(role, text) {
     const isUser = role === 'user';
     const div = document.createElement('div');
     div.style.cssText = isUser
-        ? 'background:rgba(255,255,255,0.06);border:1px solid var(--border);padding:10px 12px;border-radius:2px;text-align:right;'
-        : 'background:rgba(255,255,255,0.03);border:1px solid var(--border);padding:10px 12px;border-radius:2px;';
+        ? 'background:rgba(20,20,20,0.05);border:1px solid var(--border);padding:10px 12px;border-radius:2px;text-align:right;'
+        : 'background:rgba(20,20,20,0.03);border:1px solid var(--border);padding:10px 12px;border-radius:2px;';
     div.innerHTML = `
         <p style="font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--dim);margin-bottom:4px;">${isUser ? 'You' : 'Concierge'}</p>
-        <p style="font-size:12px;color:rgba(255,255,255,0.8);line-height:1.7;font-weight:300;">${text}</p>`;
+        <p style="font-size:12px;color:rgba(20,20,20,0.85);line-height:1.7;font-weight:300;">${text}</p>`;
     msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight;
 }
 function showTyping() {
     const msgs = document.getElementById('chatMessages');
     const div = document.createElement('div');
     div.id = 'typing';
-    div.style.cssText = 'background:rgba(255,255,255,0.03);border:1px solid var(--border);padding:10px 12px;display:flex;align-items:center;gap:3px;';
+    div.style.cssText = 'background:rgba(20,20,20,0.03);border:1px solid var(--border);padding:10px 12px;display:flex;align-items:center;gap:3px;';
     div.innerHTML = `<span style="font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--dim);margin-right:8px;">Concierge</span>
-        <span class="dot-1" style="width:5px;height:5px;background:#888;border-radius:50%;"></span>
-        <span class="dot-2" style="width:5px;height:5px;background:#888;border-radius:50%;"></span>
-        <span class="dot-3" style="width:5px;height:5px;background:#888;border-radius:50%;"></span>`;
+        <span class="dot-1" style="width:5px;height:5px;background:#8a8a86;border-radius:50%;"></span>
+        <span class="dot-2" style="width:5px;height:5px;background:#8a8a86;border-radius:50%;"></span>
+        <span class="dot-3" style="width:5px;height:5px;background:#8a8a86;border-radius:50%;"></span>`;
     msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight;
 }
 function removeTyping() { const el = document.getElementById('typing'); if (el) el.remove(); }
@@ -1664,9 +1414,11 @@ async function sendChatMessage(event) {
                 model: 'claude-sonnet-4-20250514',
                 max_tokens: 1000,
                 system: `You are the concierge for wearwc, a new independent watch brand inspired by classic watchmaking. Be brief and elegant (2-4 sentences). Key facts:
-• Models: Voyager GMT ($26 / 6,550 DZD), The Mariner ($26 / 6,550 DZD), The Heritage ($22 / 5,800 DZD). All marked down from $51 as a new-store launch price.
-• Shipping: 7–14 business days worldwide, discreet plain-box packaging.
-• Payment: Orders are placed through the in-site checkout, which sends the order to us on WhatsApp for confirmation. Cash on Delivery (COD) available ONLY for Algeria.
+• Models: Voyager GMT, The Mariner, The Heritage (3 finishes), The Diver, The Chronograph.
+• Prices: roughly 5,800–7,000 DZD (about $22–$28), marked down from launch prices — exact current price is shown on each product card. Site defaults to DZD, USD also available via the currency switch.
+• Shipping: up to 2 days, worldwide, discreet plain-box packaging.
+• Payment: orders are placed through the in-site checkout, which sends the order to us on WhatsApp for confirmation. Cash on Delivery (COD) available for Algeria.
+• Personal video verification: any customer can message us on WhatsApp and we'll send a real video of their exact watch before it ships.
 • Refund policy: full refund if parcel not delivered.
 • We are transparent: these are independently designed timepieces, not officially affiliated with any luxury brand.
 Reply in the same language the customer writes in.`,
@@ -1685,6 +1437,11 @@ Reply in the same language the customer writes in.`,
     }
     btn.disabled = false; btn.textContent = '→';
 }
+
+// ── Init ──
+renderProducts();
+applyCurrencyToDOM();
+initReveal();
 </script>
 </body>
 </html>
