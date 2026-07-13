@@ -927,8 +927,39 @@
         <div class="bar"></div>
     </div>
 </button>
+
+<!-- NOTE: If your file is named theme.mp3 instead of theme1.mp3, change the src below -->
 <audio id="bgMusic" src="theme1.mp3" loop preload="auto"></audio>
 
+<!-- JavaScript Controller -->
+<script>
+function toggleMusic() {
+    const music = document.getElementById('bgMusic');
+    const btn = document.getElementById('musicBtn');
+    
+    if (!music || !btn) return;
+
+    if (music.paused) {
+        // Set a comfortable background volume (0.0 to 1.0)
+        music.volume = 0.4; 
+        
+        music.play()
+            .then(() => {
+                // Audio started successfully: turn on visualizer bars & change tooltip
+                btn.classList.add('playing');
+                btn.setAttribute('data-tip', 'PAUSE MUSIC');
+            })
+            .catch(err => {
+                console.error("Playback failed or was blocked by browser:", err);
+            });
+    } else {
+        // Audio is currently playing: pause it, stop bars, reset tooltip
+        music.pause();
+        btn.classList.remove('playing');
+        btn.setAttribute('data-tip', 'PLAY MUSIC');
+    }
+}
+</script>
 <a href="https://wa.me/213555639302" target="_blank"
    style="position:fixed; bottom:20px; right:72px; z-index:50; background:#16a34a; color:#fff; padding:14px; border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; cursor:none;"
    aria-label="WhatsApp">
