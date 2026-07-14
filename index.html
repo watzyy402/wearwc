@@ -151,7 +151,7 @@
         /* ══════════════════════════════
            HERO
         ══════════════════════════════ */
-        #hero { min-height: 80vh; display: grid; align-items: center; padding: 72px 0; }
+        #hero { display: grid; align-items: center; padding: 36px 0 40px; }
         .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
         @media (max-width: 768px) { .hero-grid { grid-template-columns: 1fr; gap: 48px; } }
 
@@ -371,7 +371,7 @@
             opacity: 0; pointer-events: none; transition: opacity 0.2s;
             box-shadow: 0 2px 10px rgba(0,0,0,0.08);
         }
-        #musicBtn:hover::after { opacity: 1; }
+        #musicBtn:hover::after, #musicBtn.tip-flash::after { opacity: 1; }
 
         /* ══════════════════════════════
            CUSTOM ORDER SECTION
@@ -482,14 +482,14 @@
                         <span class="new-badge-dot"></span>
                         New Store · Now Open
                     </div>
-                    <h1 class="serif" style="font-size:clamp(38px,5vw,62px); line-height:1.1; font-weight:700; margin-bottom:24px; color:var(--white);">
+                    <h1 class="serif" style="font-size:clamp(34px,4.4vw,54px); line-height:1.1; font-weight:700; margin-bottom:16px; color:var(--white);">
                         Wear the<br><em style="font-style:italic; color:rgba(20,20,20,0.55);">icon.</em><br>Not the price.
                     </h1>
-                    <p style="font-size:14px; color:var(--dim); line-height:1.8; max-width:420px; margin-bottom:32px; font-weight:300;">
-                        Original timepieces inspired by classic watchmaking — sharp lines, real weight, honest pricing — shipped worldwide, delivered to your door. Launching with opening prices.
+                    <p style="font-size:13px; color:var(--dim); line-height:1.7; max-width:420px; margin-bottom:20px; font-weight:300;">
+                        Original timepieces inspired by classic watchmaking — sharp lines, real weight, honest pricing — shipped worldwide, delivered to your door.
                     </p>
 
-                    <div style="border:1px solid var(--border2); padding:16px 20px; margin-bottom:32px; display:inline-block;">
+                    <div style="border:1px solid var(--border2); padding:12px 18px; margin-bottom:20px; display:inline-block;">
                         <p class="label" style="margin-bottom:6px;">Grand Opening Sale</p>
                         <p style="font-size:13px; color:var(--white);">Was <span class="price-orig" data-usd-orig="51" data-dzd-orig="12800">$51</span> — now from <strong class="price-display" data-usd="22" data-dzd="5800">$22 USD</strong> while stock lasts.</p>
                     </div>
@@ -500,38 +500,20 @@
                     </div>
                 </div>
 
-                <div class="reveal hero-img-card" onclick="openLightbox('voyager-gmt.png','Voyager GMT')">
-                    <img src="voyager-gmt.png" alt="Voyager GMT" onerror="this.style.opacity='0'"/>
-                    <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(20,20,20,0.02) 0%,transparent 60%); pointer-events:none;"></div>
-                    <div class="overlay-label">
-                        <p class="label" style="color:rgba(255,255,255,0.4); margin-bottom:3px;">Featured</p>
-                        <p style="font-size:14px; font-weight:500; color:#f4f4f4;">Voyager GMT — Opening Price</p>
+                <div class="reveal card" style="overflow:hidden; position:relative; justify-self:center; width:fit-content;">
+                    <video id="heroVid1" src="p_video1.mp4" autoplay muted loop playsinline controls preload="auto"
+                           style="height:min(60vh,560px); width:auto; aspect-ratio:9/16; object-fit:cover; display:block;"
+                           onerror="document.getElementById('heroVid1Missing').style.display='flex'"></video>
+                    <div id="heroVid1Missing" style="display:none; position:absolute; inset:0; align-items:center; justify-content:center; text-align:center; padding:20px; background:rgba(20,20,20,0.04);">
+                        <p style="font-size:11px; color:var(--dim); line-height:1.6;">Upload <strong style="color:var(--white);">p_video1.mp4</strong><br>next to this file to show this preview.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ── PREVIEW VIDEOS ── -->
-    <section id="previews" style="padding:20px 0 72px;">
-        <div class="container reveal">
-            <div style="text-align:center; margin-bottom:32px;">
-                <p class="label" style="margin-bottom:10px;">See It In Motion</p>
-                <h2 class="serif" style="font-size:clamp(24px,3.4vw,34px); font-weight:700; color:var(--white);">Watch Previews</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div class="card" style="overflow:hidden;">
-                    <video src="p_video1.mp4" autoplay muted loop playsinline controls preload="none" style="width:100%; height:auto; max-height:520px; display:block; background:rgba(20,20,20,0.03);"></video>
-                </div>
-                <div class="card" style="overflow:hidden;">
-                    <video src="p_video2.mp4" autoplay muted loop playsinline controls preload="none" style="width:100%; height:auto; max-height:520px; display:block; background:rgba(20,20,20,0.03);"></video>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- ── COLLECTION ── -->
-    <section id="collection" style="padding:40px 0 80px;">
+    <section id="collection" style="padding:60px 0 80px;">
         <div class="container">
             <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:40px;" class="reveal">
                 <div>
@@ -927,39 +909,8 @@
         <div class="bar"></div>
     </div>
 </button>
+<audio id="bgMusic" src="theme1.mp3" loop preload="none"></audio>
 
-<!-- NOTE: If your file is named theme.mp3 instead of theme1.mp3, change the src below -->
-<audio id="bgMusic" src="theme.mp3" loop preload="auto"></audio>
-
-<!-- JavaScript Controller -->
-<script>
-function toggleMusic() {
-    const music = document.getElementById('bgMusic');
-    const btn = document.getElementById('musicBtn');
-    
-    if (!music || !btn) return;
-
-    if (music.paused) {
-        // Set a comfortable background volume (0.0 to 1.0)
-        music.volume = 0.4; 
-        
-        music.play()
-            .then(() => {
-                // Audio started successfully: turn on visualizer bars & change tooltip
-                btn.classList.add('playing');
-                btn.setAttribute('data-tip', 'PAUSE MUSIC');
-            })
-            .catch(err => {
-                console.error("Playback failed or was blocked by browser:", err);
-            });
-    } else {
-        // Audio is currently playing: pause it, stop bars, reset tooltip
-        music.pause();
-        btn.classList.remove('playing');
-        btn.setAttribute('data-tip', 'PLAY MUSIC');
-    }
-}
-</script>
 <a href="https://wa.me/213555639302" target="_blank"
    style="position:fixed; bottom:20px; right:72px; z-index:50; background:#16a34a; color:#fff; padding:14px; border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; cursor:none;"
    aria-label="WhatsApp">
@@ -1326,7 +1277,7 @@ function playSwoosh() {
     } catch(e) {}
 }
 
-// ── Background music — plays theme.mp3 on loop. Upload that file next
+// ── Background music — plays theme1.mp3 on loop. Upload that file next
 //    to this HTML file and this button will play/pause it. ──
 let musicPlaying = false;
 function toggleMusic() {
@@ -1338,7 +1289,9 @@ function toggleMusic() {
             btn.classList.add('playing');
             btn.setAttribute('data-tip', 'PAUSE MUSIC');
         }).catch(() => {
-            btn.setAttribute('data-tip', 'ADD theme1.mp3');
+            btn.setAttribute('data-tip', 'ADD theme1.mp3 FILE');
+            btn.classList.add('tip-flash');
+            setTimeout(() => btn.classList.remove('tip-flash'), 3500);
         });
     } else {
         audio.pause();
